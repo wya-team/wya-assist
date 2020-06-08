@@ -103,10 +103,6 @@ export default class WXManager {
 		this.wxConfig = null; // Promise
 		this.location = null; // Promise
 
-		this.schedule = new Promise((resolve) => {
-			this._schedule = resolve;
-		});
-
 		/**
 		 * iOS 10 下诡异的Promise, 会连续触发两次_getConfig(概率性)
 		 */
@@ -160,7 +156,7 @@ export default class WXManager {
 				// 签名过程中不允许修改路径
 				this._replaceSchedule && this._replaceSchedule('cancel');
 				Promise.race([
-					this.schedule,
+					new Promise(r => this.ready(r)),
 					new Promise((_, reject) => this._replaceSchedule = reject), 
 					new Promise(r => setTimeout(r, 3000))
 				])
@@ -271,7 +267,6 @@ export default class WXManager {
 			const { force, ...rest } = opts;
 			let fn = () => {
 				resolve(this.wxConfig);
-				this._schedule();
 			};
 
 			if (!this.hackSignCount) {
