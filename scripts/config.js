@@ -1,9 +1,9 @@
 const path = require('path');
+const { babel } = require('@rollup/plugin-babel');
 const buble = require('@rollup/plugin-buble');
 const replace = require('@rollup/plugin-replace');
 const commonjs = require('@rollup/plugin-commonjs');
-const nodeResolve = require('@rollup/plugin-node-resolve');
-const babel = require('rollup-plugin-babel');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const { uglify } = require('rollup-plugin-uglify');
 const postcss = require('rollup-plugin-postcss');
 const vue = require('rollup-plugin-vue');
@@ -18,8 +18,10 @@ const external = filename => {
 	let regex = [
 		'^vue$',
 		'^@babel/runtime',
-		// 用于测试用例?
-		'^@wya/ps$'
+		
+		'^@wya/ps$',
+		'^@wya/utils$',
+		'^@wya/vc'
 	].join('|');
 
 	return new RegExp(`(${regex})`).test(filename);
@@ -68,16 +70,17 @@ const builds = {
 					],
 					extensions: ['.css', '.scss'],
 				})
-			]
-		},
-		external,
+			],
+			external,
+		}
 	},
 	wx: {
 		script: 'babel packages/wx/src --out-dir packages/wx/dist --copy-files --ignore **.test.js,**.md,examples/**',
 		rollup: {
 			entry: 'packages/wx/src/index.js',
 			dest: 'packages/wx/dist/wx.min.js',
-			format: 'cjs'
+			format: 'cjs',
+			external,
 		}
 	}
 };
@@ -117,7 +120,7 @@ class Config {
 				babel({
 					babelrc: true,
 					exclude: 'node_modules/**',
-					runtimeHelpers: true
+					babelHelpers: 'runtime'
 				}),
 				buble({
 					objectAssign: 'Object.assign' // ...Object spread and rest
