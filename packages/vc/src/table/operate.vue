@@ -47,7 +47,10 @@
 			>
 				<div class="vca-table-operate__text">
 					<span>更多</span>
-					<vc-icon type="p-down-small" class="g-fs-14" style="margin-bottom: 2px" />
+					<vc-icon 
+						type="down" 
+						style="margin-bottom: 2px; transform: scale(0.8)" 
+					/>
 				</div>
 				<vc-dropdown-menu slot="list">
 					<template v-for="(item, i) of dataSource.slice(1)">
@@ -79,8 +82,21 @@
 	</div>
 </template>
 <script>
+import Dropdown from '@wya/vc/lib/dropdown';
+import Popconfirm from '@wya/vc/lib/popconfirm';
+import Icon from '@wya/vc/lib/icon';
+import Divider from '@wya/vc/lib/divider';
+
 export default {
 	name: 'vca-table-operate',
+	components: {
+		'vc-dropdown': Dropdown,
+		'vc-dropdown-menu': Dropdown.Menu,
+		'vc-dropdown-item': Dropdown.Item,
+		'vc-icon': Icon,
+		'vc-divider': Divider,
+		'vc-popconfirm': Popconfirm,
+	},
 	props: {
 		dataSource: Array,
 		dataSourceKey: {
