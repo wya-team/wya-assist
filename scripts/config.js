@@ -24,6 +24,9 @@ const external = filename => {
 		'^@wya/vc'
 	].join('|');
 
+	if (/^@wya\/vc$/.test(filename)) {
+		throw new Error('请使用以下公式 import Xxx from "@wya/vc/lib/xxx"');
+	}
 	return new RegExp(`(${regex})`).test(filename);
 };
 
@@ -50,7 +53,7 @@ const builds = {
 		script: 'babel packages/vc/src --out-dir packages/vc/dist --copy-files --ignore **.test.js,**.md,examples/**',
 		rollup: {
 			entry: 'packages/vc/src/index.js',
-			dest: 'packages/vc/dist/vc.min.js',
+			dest: 'packages/vc/dist/assist-vc.min.js',
 			format: 'cjs',
 			globals: {
 				vue: 'Vue'
