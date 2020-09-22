@@ -6,17 +6,21 @@
 		<vca-table-sorter v-model="value">
 			<div>sorter</div>
 		</vca-table-sorter>
+
+		<vca-table-operate :data-source="dataSource1" @click="handleClick" />
 	</div>
 </template>
 
 <script>
+import Message from '@wya/vc/lib/message';
 import Table from '..';
 
 export default {
 	name: 'vca-basic',
 	components: {
 		'vca-table-filter': Table.Filter,
-		'vca-table-sorter': Table.Sorter
+		'vca-table-sorter': Table.Sorter,
+		'vca-table-operate': Table.Operate
 	},
 	data() {
 		return {
@@ -30,16 +34,36 @@ export default {
 					value: '2',
 					label: '2'
 				}
-			]
+			],
+			dataSource1: [
+				{
+					message: '带提示',
+					name: '按钮1 - 带提示'
+				},
+				{
+					name: '按钮2'
+				},
+				{
+					message: '带提示',
+					name: '按钮3 - 带提示'
+				},
+				{
+					name: '按钮4'
+				}
+
+			] 
 		};
 	},
 	methods: {
 		handleOk() {
-			alert('ok');
+			Message.info('ok');
 		},
 		handleCancel() {
-			alert('cancel');
-		}		
+			Message.info('cancel');
+		},
+		handleClick(name, item) {
+			Message.info(name);
+		}	
 	}
 };
 </script>
