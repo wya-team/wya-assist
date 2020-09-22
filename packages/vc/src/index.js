@@ -1,1 +1,1 @@
-export { default } from './comp.vue';
+export { default as SectionTitle } from './section-title';
