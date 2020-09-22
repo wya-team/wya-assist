@@ -8,6 +8,7 @@
     "src/**"
   ],
   "scripts": {
+    "dev": "wya-vue sfc --pattern '**/examples'",
     "test:common": "cross-env BABEL_ENV=test karma start tests/karma.config.js",
     "test": "npm run test:common -- --single-run",
     "test:watch": "npm run test:common"
