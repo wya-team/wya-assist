@@ -80,5 +80,6 @@
     "@wya/utils": ">=1.6.1",
     "@wya/vc": ">=2.0.0",
     "vue": ">=2.6.0"
-  }
+  },
+  "gitHead": "a789749ee7fdb0dd4aa966c38159caf020bcde5b"
 }

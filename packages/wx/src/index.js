@@ -1,3 +1,1 @@
-export const wx = () => {
-
-};
+export { default as WXManager } from './wx';

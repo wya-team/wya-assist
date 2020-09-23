@@ -1,3 +1,1 @@
-export const js = () => {
-
-};
+export { default as HackManager } from './hack';
