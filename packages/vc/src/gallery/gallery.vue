@@ -204,7 +204,8 @@ export default {
 			return this.store.state.listInfo;
 		},
 		isWhole() {
-			return !!this.curCategory.is_all;
+			const { isAll } = this.valueKey;
+			return !!this.curCategory[isAll];
 		},
 		categoryList() {
 			return this.store.state.categoryList;
@@ -217,7 +218,7 @@ export default {
 		},
 		selectedFileIds() {
 			const { fileId } = this.valueKey;
-			return this.selectedFiles.map(item => item.fileId);
+			return this.selectedFiles.map(item => item[fileId]);
 		}
 	},
 	created() {

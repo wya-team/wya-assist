@@ -5,13 +5,13 @@
 			class="vca-gallery-img-item__img-wrapper"
 			@click="handleToggle"
 		>
-			<img :src="`${it.file_url}!4-4`" class="vca-gallery-img-item__img">
+			<img :src="`${it[valueKey.fileUrl]}!4-4`" class="vca-gallery-img-item__img">
 			<div v-show="checked || disabled" class="vca-gallery-img-item__checked-icon-wrapper">
 				<vc-icon type="correct" class="vca-gallery-img-item__checked-icon" />
 			</div>
 		</div>
 		<div class="vca-gallery-img-item__name-wrapper">
-			<span class="vca-gallery-img-item__name">{{ it.file_name }}</span>
+			<span class="vca-gallery-img-item__name">{{ it[valueKey.fileName] }}</span>
 			<vc-icon type="edit" class="vca-gallery-img-item__name-edit-icon" @click="handleRename" />
 		</div>
 	</div>
@@ -25,7 +25,7 @@ import { Editor, MoveImg } from './popup';
 
 export default {
 	name: 'vca-gallery-img-item',
-	inject: ['APIS', 'store', 'http'],
+	inject: ['APIS', 'store', 'http', 'valueKey'],
 	components: {
 		'vc-icon': Icon
 	},
@@ -45,21 +45,22 @@ export default {
 	},
 	methods: {
 		handleRename() {
+			const { fileName, fileId } = this.valueKey;
 			Editor.popup({
 				title: '图片重命名',
-				originalText: this.it.file_name,
+				originalText: this.it[fileName],
 				placeholder: '请输入新的图片名称',
 			}).then(({ inputValue }) => {
-				const v = inputValue || this.it.file_name;
+				const v = inputValue || this.it[fileName];
 				this.http({
 					url: this.APIS['URL_GALLERY_IMG_RENAME'],
 					type: 'POST',
 					param: {
-						file_id: this.it.file_id,
-						file_name: v
+						[fileId]: tfileIdhis.it[fileId],
+						[fileName]: v
 					}
 				}).then(() => {
-					this.it.file_name = v;
+					this.it[fileName] = v;
 				}).catch(err => {
 					console.log(err, 'error');
 				});
@@ -145,7 +146,7 @@ $block: vca-gallery-img-item;
 		@include pseudo(hover) {
 			@include element(name-edit-icon) {
 				display: inline-block;
-	}
+			}
 		}
 	}
 
