@@ -16,7 +16,7 @@
 // 	}
 // });
 import { merge, pick, cloneDeep, debounce, noop } from 'lodash';
-import { MToast } from '@wya/vc';
+import MToast from '@wya/vc/lib/toast/index.m';
 import { Cookie, Storage, URL, Device, Utils } from '@wya/utils';
 import { ajax } from '@wya/http';
 
