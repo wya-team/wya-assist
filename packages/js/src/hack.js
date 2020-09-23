@@ -1,8 +1,7 @@
 /**
  * 专门处理微信端相关兼容问题
  */
-import { Storage, URL, Device, Load } from '@wya/utils';
-import { ajax } from '@wya/http';
+import { Device, Load } from '@wya/utils';
 
 /**
  * 暂时先有公共的管理，后期考虑每个项目中单独拥有

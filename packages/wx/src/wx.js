@@ -17,7 +17,7 @@
 // });
 import { merge, pick, cloneDeep, debounce, noop } from 'lodash';
 import MToast from '@wya/vc/lib/toast/index.m';
-import { Cookie, Storage, URL, Device, Utils } from '@wya/utils';
+import { Storage, URL, Device } from '@wya/utils';
 import { ajax } from '@wya/http';
 
 typeof wx !== 'object' && console.error('wx未注入完成');

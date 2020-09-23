@@ -17,10 +17,12 @@ const cssnano = require('cssnano');
 const external = filename => {
 	let regex = [
 		'^vue$',
+		'^lodash$',
 		'^@babel/runtime',
 		
 		'^@wya/ps$',
 		'^@wya/utils$',
+		'^@wya/http$',
 		'^@wya/vc'
 	].join('|');
 
@@ -45,8 +47,9 @@ const builds = {
 		script: 'babel packages/js/src --out-dir packages/js/dist --copy-files --ignore **.test.js,**.md,examples/**',
 		rollup: {
 			entry: 'packages/js/src/index.js',
-			dest: 'packages/js/dist/js.min.js',
-			format: 'cjs'
+			dest: 'packages/js/dist/assist-js.min.js',
+			format: 'cjs',
+			external,
 		}
 	},
 	vc: {
@@ -81,7 +84,7 @@ const builds = {
 		script: 'babel packages/wx/src --out-dir packages/wx/dist --copy-files --ignore **.test.js,**.md,examples/**',
 		rollup: {
 			entry: 'packages/wx/src/index.js',
-			dest: 'packages/wx/dist/wx.min.js',
+			dest: 'packages/wx/dist/assist-wx.min.js',
 			format: 'cjs',
 			external,
 		}
