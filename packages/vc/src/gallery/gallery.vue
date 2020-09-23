@@ -1,6 +1,6 @@
 <template>
 	<vc-modal
-		v-model="visible"
+		v-model="isVisible"
 		:mask-closable="false"
 		size="large"
 		title="选择图片"
@@ -116,7 +116,7 @@ import uploadMixin from './upload';
 import Footer from './footer.vue';
 import NoCategory from './no-category.vue';
 
-const wrapperComponent = {
+export default {
 	name: 'vca-gallery',
 	components: {
 		'vc-modal': Modal,
@@ -128,7 +128,7 @@ const wrapperComponent = {
 		'vca-gallery-category-menu': CategoryMenu,
 		'vca-gallery-img-item': ImgItem,
 		'vca-gallery-footer': Footer,
-		'vca-gallery-no-category': NoCategory
+		// 'vca-gallery-no-category': NoCategory
 	},
 	mixins: [uploadMixin],
 	provide() {
@@ -181,7 +181,7 @@ const wrapperComponent = {
 		});
 
 		return {
-			visible: false,
+			isVisible: false,
 			keyword: '',
 			store,
 			current: {},
@@ -225,7 +225,8 @@ const wrapperComponent = {
 		this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { target: this.baseData.paths[0] });
 	},
 	mounted() {
-		this.visible = true;
+		this.isVisible = true;
+		console.log(this.isVisible);
 	},
 	methods: {
 		loadCategory() {
@@ -243,7 +244,8 @@ const wrapperComponent = {
 			});
 		},
 		handleCancel() {
-			this.visible = false;
+			console.log(2);
+			this.isVisible = false;
 			this.$emit('close');
 		},
 		loadData(page, pageSize) {
@@ -318,23 +320,13 @@ const wrapperComponent = {
 
 		handleConfirm() {
 			const { fileUrl } = this.valueKey;
-			this.visible = false;
+			this.isVisible = false;
 			const list = this.selectedFiles.map(it => it[fileUrl]);
 			this.$emit('sure', { list });
 		}
 	}
 };
 
-export default wrapperComponent;
-export const Gallery = new Portal(wrapperComponent, {
-	onBefore(opts) {
-		const http = opts.ajax || ajax;
-		return http({
-			url: opts.apis['URL_GALLERY_CATEGORY_LIST'],
-			type: 'GET'
-		});
-	}
-});
 </script>
 
 <style lang="scss">

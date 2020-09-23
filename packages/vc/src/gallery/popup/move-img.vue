@@ -23,7 +23,7 @@ import Portal from '@wya/vc/lib/portal';
 import Modal from '@wya/vc/lib/modal';
 import Radio from '@wya/vc/lib/radio';
 
-const wrapperComponent = {
+export default {
 	name: 'vca-gallery-move-img',
 	components: {
 		'vc-modal': Modal,
@@ -87,10 +87,6 @@ const wrapperComponent = {
 		}
 	}
 };
-
-export default wrapperComponent;
-export const MoveImg = new Portal(wrapperComponent, {});
-
 </script>
 
 <style lang="scss">

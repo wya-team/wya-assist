@@ -50,8 +50,7 @@ import Input from '@wya/vc/lib/input';
 import Icon from '@wya/vc/lib/icon';
 import Button from '@wya/vc/lib/button';
 
-
-const wrapperComponent = {
+export default {
 	name: 'vca-gallery-editor',
 	components: {
 		'vc-modal': Modal,
@@ -111,9 +110,6 @@ const wrapperComponent = {
 		}
 	}
 };
-
-export default wrapperComponent;
-export const Editor = new Portal(wrapperComponent, {});
 </script>
 
 <style lang="scss">

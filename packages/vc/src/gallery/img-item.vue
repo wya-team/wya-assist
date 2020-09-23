@@ -21,8 +21,7 @@
 import Icon from '@wya/vc/lib/icon';
 import Message from '@wya/vc/lib/message';
 
-import { Editor } from './popup/editor.vue';
-import { MoveImg } from './popup/move-img.vue';
+import { Editor, MoveImg } from './popup';
 
 export default {
 	name: 'vca-gallery-img-item',

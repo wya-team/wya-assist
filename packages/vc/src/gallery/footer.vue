@@ -38,7 +38,7 @@
 import Modal from '@wya/vc/lib/modal';
 import Button from '@wya/vc/lib/button';
 import Message from '@wya/vc/lib/message';
-import { MoveImg } from './popup/move-img.vue';
+import { MoveImg } from './popup';
 
 export default {
 	name: 'vca-gallery-footer',
