@@ -13,24 +13,25 @@
 <script>
 import Vc from '@wya/vc/lib/vc';
 import UploadPicker from '@wya/vc/lib/upload-picker';
-import createHttpClient, { ajax } from '@wya/http';
+import createHttpClient from '@wya/http';
 
 import Gallery from '..';
 
+const { ajax } = createHttpClient({
+	onBefore({ options }) {
+		return {
+			...options,
+			headers: {
+				token: '539995a80a612e02852c2b1cb6ac5d6bde7d7cfc'
+			}
+		};
+	}
+});
 const OSS = 'https://wyatest.oss-cn-hangzhou.aliyuncs.com';
 const BASE = 'https://is-manage.wyawds.com';
 
 const galleryOptions = {
-	ajax: createHttpClient({
-		onBefore({ options }) {
-			return {
-				...options,
-				headers: {
-					token: '539995a80a612e02852c2b1cb6ac5d6bde7d7cfc'
-				}
-			};
-		}
-	}).ajax,
+	ajax,
 	max: 9,
 	uploadOpts: {
 		max: 30,
@@ -64,6 +65,15 @@ const vaildFile = (file) => {
 	}
 };
 
+const parseFile = (file) => {
+	return {
+		type: `.${file.name.split('.').pop()}`,
+		uid: file.uid,
+		title: file.name,
+		size: file.size
+	};
+};
+
 Vc.instance.init({
 	UploadPicker: {
 		gallery(ctx, type) {
@@ -91,8 +101,8 @@ Vc.instance.init({
 
 			return new Promise((resolve, reject) => {
 				ajax({
-					url: `${BASE}/base/upload/get-sign.json`,
-					type: "POST",
+					url: `${BASE}/base/upload/get-oss-sign.json`,
+					type: "GET",
 					param: {},
 					successTip: false,
 				}).then(res => {
@@ -120,7 +130,7 @@ Vc.instance.init({
 			// 约定的字段为file
 			let { file } = options.param;
 
-			if (env === 'development') {
+			if (process.env.NODE_ENV === 'development') {
 				return {
 					status: 1,
 					data: {

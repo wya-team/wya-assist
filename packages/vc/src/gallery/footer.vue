@@ -45,7 +45,7 @@ export default {
 	components: {
 		'vc-button': Button
 	},
-	inject: ['APIS', 'store', 'http'],
+	inject: ['APIS', 'store', 'http', 'valueKey'],
 	props: {
 		whole: {
 			type: Boolean,
