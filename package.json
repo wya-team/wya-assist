@@ -11,7 +11,6 @@
     "test": "node scripts/unit-test.js",
     "bootstrap": "lerna clean && lerna bootstrap --loglevel silly",
     "pub": "npm run build:packages && lerna publish",
-    "pub": "npm publish --access public",
     "lint": "esw packages/ --ext .vue,.js --color",
     "lint:fix": "npm run lint -- --fix --color",
     "lint:watch": "npm run lint -- --fix --watch"
