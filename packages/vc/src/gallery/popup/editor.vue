@@ -117,7 +117,7 @@ export const Editor = new Portal(wrapperComponent, {});
 </script>
 
 <style lang="scss">
-@import "~@wya/sass/lib/mixins/index.scss";
+@import "../../style/index.scss";
 
 $block: vca-gallery-editor;
 

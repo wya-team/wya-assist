@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@wya/sass/lib/mixins/index.scss";
+@import "../style/index.scss";
 
 $block: vca-gallery-category-menu;
 $c-border: #e9e9e9;

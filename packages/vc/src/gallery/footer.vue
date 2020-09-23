@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@wya/sass/lib/mixins/index.scss";
+@import "../style/index.scss";
 
 @include block(vca-gallery-footer) {
 	display: flex;

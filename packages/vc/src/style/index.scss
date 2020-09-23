@@ -1,0 +1,4 @@
+// @import "~@wya/sass/lib/mixins/index.scss"; // 仅webpack可以
+// @import "node_moduels/@wya/sass/lib/mixins/index.scss"; // 仅rollup可以
+
+@import "./bem.scss";

@@ -1,11 +1,13 @@
 import SectionTitle from './section-title';
 import Footer from './footer';
 import Table from './table';
+import Gallery from './gallery';
 
 export {
 	SectionTitle,
 	Footer,
-	Table
+	Table,
+	Gallery
 };
 
 export default {

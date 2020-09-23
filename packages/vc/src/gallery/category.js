@@ -1,5 +1,5 @@
 import Modal from '@wya/vc/lib/modal';
-import { Editor } from './popup/editor';
+import { Editor } from './popup/editor.vue';
 
 export default {
 	methods: {

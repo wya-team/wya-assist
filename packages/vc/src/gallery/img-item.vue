@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@wya/sass/lib/mixins/index.scss";
+@import "../style/index.scss";
 
 $block: vca-gallery-img-item;
 

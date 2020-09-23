@@ -338,7 +338,7 @@ export const Gallery = new Portal(wrapperComponent, {
 </script>
 
 <style lang="scss">
-@import "~@wya/sass/lib/mixins/index.scss";
+@import "../style/index.scss";
 
 $block: vca-gallery;
 $c-border: #e8e8e8;
