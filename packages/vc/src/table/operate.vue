@@ -111,10 +111,10 @@ export default {
 	},
 	computed: {
 		message() {
-			return this.treeProps.message;
+			return this.dataSourceKey.message;
 		},
 		label() {
-			return this.treeProps.label;
+			return this.dataSourceKey.label;
 		}
 	},
 	methods: {
