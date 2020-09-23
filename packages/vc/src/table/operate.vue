@@ -2,20 +2,20 @@
 	<div class="vca-table-operate">
 		<div v-if="dataSource.length > 0" class="vca-table-operate__wrapper">
 			<vc-popconfirm
-				v-if="dataSource[0][message] || dataSource[0].title"
-				:title="dataSource[0][message] || dataSource[0].title"
+				v-if="dataSource[0][message]"
+				:title="dataSource[0][message]"
 				@ok="handleOk(dataSource[0])"
 				@cancel="handleCancel(dataSource[0])"
 			>
 				<span class="vca-table-operate__text">
-					{{ dataSource[0][name] }}
+					{{ dataSource[0][label] }}
 				</span>
 			</vc-popconfirm>
 			<span
 				v-else
 				class="vca-table-operate__text"
 				@click="handleOk(dataSource[0])"
-				v-text="dataSource[0][name]"
+				v-text="dataSource[0][label]"
 			/>
 			<vc-divider
 				v-if="dataSource.length > 1"
@@ -23,20 +23,20 @@
 			/>
 			<template v-if="dataSource.length === 2">
 				<vc-popconfirm
-					v-if="dataSource[1][message] || dataSource[1].title"
-					:title="dataSource[1][message] || dataSource[1].title"
+					v-if="dataSource[1][message]"
+					:title="dataSource[1][message]"
 					@ok="handleOk(dataSource[1])"
 					@cancel="handleCancel(dataSource[1])"
 				>
 					<span class="vca-table-operate__text">
-						{{ dataSource[1][name] }}
+						{{ dataSource[1][label] }}
 					</span>
 				</vc-popconfirm>
 				<span
 					v-else
 					class="vca-table-operate__text is-inline"
 					@click="handleOk(dataSource[1])"
-					v-text="dataSource[1][name]"
+					v-text="dataSource[1][label]"
 				/>
 			</template>
 			<vc-dropdown
@@ -55,25 +55,24 @@
 				<vc-dropdown-menu slot="list">
 					<template v-for="(item, i) of dataSource.slice(1)">
 						<vc-popconfirm
-							v-if="item[message] || item.title"
+							v-if="item[message]"
 							:key="i"
 							:portal="false"
-							:title="item[message] || item.title"
+							:title="item[message]"
 							tag="li" 
 							class="vc-dropdown-item"
 							placement="right"
 							@ok="handleOk(dataSource[1])"
 							@cancel="handleCancel(dataSource[1])"
 						>
-							<span>{{ item[name] }}</span>
+							<span>{{ item[label] }}</span>
 						</vc-popconfirm>
 						<vc-dropdown-item
 							v-else
 							:key="i"
-							:name="item[name]"
 							align="left"
 							@click="handleOk(item)"
-							v-text="item[name]"
+							v-text="item[label]"
 						/>
 					</template>
 				</vc-dropdown-menu>
@@ -104,28 +103,29 @@ export default {
 			default: () => {
 				return {
 					message: 'message',
-					name: 'name'
+					label: 'label',
+					children: 'children'
 				};
 			}
 		},
 	},
 	computed: {
 		message() {
-			return this.dataSourceKey.message;
+			return this.treeProps.message;
 		},
-		name() {
-			return this.dataSourceKey.name;
+		label() {
+			return this.treeProps.label;
 		}
 	},
 	methods: {
 		handleOk(item) {
-			const { name } = this;
-			this.$emit('click', item[name], item);
-			this.$emit('ok', item[name], item);
+			const { label } = this;
+			this.$emit('click', item[label], item);
+			this.$emit('ok', item[label], item);
 		},
 		handleCancel(item) {
-			const { name } = this;
-			this.$emit('cancel', item[name], item);
+			const { label } = this;
+			this.$emit('cancel', item[label], item);
 		}
 	},
 };

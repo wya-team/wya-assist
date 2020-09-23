@@ -38,17 +38,17 @@ export default {
 			dataSource1: [
 				{
 					message: '带提示',
-					name: '按钮1 - 带提示'
+					label: '按钮1 - 带提示'
 				},
 				{
-					name: '按钮2'
+					label: '按钮2'
 				},
 				{
 					message: '带提示',
-					name: '按钮3 - 带提示'
+					label: '按钮3 - 带提示'
 				},
 				{
-					name: '按钮4'
+					label: '按钮4'
 				}
 
 			] 
@@ -61,8 +61,8 @@ export default {
 		handleCancel() {
 			Message.info('cancel');
 		},
-		handleClick(name, item) {
-			Message.info(name);
+		handleClick(label, item) {
+			Message.info(label);
 		}	
 	}
 };
