@@ -52,30 +52,32 @@
 						style="margin-bottom: 2px; transform: scale(0.8)" 
 					/>
 				</div>
-				<vc-dropdown-menu slot="list">
-					<template v-for="(item, i) of dataSource.slice(1)">
-						<vc-popconfirm
-							v-if="item[message]"
-							:key="i"
-							:portal="false"
-							:title="item[message]"
-							tag="li" 
-							class="vc-dropdown-item"
-							placement="right"
-							@ok="handleOk(dataSource[1])"
-							@cancel="handleCancel(dataSource[1])"
-						>
-							<span>{{ item[label] }}</span>
-						</vc-popconfirm>
-						<vc-dropdown-item
-							v-else
-							:key="i"
-							align="left"
-							@click="handleOk(item)"
-							v-text="item[label]"
-						/>
-					</template>
-				</vc-dropdown-menu>
+				<template #list>
+					<vc-dropdown-menu>
+						<template v-for="(item, i) of dataSource.slice(1)">
+							<vc-popconfirm
+								v-if="item[message]"
+								:key="i"
+								:portal="false"
+								:title="item[message]"
+								tag="li" 
+								class="vc-dropdown-item"
+								placement="right"
+								@ok="handleOk(item)"
+								@cancel="handleCancel(item)"
+							>
+								<span>{{ item[label] }}</span>
+							</vc-popconfirm>
+							<vc-dropdown-item
+								v-else
+								:key="i"
+								align="left"
+								@click="handleOk(item)"
+								v-text="item[label]"
+							/>
+						</template>
+					</vc-dropdown-menu>
+				</template>
 			</vc-dropdown>
 		</div>
 	</div>
