@@ -80,6 +80,34 @@ const builds = {
 			external,
 		}
 	},
+	vm: {
+		script: 'babel packages/vm/src --out-dir packages/vm/dist --copy-files --ignore **.test.js,**.md,examples/**',
+		rollup: {
+			entry: 'packages/vm/src/index.js',
+			dest: 'packages/vm/dist/assist-vm.min.js',
+			format: 'cjs',
+			globals: {
+				vue: 'Vue'
+			},
+			plugins: [
+				vue({
+					css: true, // css in js
+					style: {
+						postcssPlugins: BASIC_POSTCSS_PLUGIN
+					}
+				}),
+				// 使用postcss
+				postcss({
+					plugins: [
+						...BASIC_POSTCSS_PLUGIN,
+						cssnano() // 压缩，不能用于vue, 上面要求是async plugin
+					],
+					extensions: ['.css', '.scss'],
+				})
+			],
+			external,
+		}
+	},
 	wx: {
 		script: 'babel packages/wx/src --out-dir packages/wx/dist --copy-files --ignore **.test.js,**.md,examples/**',
 		rollup: {
