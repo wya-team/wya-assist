@@ -1,3 +1,3 @@
 export * from './basic';
-export Editor from './editor';
-export Viewer from './viewer';
+export { default as Editor } from './editor';
+export { default as Viewer } from './viewer';
