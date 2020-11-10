@@ -1,8 +1,8 @@
 <template>
-	<div class="vm-basic-q-imgs-select-viewer" :style="layoutStyle.wrapper">
+	<vm-viewer-layout class="vm-basic-q-imgs-select-viewer">
 		<components 
 			:is="`vc-${multiple ? 'checkbox' : 'radio'}-group`" 
-			:style="[layoutStyle.content, { display: 'block' }]"
+			:style="[{ display: 'block' }]"
 			:value="multiple ? answer : answer[0]"
 		>
 			<vm-viewer-question 
@@ -46,7 +46,7 @@
 				</template>
 			</vm-viewer-question>
 		</components>
-	</div>
+	</vm-viewer-layout>
 </template>
 
 <script>
@@ -58,13 +58,14 @@ import Question from '../../viewers/question';
 export default {
 	name: 'vm-q-imgs-select-viewer',
 	components: {
+		'vm-viewer-layout': Viewer.Layout,
 		'vm-viewer-question': Question,
 		'vc-radio-group': Radio.Group,
 		'vc-checkbox-group': Checkbox.Group,
 		'vc-radio': Radio,
 		'vc-checkbox': Checkbox,
 	},
-	mixins: Viewer.mixins(['layout-style', 'q-index']),
+	mixins: Viewer.mixins(['q-index']),
 	props: {
 		id: String,
 		

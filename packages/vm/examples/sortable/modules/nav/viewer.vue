@@ -1,20 +1,18 @@
 <template>
-	<div class="vm-basic-nav-viewer" :style="layoutStyle.wrapper">
-		<div :style="layoutStyle.content">
-			<div class="vm-basic-nav-viewer__main">
-				<div v-if="icon && icon[0]">
-					<img :src="icon[0]">
-					<!-- <div v-else class="vm-basic-nav-viewer__placeholder" /> -->
-				</div>
-				<div class="vm-basic-nav-viewer__text">
-					<p>
-						{{ title }}
-					</p>
-					<span v-if="subhead">{{ subhead }}</span>
-				</div>
+	<vm-viewer-layout class="vm-basic-nav-viewer">
+		<div class="vm-basic-nav-viewer__main">
+			<div v-if="icon && icon[0]">
+				<img :src="icon[0]">
+				<!-- <div v-else class="vm-basic-nav-viewer__placeholder" /> -->
+			</div>
+			<div class="vm-basic-nav-viewer__text">
+				<p>
+					{{ title }}
+				</p>
+				<span v-if="subhead">{{ subhead }}</span>
 			</div>
 		</div>
-	</div>
+	</vm-viewer-layout>
 </template>
 
 <script>
@@ -22,7 +20,9 @@ import { Viewer } from '../../../../src/index';
 
 export default {
 	name: 'vm-nav-viewer',
-	mixins: Viewer.mixins(['layout-style']),
+	components: {
+		'vm-viewer-layout': Viewer.Layout
+	},
 	props: {
 		id: String,
 		title: String,

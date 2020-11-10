@@ -1,6 +1,6 @@
 <template>
-	<div style="padding-top: 20px">
-		<div style="position: absolute; top: 5px;">
+	<div class="vm-hack-entry">
+		<div style="padding: 10px">
 			<vc-button @click="theme = theme === 'dark' ? 'light' : 'dark'">
 				主题: {{ theme }}
 			</vc-button>
@@ -24,6 +24,7 @@
 			v-model="list"
 			:frame-w="375"
 			:frame-h="606"
+			:editor-w="400"
 			:show-assist="false"
 			:width="style.width"
 			:height="style.height"

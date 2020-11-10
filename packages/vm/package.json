@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/runtime": "^7.10.2",
     "@wya/utils": "^1.6.1",
-    "@wya/vc": "^2.0.0-alpha.85",
+    "@wya/vc": "^2.0.0-alpha.94",
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-istanbul": "^6.0.0",

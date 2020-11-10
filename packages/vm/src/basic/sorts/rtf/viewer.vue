@@ -1,8 +1,5 @@
 <template>
-	<vm-viewer-layout 
-		class="vm-rtf-viewer" 
-		v-bind="layoutStyle"
-	>
+	<vm-viewer-layout class="vm-rtf-viewer">
 		<vcm-editor-view
 			v-if="content"
 			:content="content"
@@ -28,7 +25,6 @@ export default {
 		"vcm-editor-view": Editor.View,
 		"vm-viewer-layout": Viewer.Layout
 	},
-	mixins: Viewer.mixins(['layout-style']),
 	props: {
 		id: String,
 		content: String,

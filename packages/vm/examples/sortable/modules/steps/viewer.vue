@@ -1,21 +1,19 @@
 <template>
-	<div v-if="vm.type === 'frame'" class="vm-basic-steps-viewer" :style="layoutStyle.wrapper">
-		<div :style="layoutStyle.content">
-			<div class="vm-basic-steps-viewer__main">
-				<template v-if="!isLast">
-					<div :style="btnStyle">
-						上一页
-					</div>
-					<div :style="btnStyle">
-						下一页
-					</div>
-				</template>
-				<div v-else :style="btnStyle">
-					提交
+	<vm-viewer-layout v-if="vm.type === 'frame'" class="vm-basic-steps-viewer">
+		<div class="vm-basic-steps-viewer__main">
+			<template v-if="!isLast">
+				<div :style="btnStyle">
+					上一页
 				</div>
+				<div :style="btnStyle">
+					下一页
+				</div>
+			</template>
+			<div v-else :style="btnStyle">
+				提交
 			</div>
 		</div>
-	</div>
+	</vm-viewer-layout>
 </template>
 
 <script>
@@ -24,7 +22,9 @@ import { Viewer } from '../../../../src/index';
 export default {
 	name: 'vm-steps-viewer',  // eslint-disable-line
 	inject: ['getVM', 'getData'],
-	mixins: Viewer.mixins(['layout-style']),
+	components: {
+		'vm-viewer-layout': Viewer.Layout,
+	},
 	props: {
 		id: String,
 		buttonBackgroundColor: {

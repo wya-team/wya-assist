@@ -1,7 +1,6 @@
 <template>
-	<div class="vm-basic-q-text-input-viewer" :style="layoutStyle.wrapper">
+	<vm-viewer-layout class="vm-basic-q-text-input-viewer">
 		<vm-viewer-question 
-			:style="layoutStyle.content"
 			:title="title"
 			:title-prefix="qIndex"
 			:subhead="subhead"
@@ -18,7 +17,7 @@
 				</div>
 			</template>
 		</vm-viewer-question>
-	</div>
+	</vm-viewer-layout>
 </template>
 
 <script>
@@ -28,9 +27,10 @@ import Question from '../../viewers/question';
 export default {
 	name: 'vm-q-text-input-viewer',
 	components: {
+		'vm-viewer-layout': Viewer.Layout,
 		'vm-viewer-question': Question,
 	},
-	mixins: Viewer.mixins(['layout-style', 'q-index']),
+	mixins: Viewer.mixins(['q-index']),
 	props: {
 		id: String,
 		
