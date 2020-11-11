@@ -1,5 +1,9 @@
 export default {
 	props: {
+		reverse: {
+			type: Boolean,
+			default: false
+		},
 		paddingVertical: Number,
 		paddingHorizontal: Number,
 		borderRadius: Number,
@@ -16,6 +20,7 @@ export default {
 			return {
 				wrapper: {
 					padding: `${this.paddingVertical}px ${this.paddingHorizontal}px`,
+					background: this.reverse ? `${this.backgroundColor}` : 'transparent',
 				},
 				content: {
 					background: `${this.backgroundColor}`,

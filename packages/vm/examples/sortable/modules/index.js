@@ -18,7 +18,9 @@ import { tpl } from './tpl/root';
 
 export const defaultModules = {
 	...basicSorts.getModules([
-		'page', 
+		'page',
+		'space', 
+		'cutoff',
 		{ 
 			name: 'rtf',
 			// 初始化data中的值

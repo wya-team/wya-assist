@@ -2,10 +2,14 @@ import { generatePicker } from '../../utils';
 
 import { rtf } from './rtf/root';
 import { page } from './page/root';
+import { space } from './space/root';
+import { cutoff } from './cutoff/root';
 
 const originModules = {
 	page,
 	rtf,
+	space,
+	cutoff
 };
 
 export default {

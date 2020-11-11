@@ -11,6 +11,10 @@
 export default {
 	name: "vm-viewer-layout",
 	props: {
+		reverse: {
+			type: Boolean,
+			default: false
+		},
 		wrapper: {
 			type: [String, Array, Object],
 			default: ''
@@ -23,17 +27,20 @@ export default {
 	computed: {
 		wrapperStyle() {
 			if (this.wrapper) return this.wrapper;
-			let { paddingVertical, paddingHorizontal } = this.$parent;
+			let { backgroundColor, paddingVertical, paddingHorizontal } = this.$parent;
 			let { 
+				backgroundColor: $backgroundColor, 
 				paddingVertical: $paddingVertical, 
 				paddingHorizontal: $paddingHorizontal, 
 			} = this.$parent.$attrs || {};
 			
+			backgroundColor = backgroundColor || $backgroundColor || 'transparent';
 			paddingVertical = paddingVertical || $paddingVertical || 0;
 			paddingHorizontal = paddingHorizontal || $paddingHorizontal || 0;
 			
 			return {
 				padding: `${paddingVertical}px ${paddingHorizontal}px`,
+				background: this.reverse ? `${backgroundColor}` : 'transparent',
 			};
 		},
 		contentStyle() {
