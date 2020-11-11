@@ -1,9 +1,8 @@
 <template>
-	<div
+	<vm-editor-layout
+		title="阶段导航"
 		class="vm-basic-nav-editor"
-		style="display: flex; flex-direction: column;"
 	>
-		<vm-editor-header title="阶段导航" />
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -74,7 +73,7 @@
 				@input="handleChange(arguments[0], 'subhead')"
 			/>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -85,7 +84,7 @@ export default {
 	components: {
 		'vm-editor-cell': Editor.Cell,
 		'vm-editor-radio': Editor.Radio,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-imgs-picker': Editor.ImgsPicker,
 		'vm-editor-color': Editor.Color,
 		'vm-editor-slider': Editor.Slider,

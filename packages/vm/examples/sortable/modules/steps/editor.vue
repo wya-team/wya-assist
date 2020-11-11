@@ -1,9 +1,5 @@
 <template>
-	<div
-		class="vm-basic-steps-editor"
-		style="display: flex; flex-direction: column;"
-	>
-		<vm-editor-header title="分页" />
+	<vm-editor-layout title="分页" class="vm-basic-steps-editor">
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -31,7 +27,7 @@
 			/>
 		</vm-editor-cell>
 		<vm-editor-tip content="提示：问卷可使用此分页控件，切勿添加多个『连续』的分页控件，用户将会看到空白的表单; 默认最后一项为『提交』" />
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -41,7 +37,7 @@ export default {
 	name: 'vm-basic-steps-editor', // eslint-disable-line
 	components: {
 		'vm-editor-cell': Editor.Cell,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-slider': Editor.Slider,
 		'vm-editor-color': Editor.Color,
 		'vm-editor-tip': Editor.Tip,

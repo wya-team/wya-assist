@@ -1,11 +1,8 @@
 <template>
-	<div
+	<vm-editor-layout
+		title="辅助空白"
 		class="vm-basic-space-editor"
-		style="display: flex; flex-direction: column;"
 	>
-		<vm-editor-header
-			title="辅助空白"
-		/>
 		<vm-editor-cell label="空白高度：" style="margin-top: 36px;">
 			<vm-editor-slider
 				v-model="$attrs.height"
@@ -21,7 +18,7 @@
 				@change="handleChange(arguments[0], 'backgroundColor')"
 			/>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -31,7 +28,7 @@ export default {
 	name: 'vm-basic-space-editor',
 	components: {
 		'vm-editor-cell': VMEditor.Cell,
-		'vm-editor-header': VMEditor.Header,
+		'vm-editor-layout': VMEditor.Layout,
 		'vm-editor-color': VMEditor.Color,
 		'vm-editor-slider': VMEditor.Slider,
 	},

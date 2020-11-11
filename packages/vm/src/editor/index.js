@@ -14,8 +14,10 @@ import ImgsPicker from './imgs-picker';
 import InputNumber from './input-number';
 import Tip from './tip';
 import Add from './add';
+import Layout from './layout';
 
 export default {
+	Layout,
 	Radio,
 	Checkbox,
 	Cell,

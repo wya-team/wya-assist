@@ -1,9 +1,5 @@
 <template>
-	<div
-		class="vm-basic-tpl-editor"
-		style="display: flex; flex-direction: column;"
-	>
-		<vm-editor-header title="模版名称" />
+	<vm-editor-layout title="模版名称" class="vm-basic-tpl-editor">
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -55,7 +51,7 @@
 				@input="handleChange(arguments[0], 'name')"
 			/>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -65,7 +61,7 @@ export default {
 	name: 'vm-basic-tpl-editor', // eslint-disable-line
 	components: {
 		'vm-editor-cell': Editor.Cell,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-slider': Editor.Slider,
 		'vm-editor-radio': Editor.Radio,
 		'vm-editor-color': Editor.Color,

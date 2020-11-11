@@ -1,10 +1,6 @@
 
 <template>
-	<div
-		class="vm-basic-TPL-editor"
-		style="display: flex; flex-direction: column;"
-	>
-		<vm-editor-header title="TPL" />
+	<vm-editor-layout title="TPL" class="vm-basic-TPL-editor">
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -23,7 +19,7 @@
 				@change="handleChange(arguments[0], 'borderRadius')"
 			/>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -33,7 +29,7 @@ export default {
 	name: 'vm-basic-TPL-editor', // eslint-disable-line
 	components: {
 		'vm-editor-cell': Editor.Cell,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-slider': Editor.Slider,
 	},
 	inheritAttrs: false,

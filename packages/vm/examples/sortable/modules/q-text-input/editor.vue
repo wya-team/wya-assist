@@ -1,9 +1,5 @@
 <template>
-	<div
-		class="vm-basic-q-text-input-editor"
-		style="display: flex; flex-direction: column;"
-	>
-		<vm-editor-header title="文本题" />
+	<vm-editor-layout title="文本题" class="vm-basic-q-text-input-editor">
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -54,7 +50,7 @@
 			/>
 			<span>必填</span>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -64,7 +60,7 @@ export default {
 	name: 'vm-basic-q-text-input-editor',
 	components: {
 		'vm-editor-cell': Editor.Cell,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-slider': Editor.Slider
 	},
 	inheritAttrs: false,

@@ -1,11 +1,8 @@
 <template>
-	<div
+	<vm-editor-layout
+		title="页面设置"
 		class="vm-basic-page-editor"
-		style="display: flex; flex-direction: column;"
 	>
-		<vm-editor-header
-			title="页面设置"
-		/>
 		<vm-editor-cell label="页面背景：" style="margin-top: 20px;" multiple>
 			<vm-editor-radio
 				v-model="$attrs.backgroundType"
@@ -28,7 +25,7 @@
 				/>
 			</div>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -39,7 +36,7 @@ export default {
 	components: {
 		'vm-editor-cell': Editor.Cell,
 		'vm-editor-radio': Editor.Radio,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-color': Editor.Color,
 		'vm-editor-imgs-picker': Editor.ImgsPicker,
 	},

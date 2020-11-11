@@ -1,9 +1,5 @@
 <template>
-	<div
-		class="vm-basic-q-text-select-editor"
-		style="display: flex; flex-direction: column;"
-	>
-		<vm-editor-header title="文本选择题" />
+	<vm-editor-layout title="文本选择题" class="vm-basic-q-text-select-editor">
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -81,7 +77,7 @@
 				</vm-editor-cell>
 			</template>
 		</vm-editor-add>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -92,7 +88,7 @@ export default {
 	name: 'vm-basic-q-text-select-editor', // eslint-disable-line
 	components: {
 		'vm-editor-cell': Editor.Cell,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-slider': Editor.Slider,
 		'vm-editor-radio': Editor.Radio,
 		'vm-editor-add': Editor.Add,

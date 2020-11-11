@@ -1,9 +1,8 @@
 <template>
-	<div
+	<vm-editor-layout
+		title="图片题"
 		class="vm-basic-q-imgs-picker-editor"
-		style="display: flex; flex-direction: column;"
 	>
-		<vm-editor-header title="图片题" />
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -44,7 +43,7 @@
 				@input="handleChange(arguments[0], 'subhead')"
 			/>
 		</vm-editor-cell>
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -54,7 +53,7 @@ export default {
 	name: 'vm-basic-q-imgs-picker-editor', // eslint-disable-line
 	components: {
 		'vm-editor-cell': Editor.Cell,
-		'vm-editor-header': Editor.Header,
+		'vm-editor-layout': Editor.Layout,
 		'vm-editor-slider': Editor.Slider,
 	},
 	inheritAttrs: false,

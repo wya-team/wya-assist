@@ -1,11 +1,5 @@
 <template>
-	<div
-		class="vm-rtf-editor"
-		style="display: flex; flex-direction: column;"
-	>
-		<vm-editor-header
-			title="富文本"
-		/>
+	<vm-editor-layout title="富文本" class="vm-rtf-editor">
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -41,7 +35,7 @@
 			/>
 		</div>
 		<vm-editor-tip content="平铺展示，文本长的情况下可以分行展示" />
-	</div>
+	</vm-editor-layout>
 </template>
 
 <script>
@@ -51,7 +45,7 @@ export default {
 	name: 'vm-rtf-editor',
 	components: {
 		'vm-editor-cell': VMEditor.Cell,
-		'vm-editor-header': VMEditor.Header,
+		'vm-editor-layout': VMEditor.Layout,
 		'vm-editor-color': VMEditor.Color,
 		'vm-editor-slider': VMEditor.Slider,
 		'vm-editor-tip': VMEditor.Tip,
