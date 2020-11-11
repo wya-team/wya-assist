@@ -29,8 +29,15 @@
 	</div>
 </template>
 <script>
+import Checkbox from '@wya/vc/lib/checkbox';
+import Input from '@wya/vc/lib/input';
+
 export default {
 	name: 'vm-editor-title',
+	components: {
+		'vc-checkbox': Checkbox,
+		'vc-input': Input,
+	},
 	props: {
 		mode: {
 			type: String,

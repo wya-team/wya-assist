@@ -11,8 +11,13 @@
 	</div>
 </template>
 <script>
+import Input from '@wya/vc/lib/input/index.m';
+
 export default {
 	name: 'vm-editor-input-number',
+	components: {
+		"vcm-input-number": Input.Number,
+	},
 	props: {
 		value: [String, Number],
 		min: {

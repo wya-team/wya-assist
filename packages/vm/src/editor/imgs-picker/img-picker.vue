@@ -14,8 +14,13 @@
 	</div>
 </template>
 <script>
+import UploadPicker from '@wya/vc/lib/upload-picker';
+
 export default {
 	name: 'vm-editor-imgs-picker',
+	components: {
+		'vc-upload-picker': UploadPicker,
+	},
 	props: {
 		value: {
 			type: Array,

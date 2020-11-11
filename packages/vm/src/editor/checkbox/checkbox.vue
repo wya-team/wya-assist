@@ -19,8 +19,15 @@
 	</div>
 </template>
 <script>
+import Checkbox from '@wya/vc/lib/checkbox';
+
+
 export default {
 	name: 'vm-editor-checkboxes',
+	components: {
+		'vc-checkbox-group': Checkbox.Group,
+		'vc-checkbox': Checkbox,
+	},
 	props: {
 		dataSource: {
 			type: Array,

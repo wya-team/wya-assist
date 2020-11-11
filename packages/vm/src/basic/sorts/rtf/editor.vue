@@ -39,11 +39,15 @@
 </template>
 
 <script>
+import Editor from '@wya/vc/lib/editor';
+
 import VMEditor from "../../../editor";
+
 
 export default {
 	name: 'vm-rtf-editor',
 	components: {
+		'vc-editor': Editor,
 		'vm-editor-cell': VMEditor.Cell,
 		'vm-editor-layout': VMEditor.Layout,
 		'vm-editor-color': VMEditor.Color,

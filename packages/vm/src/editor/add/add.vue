@@ -36,8 +36,15 @@
 	</div>
 </template>
 <script>
+import Icon from '@wya/vc/lib/icon';
+import SortList from '@wya/vc/lib/sort-list';
+
 export default {
 	name: 'vm-editor-add',
+	components: {
+		'vc-sort-list': SortList,
+		'vc-icon': Icon,
+	},
 	inheritAttrs: false,
 	model: {
 		prop: 'dataSource',

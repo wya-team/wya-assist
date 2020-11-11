@@ -7,8 +7,13 @@
 	</div>
 </template>
 <script>
+import ColorPicker from '@wya/vc/lib/color-picker';
+
 export default {
 	name: 'vm-editor-color',
+	components: {
+		'vc-color-picker': ColorPicker
+	},
 	props: {
 		color: String,
 		alpha: {

@@ -1,7 +1,7 @@
 <template>
 	<div class="vm-editor-slider">
 		<div class="vm-editor-slider__wrapper">
-			<vcm-slider
+			<vc-slider
 				:value="+num"
 				:step="step"
 				:min="min"
@@ -20,8 +20,15 @@
 	</div>
 </template>
 <script>
+import Input from '@wya/vc/lib/input/index.m';
+import Slider from '@wya/vc/lib/slider';
+
 export default {
 	name: 'vm-editor-slider',
+	components: {
+		"vcm-input-number": Input.Number,
+		"vc-slider": Slider,
+	},
 	props: {
 		value: {
 			type: [Number, String],

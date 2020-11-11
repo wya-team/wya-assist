@@ -38,11 +38,16 @@
 	</div>
 </template>
 <script>
+import Input from '@wya/vc/lib/input/index.m';
+import Icon from '@wya/vc/lib/icon';
+
 import Radio from '../radio';
 
 export default {
 	name: 'vm-editor-sort-list',
 	components: {
+		'vc-input': Input,
+		'vcm-icon': Icon,
 		'vm-editor-radio': Radio
 	},
 	props: {

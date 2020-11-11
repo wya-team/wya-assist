@@ -15,8 +15,14 @@
 	</div>
 </template>
 <script>
+import Radio from '@wya/vc/lib/radio';
+
 export default {
 	name: 'vm-editor-radio',
+	components: {
+		'vc-radio-group': Radio.Group,
+		'vc-radio': Radio,
+	},
 	model: {
 		prop: 'value',
 		event: 'change',
