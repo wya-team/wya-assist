@@ -12,7 +12,18 @@ import { QTextInput } from './q-text-input/root';
 import { QTextSelect } from './q-text-select/root';
 
 export const defaultModules = {
-	...basicSorts.getComponents(),
+	...basicSorts.getModules([
+		'page', 
+		{ 
+			name: 'rtf',
+			// 初始化data中的值
+			defaultData: {
+				paddingVertical: 6,
+				paddingHorizontal: 12,
+				borderRadius: 8,
+			},
+		}
+	]),
 	steps,
 	nav,
 	[QTextSelect.module]: QTextSelect,

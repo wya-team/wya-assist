@@ -7,7 +7,7 @@
 		<div class="vm-viewer-question__content">
 			<div class="vm-viewer-question__text">
 				<p>
-					{{ titlePrefix }}{{ title }}
+					{{ titlePrefix }}. {{ title }}
 					<span v-if="required" style="color: red">*</span>
 				</p>
 				<span>{{ subhead }}</span>
@@ -46,7 +46,7 @@ export default {
 			default: () => (index) => `${String.fromCharCode('A'.charCodeAt(0) + index)}.`
 		},
 		titlePrefix: {
-			type: String,
+			type: [String, Number],
 			default: ''
 		},
 		optionsClassName: {

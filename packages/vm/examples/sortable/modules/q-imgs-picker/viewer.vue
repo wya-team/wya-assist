@@ -2,7 +2,7 @@
 	<vm-viewer-layout class="vm-basic-q-imgs-picker-viewer">
 		<vm-viewer-question 
 			:title="title"
-			:title-prefix="qIndex"
+			:title-prefix="rebuildIndex"
 			:subhead="subhead"
 			:required="required"
 			tag="图片"
@@ -30,7 +30,7 @@ export default {
 		'vm-viewer-layout': Viewer.Layout,
 		'vm-viewer-question': Question,
 	},
-	mixins: Viewer.mixins(['q-index']),
+	mixins: Viewer.mixins(['rebuild-index']),
 	props: {
 		id: String,
 		

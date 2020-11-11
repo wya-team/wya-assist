@@ -1,10 +1,11 @@
-import { pick, values } from 'lodash';
-import layoutStyle from './layout-style';
-import qIndex from './q-index';
+import { generatePicker } from '../../utils';
 
-let mixins = {
+import layoutStyle from './layout-style';
+import rebuildIndex from './rebuild-index';
+
+const mixins = {
 	'layout-style': layoutStyle,
-	'q-index': qIndex
+	'rebuild-index': rebuildIndex
 };
 
-export default (needs) => values(pick(mixins, needs || Object.keys(mixins)));
+export default generatePicker(mixins);

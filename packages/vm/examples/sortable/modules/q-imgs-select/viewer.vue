@@ -7,7 +7,7 @@
 		>
 			<vm-viewer-question 
 				:title="title"
-				:title-prefix="qIndex"
+				:title-prefix="rebuildIndex"
 				:subhead="subhead"
 				:tag="multiple ? '多选' : '单选'"
 				:required="required"
@@ -65,7 +65,7 @@ export default {
 		'vc-radio': Radio,
 		'vc-checkbox': Checkbox,
 	},
-	mixins: Viewer.mixins(['q-index']),
+	mixins: Viewer.mixins(['rebuild-index']),
 	props: {
 		id: String,
 		
