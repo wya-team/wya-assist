@@ -11,7 +11,7 @@
 export default {
 	name: "vm-viewer-layout",
 	props: {
-		reverse: {
+		inner: {
 			type: Boolean,
 			default: false
 		},
@@ -40,7 +40,7 @@ export default {
 			
 			return {
 				padding: `${paddingVertical}px ${paddingHorizontal}px`,
-				background: this.reverse ? `${backgroundColor}` : 'transparent',
+				background: this.inner ? `${backgroundColor}` : 'transparent',
 			};
 		},
 		contentStyle() {

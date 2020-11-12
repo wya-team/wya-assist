@@ -1,6 +1,6 @@
 export default {
 	props: {
-		reverse: {
+		inner: {
 			type: Boolean,
 			default: false
 		},
@@ -20,7 +20,7 @@ export default {
 			return {
 				wrapper: {
 					padding: `${this.paddingVertical}px ${this.paddingHorizontal}px`,
-					background: this.reverse ? `${this.backgroundColor}` : 'transparent',
+					background: this.inner ? `${this.backgroundColor}` : 'transparent',
 				},
 				content: {
 					background: `${this.backgroundColor}`,
