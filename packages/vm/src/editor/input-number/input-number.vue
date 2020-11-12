@@ -35,10 +35,6 @@ export default {
 		placeholder: {
 			type: String,
 			default: '请输入'
-		},
-		showLimit: {
-			type: Boolean,
-			default: true
 		}
 	},
 	data() {
@@ -82,7 +78,7 @@ $cb6: #b6b6b6;
 		font-size: 12px;
 		color: #333;
 	}
-	>span {
+	> span {
 		flex: 0 0 30px;
 		padding: 0 2px;
 		line-height: 24px;

@@ -10,7 +10,8 @@
 		/>
 		<span
 			:style="mode === 'normal'
-				? `width: ${titleWidth || 50}px; text-align: right;` : `width: ${titleWidth || 100}px; text-align: left;`"
+				? `width: ${titleWidth || 50}px; text-align: right;` 
+				: `width: ${titleWidth || 100}px; text-align: left;`"
 			style="display: inline-block;"
 		>
 			{{ label }}

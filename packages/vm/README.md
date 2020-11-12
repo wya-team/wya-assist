@@ -117,27 +117,41 @@ export default {
 };
 ```
 
-- Layout
+- [Layout][Editor.Layout]
 
 名称 | 说明 | 默认值 | 其他
 ---|---|---|---
 `title` | 标题 | '' | -
 
-- Add
-- Cell
-- Checkbox
-- Color
-- Header
-- ImgsPicker
-- InputNumber
-- LabelTitle
-- Radio
-- Slider
-- SortList
-- Tip
-- Title
+> 项目移植而来，可能有些不完善，及时PR
+
+- [Add][Editor.Add]
+- [Cell][Editor.Cell]
+- [Checkbox][Editor.Checkbox]
+- [Color][Editor.Color]
+- [Header][Editor.Header]
+- [ImgsPicker][Editor.ImgsPicker]
+- [InputNumber][Editor.InputNumber]
+- [LabelTitle][Editor.LabelTitle]
+- [Radio][Editor.Radio]
+- [Slider][Editor.Slider]
+- [SortList][Editor.SortList]
+- [Tip][Editor.Tip]
+- [Title][Editor.Title]
 
 
 
-
-
+[Editor.Layout]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/layout/layout.vue
+[Editor.Add]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/add/add.vue
+[Editor.Cell]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/cell/cell.vue
+[Editor.Checkbox]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/checkbox/checkbox.vue
+[Editor.Color]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/color/color.vue
+[Editor.Header]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/header/header.vue
+[Editor.ImgsPicker]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/imgs-picker/imgs-picker.vue
+[Editor.InputNumber]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/input-number/input-number.vue
+[Editor.LabelTitle]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/label-title/label-title.vue
+[Editor.Radio]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/radio/radio.vue
+[Editor.Slider]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/slider/slider.vue
+[Editor.SortList]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/sort-list/sort-list.vue
+[Editor.Tip]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/tip/tip.vue
+[Editor.Title]: https://github.com/wya-team/wya-assist/blob/master/packages/vm/src/editor/title/title.vue
