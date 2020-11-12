@@ -71,7 +71,7 @@ export default {
 
 名称 | 说明 | 默认值 | 其他
 ---|---|---|---
-`reverse` | 改变填充方式 | false | -
+`inner` | 是否为内填充方式 | false | -
 
 #### mixins
 
