@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@wya/sass/lib/mixins/bem.scss";
+@import "../../../style/index.scss";
 $block: vm-basic-notice-viewer;
 $red: #ff3c4a;
 

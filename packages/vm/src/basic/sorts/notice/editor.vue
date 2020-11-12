@@ -47,11 +47,13 @@
 </template>
 
 <script>
+import Textarea from '@wya/vc/lib/textarea';
 import Editor from "../../../editor";
 
 export default {
 	name: 'vm-basic-notice-editor',
 	components: {
+		'vc-textarea': Textarea,
 		'vm-editor-layout': Editor.Layout,
 		'vm-editor-cell': Editor.Cell,
 		'vm-editor-color': Editor.Color,
