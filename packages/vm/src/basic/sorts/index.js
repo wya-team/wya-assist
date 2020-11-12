@@ -4,12 +4,14 @@ import { rtf } from './rtf/root';
 import { page } from './page/root';
 import { space } from './space/root';
 import { cutoff } from './cutoff/root';
+import { notice } from './notice/root';
 
 const originModules = {
 	page,
 	rtf,
 	space,
-	cutoff
+	cutoff,
+	notice
 };
 
 export default {

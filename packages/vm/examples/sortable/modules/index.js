@@ -1,6 +1,6 @@
 import { pick } from 'lodash';
 
-import { basicSorts } from '../../../src/index';
+import { Sorts } from '../../../src/index';
 
 import { nav } from './nav/root';
 import { steps } from './steps/root';
@@ -17,10 +17,11 @@ import { array } from './array/root';
 import { tpl } from './tpl/root';
 
 export const defaultModules = {
-	...basicSorts.getModules([
+	...Sorts.getModules([
 		'page',
 		'space', 
 		'cutoff',
+		'notice',
 		{ 
 			name: 'rtf',
 			// 初始化data中的值
