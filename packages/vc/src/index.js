@@ -37,7 +37,7 @@ export default {
 			Table.Sorter,
 			Table.Operate
 		].forEach(comp => {
-			const { name } = comp;
+			const { name, aliasName } = comp;
 
 			if (
 				ignoreComponents.includes(name)
@@ -48,6 +48,7 @@ export default {
 			}
 
 			Vue.component(name, comp);
+			aliasName && Vue.component(aliasName, comp);
 		});
 	}
 };

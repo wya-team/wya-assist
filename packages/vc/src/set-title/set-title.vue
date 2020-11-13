@@ -10,6 +10,7 @@ import BreadCrumb from './bread-crumb.vue';
 
 export default {
 	name: "vca-set-title",
+	aliasName: 'set-title',
 	components: {
 		'vca-bread-crumb': BreadCrumb
 	},
