@@ -4,10 +4,14 @@ import Table from './table';
 import Gallery from './gallery';
 import Link from './link';
 import VcaInstance from './vca';
-import Service from './service';
+import Store from './store';
+import Extends from './extends';
 
 export {
-	Service,
+	Store,
+	Extends,
+
+	// 组件
 	SectionTitle,
 	Footer,
 	Table,
@@ -19,6 +23,7 @@ export default {
 	install(Vue, opts) {
 		Vue.prototype.$vca = VcaInstance.init(opts);
 
+		// - 全局components, mixins开发者自行注入
 		Vue.component(SectionTitle.name, SectionTitle);
 		Vue.component(Footer.name, Footer);
 		Vue.component(Link.name, Link);

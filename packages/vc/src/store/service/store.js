@@ -1,5 +1,6 @@
 import { isEqualWith, cloneDeep } from 'lodash';
 import { Storage } from '@wya/utils';
+import Base from './base';
 
 const resetStore = () => {
 	return cloneDeep({

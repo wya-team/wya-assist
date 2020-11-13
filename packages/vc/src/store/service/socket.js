@@ -12,9 +12,7 @@ class SocketService extends Base {
 		const {
 			key,
 			url,
-			bindUrl,
-			param = {},
-			getParam = (instance) => ({}),
+			onConnect,
 			getConnect = (v, instance) => v,
 			isNeedDestroy = true,
 			parser
@@ -49,23 +47,10 @@ class SocketService extends Base {
 									} 
 								}
 							);
-							// 链接成功后获取client_id
-							bindUrl && socket.on('connect', (res) => {
+							// 链接成功后回调，用于绑定信息
+							socket.on('connect', (res) => {
 								const { data = {} } = res.data || {};
-								this.$request({
-									url: bindUrl,
-									type: 'GET',
-									param: {
-										...data,
-										...param,
-										...getParam(this)
-									},
-								}).then((res) => { // eslint-disable-line
-									// todo
-								}).catch((error) => {
-									// Message.error(error.msg);
-								});
-								// 绑定id，后端要求
+								onConnect && onConnect(data, this);
 							});
 
 							// 存储
