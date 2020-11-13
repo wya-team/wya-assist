@@ -1,7 +1,7 @@
 <template>
 	<!-- 仅这个组件添加了外部className -->
 	<div class="g-reset"> 
-		<vca-bread-crumb :routes="routes" />
+		<vca-bread-crumb v-if="routes.length" :routes="routes" />
 		<slot />
 	</div>
 </template>
