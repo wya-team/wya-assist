@@ -4,8 +4,10 @@ import Table from './table';
 import Gallery from './gallery';
 import Link from './link';
 import VcaInstance from './vca';
+import Service from './service';
 
 export {
+	Service,
 	SectionTitle,
 	Footer,
 	Table,

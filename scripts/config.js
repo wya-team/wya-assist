@@ -23,6 +23,7 @@ const external = filename => {
 		'^@wya/ps$',
 		'^@wya/utils$',
 		'^@wya/http$',
+		'^@wya/socket$',
 		'^@wya/vc'
 	].join('|');
 
