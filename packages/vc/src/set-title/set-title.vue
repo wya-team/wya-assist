@@ -1,17 +1,35 @@
 <template>
 	<!-- 仅这个组件添加了外部className -->
 	<div class="g-reset"> 
+		<vca-bread-crumb :routes="routes" />
 		<slot />
 	</div>
 </template>
 <script>
+import BreadCrumb from './bread-crumb.vue';
+
 export default {
-	name: "set-title",
+	name: "vca-set-title",
+	components: {
+		'vca-bread-crumb': BreadCrumb
+	},
 	props: {
-		title: String
+		title: String,
+		routes: {
+			type: Array,
+			default: () => ([])
+		}
+	},
+	watch: {
+		title: 'resetTitle'
 	},
 	mounted() {
-		document.title = this.title || document.title;
+		this.resetTitle();
+	},
+	methods: {
+		resetTitle() {
+			document.title = this.title || document.title;
+		}
 	}
 };
 </script>

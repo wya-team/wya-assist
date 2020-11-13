@@ -39,9 +39,15 @@ export default {
 		].forEach(comp => {
 			const { name } = comp;
 
-			if (!ignoreComponents.includes(name)) {
-				Vue.component(name, comp);
+			if (
+				ignoreComponents.includes(name)
+				|| ignoreComponents.includes(name.replace(/^vca-/g, ''))
+				|| ignoreComponents.includes(comp)
+			) {
+				return;
 			}
+
+			Vue.component(name, comp);
 		});
 	}
 };
