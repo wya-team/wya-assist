@@ -1,5 +1,12 @@
 <template>
 	<vm-editor-layout title="富文本" class="vm-rtf-editor">
+		<vm-editor-cell label="填充方式：" multiple>
+			<vm-editor-radio
+				v-model="$attrs.inner"
+				:data-source="paddingRadios"
+				@change="handleChange(arguments[0], 'inner')"
+			/>
+		</vm-editor-cell>
 		<vm-editor-cell label="上下边距：">
 			<vm-editor-slider
 				v-model="$attrs.paddingVertical"
@@ -48,6 +55,7 @@ export default {
 	name: 'vm-rtf-editor',
 	components: {
 		'vc-editor': Editor,
+		'vm-editor-radio': VMEditor.Radio,
 		'vm-editor-cell': VMEditor.Cell,
 		'vm-editor-layout': VMEditor.Layout,
 		'vm-editor-color': VMEditor.Color,
@@ -72,6 +80,17 @@ export default {
 					value: 2,
 				}
 			],
+			paddingRadios: [
+				{
+					label: '外填充',
+					value: 0,
+
+				},
+				{
+					label: '内填充',
+					value: 1,
+				}
+			]
 		};
 	},
 	computed: {

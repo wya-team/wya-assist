@@ -15,6 +15,7 @@ export const rtf = (opts = {}) => {
 		data: {
 			closeable: true,
 
+			inner: 0,
 			backgroundColor: '#fff',
 			paddingVertical: 0,
 			paddingHorizontal: 0,

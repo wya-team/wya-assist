@@ -14,10 +14,14 @@ export const notice = (opts = {}) => {
 		// 初始数据 data 或者 data 都可以
 		data: {
 			closeable: true,
+
+			inner: 0,
 			color: '#333',
+			borderRadius: 0,
 			backgroundColor: '#fff',
 			paddingVertical: 0,
 			paddingHorizontal: 0,
+
 			content: '', // 公告内容
 			...defaultData
 		},

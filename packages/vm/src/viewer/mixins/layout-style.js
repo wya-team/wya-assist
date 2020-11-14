@@ -1,7 +1,7 @@
 export default {
 	props: {
 		inner: {
-			type: Boolean,
+			type: [Boolean, Number],
 			default: false
 		},
 		paddingVertical: Number,

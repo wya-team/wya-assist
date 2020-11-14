@@ -20,6 +20,7 @@ export const page = (opts = {}) => {
 			draggable: false,
 			parent: false,
 
+			inner: 0,
 			backgroundType: 1,
 			backgroundColor: '#F1F2F8',
 			backgroundImage: [],

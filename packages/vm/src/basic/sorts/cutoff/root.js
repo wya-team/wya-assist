@@ -26,11 +26,14 @@ export const cutoff = (opts = {}) => {
 			return {
 				closeable: true,
 				layout: index + 1,
+
+				inner: 1,
 				color: '#E8E8E8',
 				backgroundColor: '#fff',
 				paddingVertical: 0,
 				paddingHorizontal: 0,
 				borderRadius: 0,
+
 				...defaultData
 			};
 		},

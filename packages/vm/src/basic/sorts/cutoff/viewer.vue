@@ -2,7 +2,6 @@
 	<vm-viewer-layout
 		:class="`is-layout-${layout}`"
 		class="vm-basic-cut-off-viewer"
-		inner
 	>
 		<div
 			v-if="layout === 1"
