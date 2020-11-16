@@ -21,7 +21,7 @@
 				@change="handleChange(arguments[0], 'borderRadius')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="页面背景：" style="margin-top: 20px;" multiple>
+		<vm-editor-cell label="页面背景：" multiple>
 			<vm-editor-radio
 				v-model="$attrs.backgroundType"
 				:data-source="radios"

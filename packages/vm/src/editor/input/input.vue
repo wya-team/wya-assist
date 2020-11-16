@@ -123,6 +123,8 @@ $block: vm-editor-input;
 
 @include block($block) {
 	position: relative;
-	display: inline-block;
+	// display: inline-block;
+	display: flex;
+	align-items: center;
 }
 </style>

@@ -18,7 +18,7 @@
 				@change="handleChange(arguments[0], 'borderRadius')"
 			/>
 		</vm-editor-cell> -->
-		<vm-editor-cell label="按钮颜色：" style="margin-top: 20px;" multiple>
+		<vm-editor-cell label="按钮颜色：" multiple>
 			<vm-editor-color
 				:color="$attrs.buttonBackgroundColor"
 				default="#87A3F7"

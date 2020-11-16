@@ -25,7 +25,7 @@
 				@change="handleChange(arguments[0], 'borderRadius')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="背景颜色：" style="margin-top: 20px;">
+		<vm-editor-cell label="背景颜色：">
 			<vm-editor-color
 				:color="$attrs.backgroundColor"
 				default="#fff"

@@ -25,17 +25,15 @@
 				@change="handleChange(arguments[0], 'borderRadius')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="背景颜色：" style="margin-top: 20px;">
-			<div style="margin-top:20px;">
-				<vm-editor-color
-					:color="$attrs.backgroundColor"
-					default="#fff"
-					alpha
-					@change="handleChange(arguments[0], 'backgroundColor')" 
-				/>
-			</div>
+		<vm-editor-cell label="背景颜色：">
+			<vm-editor-color
+				:color="$attrs.backgroundColor"
+				default="#fff"
+				alpha
+				@change="handleChange(arguments[0], 'backgroundColor')" 
+			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="文本颜色：" style="margin-top: 20px;">
+		<vm-editor-cell label="文本颜色：">
 			<vm-editor-color
 				:color="$attrs.color"
 				default="#333"
@@ -43,7 +41,7 @@
 				@change="handleChange(arguments[0], 'color')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="公告内容：" style="margin-top: 20px;" multiple>
+		<vm-editor-cell label="公告内容：" multiple>
 			<div style="width: 300px; margin-bottom: 30px;">
 				<vc-textarea
 					v-model="$attrs.content"

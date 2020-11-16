@@ -3,14 +3,14 @@
 		title="辅助空白"
 		class="vm-basic-space-editor"
 	>
-		<vm-editor-cell label="空白高度：" style="margin-top: 36px;">
+		<vm-editor-cell label="空白高度：">
 			<vm-editor-slider
 				v-model="$attrs.height"
 				:max="100"
 				@change="handleChange(arguments[0], 'height')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="背景颜色：" style="margin-top: 22px;">
+		<vm-editor-cell label="背景颜色：">
 			<vm-editor-color 
 				:color="$attrs.backgroundColor" 
 				default="#fff" 

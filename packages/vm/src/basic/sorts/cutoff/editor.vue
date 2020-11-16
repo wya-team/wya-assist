@@ -12,7 +12,7 @@
 				@change="handleChange(arguments[0], 'paddingHorizontal')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="选择颜色：" style="margin-top: 20px;">
+		<vm-editor-cell label="选择颜色：">
 			<vm-editor-color
 				:color="$attrs.color"
 				default="#e8e8e8"
@@ -20,7 +20,7 @@
 				@change="handleChange(arguments[0], 'color')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="背景颜色：" style="margin-top: 20px;">
+		<vm-editor-cell label="背景颜色：">
 			<vm-editor-color
 				:color="$attrs.backgroundColor"
 				default="#fff"

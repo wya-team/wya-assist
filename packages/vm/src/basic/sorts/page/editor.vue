@@ -3,13 +3,13 @@
 		title="页面设置"
 		class="vm-basic-page-editor"
 	>
-		<vm-editor-cell label="页面背景：" style="margin-top: 20px;" multiple>
+		<vm-editor-cell label="页面背景：" multiple>
 			<vm-editor-radio
 				v-model="$attrs.backgroundType"
 				:data-source="radios"
 				@change="handleChange(arguments[0], 'backgroundType')"
 			/>
-			<div v-show="$attrs.backgroundType == 1" style="margin-top:20px;">
+			<div v-show="$attrs.backgroundType == 1">
 				<vm-editor-color
 					:color="$attrs.backgroundColor"
 					default="#f2f2f2"
@@ -17,7 +17,7 @@
 					@change="handleChange(arguments[0], 'backgroundColor')"
 				/>
 			</div>
-			<div v-show="$attrs.backgroundType == 2" style="margin-top:20px;">
+			<div v-show="$attrs.backgroundType == 2">
 				<vm-editor-imgs-picker
 					v-model="$attrs.backgroundImage"
 					tips="建议宽度750像素"
