@@ -4,7 +4,7 @@ class Base {
 		this.clear = this.clear.bind(this);
 	}
 
-	_add() {
+	_add(cb) {
 		this._cbs.push(cb);
 	}
 
