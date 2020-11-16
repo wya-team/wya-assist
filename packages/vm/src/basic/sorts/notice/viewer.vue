@@ -15,7 +15,8 @@
 			<vcm-icon
 				v-if="icon"
 				:type="icon"
-				class="vm-basic-notice-viewer__close"
+				style="{ color: iconColor }"
+				class="vm-basic-notice-viewer__icon"
 			/>
 		</div>
 	</vm-viewer-layout>
@@ -40,6 +41,10 @@ export default {
 		icon: {
 			type: String,
 			default: 'close'
+		},
+		iconColor: {
+			type: String,
+			default: '#ff3c4a'
 		}
 	},
 };
@@ -88,8 +93,7 @@ $red: #ff3c4a;
 			line-height: 23px;
 		}
 	}
-	@include element(close) {
-		color: $red;
+	@include element(icon) {
 		font-size: 11px;
 	}
 }

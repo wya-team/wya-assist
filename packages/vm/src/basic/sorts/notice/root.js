@@ -23,6 +23,7 @@ export const notice = (opts = {}) => {
 			paddingHorizontal: 0,
 
 			icon: 'close',
+			iconColor: '#ff3c4a',
 			content: '', // 公告内容
 			...defaultData
 		},
