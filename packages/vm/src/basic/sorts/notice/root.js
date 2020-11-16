@@ -22,6 +22,7 @@ export const notice = (opts = {}) => {
 			paddingVertical: 0,
 			paddingHorizontal: 0,
 
+			icon: 'close',
 			content: '', // 公告内容
 			...defaultData
 		},

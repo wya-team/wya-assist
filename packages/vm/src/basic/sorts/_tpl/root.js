@@ -13,8 +13,11 @@ export const TPL = {
 	data: {
 		closeable: true,
 
+		inner: 0,
 		backgroundColor: '#fff',
-		paddingVertical: 8,
+		paddingVertical: 0,
+		paddingHorizontal: 0,
+		borderRadius: 0,
 		content: ''
 	},
 	dataValidity: (res = {}) => {

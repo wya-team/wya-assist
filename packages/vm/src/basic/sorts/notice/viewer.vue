@@ -13,7 +13,8 @@
 				</div>
 			</div>
 			<vcm-icon
-				type="close"
+				v-if="icon"
+				:type="icon"
 				class="vm-basic-notice-viewer__close"
 			/>
 		</div>
@@ -35,7 +36,11 @@ export default {
 	props: {
 		id: String,
 		content: String,
-		color: String
+		color: String,
+		icon: {
+			type: String,
+			default: 'close'
+		}
 	},
 };
 </script>
