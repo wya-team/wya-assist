@@ -1,14 +1,14 @@
 <template>
-	<div class="vm-editor-imgs-picker">
+	<div class="vm-editor-upload-picker">
 		<vc-upload-picker
-			ref="imgs-picker"
-			v-model="imgs"
+			ref="upload-picker"
+			v-model="currentValue"
 			:max="max"
 			:upload-opts="uploadOpts"
 			@change="handleChange"
 			@error="handleError"
 		/>
-		<p class="vm-editor-imgs-picker__tips">
+		<p class="vm-editor-upload-picker__tips">
 			{{ tips }}
 		</p>
 	</div>
@@ -17,7 +17,7 @@
 import UploadPicker from '@wya/vc/lib/upload-picker';
 
 export default {
-	name: 'vm-editor-imgs-picker',
+	name: 'vm-editor-upload-picker',
 	components: {
 		'vc-upload-picker': UploadPicker,
 	},
@@ -45,16 +45,16 @@ export default {
 	},
 	data() {
 		return {
-			imgs: this.value
+			currentValue: this.value
 		};
 	},
 	watch: {
 		value(v, oldV) {
 			if (v !== oldV) {
-				this.imgs = v;
+				this.currentValue = v;
 				if (v.length && oldV.length) {
 					setTimeout(() => {
-						this.$refs['imgs-picker'].reset(this.imgs);
+						this.$refs['upload-picker'].reset(this.currentValue);
 					}, 0);
 				}
 			}
@@ -65,14 +65,14 @@ export default {
 			console.log(error);
 		},
 		handleChange() {
-			this.$emit('change', this.imgs);
+			this.$emit('change', this.currentValue);
 		}
 	}
 };
 </script>
 <style lang="scss">
 @import "../../style/index.scss";
-$block: vm-editor-imgs-picker;
+$block: vm-editor-upload-picker;
 $c51: #515151;
 @include block($block) {
 	@include element(tips){

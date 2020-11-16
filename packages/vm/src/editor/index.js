@@ -9,7 +9,7 @@ import Slider from './slider';
 import Header from './header';
 import Color from './color';
 import LabelTitle from './label-title';
-import ImgsPicker from './imgs-picker';
+import ImgsPicker from './upload-picker';
 import Input from './input';
 import InputNumber from './input-number';
 import Tip from './tip';
@@ -26,7 +26,8 @@ export default {
 	Header,
 	LabelTitle,
 	Color,
-	ImgsPicker,
+	ImgsPicker: UploadPicker, // 兼容老版本
+	UploadPicker,
 	Input,
 	InputNumber,
 	Tip,
