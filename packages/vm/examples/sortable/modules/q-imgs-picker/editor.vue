@@ -43,12 +43,6 @@
 				@input="handleChange(arguments[0], 'subhead')"
 			/>
 		</vm-editor-cell>
-		<vm-editor-cell label="页面背景：" multiple>
-			<vm-editor-input 
-				value="2222"
-				label="222:"
-			/>
-		</vm-editor-cell>
 	</vm-editor-layout>
 </template>
 

@@ -115,10 +115,10 @@ export default {
 			return this.checkbox || this.radio || false;
 		},
 		currentLabelStyle() {
-			const { isSelect, checkbox, labelWidth } = this;
+			const { isSelect, checkbox, radio, labelWidth } = this;
 			return {
 				width: labelWidth ? `${labelWidth}px` : 'auto',
-				textAlign: !checkbox || radio ? 'left' : 'right',
+				textAlign: !checkbox && !radio ? 'right' : 'left',
 			};
 		},
 		currentInputStyle() {
