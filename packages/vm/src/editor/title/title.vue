@@ -1,30 +1,27 @@
 <template>
 	<div class="vm-editor-title">
 		<vc-checkbox
-			v-if="mode === 'checkbox'"
-			v-model="currentCheck"
-			:true-value="1"
-			:false-value="0"
+			v-if="checkbox"
+			v-model="currentCheckValue"
+			:true-value="trueValue"
+			:false-value="falseValue"
 			style="position: relative; top: -1px;"
+			v-bind="checkboxOpts"
 			@change="handleCheckChange"
 		/>
-		<span
-			:style="mode === 'normal'
-				? `width: ${titleWidth || 50}px; text-align: right;` 
-				: `width: ${titleWidth || 100}px; text-align: left;`"
-			style="display: inline-block;"
-		>
+		<span :style="labelStyle">
 			{{ label }}
 		</span>
 		<vc-input
-			:value="currentVal"
+			v-model="currentInputValue"
 			:maxlength="maxlength"
 			:style="{
-				'width': mode === 'normal' ? '240px' : '160px',
+				'width': checkbox ? '160px' : '240px',
 			}"
 			:indicator="{ inline: true }"
 			clearable
 			style="margin-top: 4px;"
+			v-bind="inputOpts"
 			@input="handleInputChange"
 		/>
 	</div>
@@ -39,74 +36,75 @@ export default {
 		'vc-checkbox': Checkbox,
 		'vc-input': Input,
 	},
+	model: {
+		prop: 'value',
+		event: 'change'
+	},
 	props: {
-		mode: {
-			type: String,
-			validator: (val) => {
-				return ['normal', 'checkbox'].includes(val);
-			}
-		},
-		label: String,
 		value: {
-			type: [String, Number],
+			type: Array,
+			default: () => ([])
+		},
+		checkbox: {
+			type: Boolean,
+			default: false,
+		},
+		trueValue: {
+			type: Number,
+			default: 1,
+		},
+		falseValue: {
+			type: Number,
+			default: 0,
+		},
+		label: {
+			type: String,
 			default: ''
 		},
-		check: {
+		labelWidth: Number,
+		maxlength: {
 			type: Number,
-			default: 0
+			default: 30
 		},
-		titleWidth: Number,
-		maxlength: Number,
+
+		checkboxOpts: Object,
+		inputOpts: Object
 	},
 	data() {
 		return {
-			currentVal: '',
-			currentCheck: 0
+			currentInputValue: '',
+			currentCheckValue: 0
 		};
+	},
+	computed: {
+		labelStyle() {
+			const { checkbox, labelWidth } = this;
+			return {
+				width: `${labelWidth || (checkbox ? 100 : 50)}px`,
+				textAlign: checkbox ? 'left' : 'right',
+				display: 'inline-block'
+			};
+		}
 	},
 	watch: {
 		value: {
 			immediate: true,
 			handler(newVal, oldVal) {
-				this.currentVal = newVal;
-			}
-		},
-		check: {
-			immediate: true,
-			handler(newVal, oldVal) {
-				this.currentCheck = newVal;
+				this.currentInputValue = newVal[0];
+				this.currentCheckValue = newVal[1];
 			}
 		}
 	},
 	methods: {
-		handleInputChange(val) {
-			this.$emit('change', this.mode === 'normal' ? val : {
-				name: val,
-				show: this.currentCheck
-			});
+		handleInputChange(value) {
+			this.$emit('change', [value, this.currentCheckValue]);
 		},
-		handleCheckChange(val) {
-			this.$emit('change', {
-				name: this.currentVal,
-				show: val
-			});
+		handleCheckChange(value) {
+			this.$emit('change', [this.currentInputValue, value]);
 		}
 	}
 };
 </script>
 <style lang="scss">
-@import "../../style/index.scss";
-$block: vm-editor-title;
 
-@include block($block) {
-	position: relative;
-	display: inline-block;
-	@include element(tip) {
-		position: absolute;
-		right: 10px;
-		z-index: 99;
-		top: 50%;
-		transform: translate(0, -50%);
-	}
-}
 </style>

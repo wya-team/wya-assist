@@ -24,14 +24,17 @@
 			class="vm-editor-add__btn"
 			@click="handleAdd"
 		>
-			<div>
+			<div class="vm-editor-add__btn--operate">
 				<vc-icon
 					type="plus"
 					style="position: relative; top: -1px;"
 				/>
 				<span>{{ addText }}</span>
 			</div>
-			<span v-if="tip">{{ tip }}</span>
+			<span 
+				v-if="tip" 
+				class="vm-editor-add__btn--tip"
+			>{{ tip }}</span>
 		</div>
 	</div>
 </template>
@@ -148,7 +151,9 @@ $block: vm-editor-add;
 		flex-direction: column;
 		cursor: pointer;
 
-		color: #5495F6;
+		@include modifier(operate) {
+			color: #5495F6;
+		}
 	}
 }
 </style>
