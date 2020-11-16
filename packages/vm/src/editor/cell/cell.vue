@@ -70,6 +70,7 @@ $block: vm-editor-cell;
 	justify-content: space-between;
 	padding-left: 6px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	@include when(multi) {
 		align-items: flex-start;
 	}
