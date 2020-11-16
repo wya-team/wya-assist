@@ -9,7 +9,7 @@ import Slider from './slider';
 import Header from './header';
 import Color from './color';
 import LabelTitle from './label-title';
-import ImgsPicker from './upload-picker';
+import UploadPicker from './upload-picker';
 import Input from './input';
 import InputNumber from './input-number';
 import Tip from './tip';

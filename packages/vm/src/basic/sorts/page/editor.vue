@@ -9,20 +9,22 @@
 				:data-source="radios"
 				@change="handleChange(arguments[0], 'backgroundType')"
 			/>
-			<div v-show="$attrs.backgroundType == 1">
-				<vm-editor-color
-					:color="$attrs.backgroundColor"
-					default="#f2f2f2"
-					alpha
-					@change="handleChange(arguments[0], 'backgroundColor')"
-				/>
-			</div>
-			<div v-show="$attrs.backgroundType == 2">
-				<vm-editor-imgs-picker
-					v-model="$attrs.backgroundImage"
-					tips="建议宽度750像素"
-					@change="handleChange(arguments[0], 'backgroundImage')"
-				/>
+			<div style="margin-top: 10px">
+				<div v-show="$attrs.backgroundType == 1">
+					<vm-editor-color
+						:color="$attrs.backgroundColor"
+						default="#f2f2f2"
+						alpha
+						@change="handleChange(arguments[0], 'backgroundColor')"
+					/>
+				</div>
+				<div v-show="$attrs.backgroundType == 2">
+					<vm-editor-imgs-picker
+						v-model="$attrs.backgroundImage"
+						tips="建议宽度750像素"
+						@change="handleChange(arguments[0], 'backgroundImage')"
+					/>
+				</div>
 			</div>
 		</vm-editor-cell>
 	</vm-editor-layout>
