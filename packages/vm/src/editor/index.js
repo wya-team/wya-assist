@@ -7,10 +7,10 @@ import Cell from './cell';
 import SortList from './sort-list';
 import Slider from './slider';
 import Header from './header';
-import Title from './title';
 import Color from './color';
 import LabelTitle from './label-title';
 import ImgsPicker from './imgs-picker';
+import Input from './input';
 import InputNumber from './input-number';
 import Tip from './tip';
 import Add from './add';
@@ -24,10 +24,10 @@ export default {
 	SortList,
 	Slider,
 	Header,
-	Title,
 	LabelTitle,
 	Color,
 	ImgsPicker,
+	Input,
 	InputNumber,
 	Tip,
 	Add

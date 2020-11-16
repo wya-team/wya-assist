@@ -1,5 +1,5 @@
 <template>
-	<div class="vm-editor-title">
+	<div class="vm-editor-input">
 		<vc-checkbox
 			v-if="checkbox"
 			v-model="currentCheckValue"
@@ -9,7 +9,7 @@
 			v-bind="checkboxOpts"
 			@change="handleCheckChange"
 		/>
-		<span :style="labelStyle">
+		<span v-if="label" :style="labelStyle">
 			{{ label }}
 		</span>
 		<vc-input
@@ -31,7 +31,7 @@ import Checkbox from '@wya/vc/lib/checkbox';
 import Input from '@wya/vc/lib/input';
 
 export default {
-	name: 'vm-editor-title',
+	name: 'vm-editor-input',
 	components: {
 		'vc-checkbox': Checkbox,
 		'vc-input': Input,
@@ -42,8 +42,8 @@ export default {
 	},
 	props: {
 		value: {
-			type: Array,
-			default: () => ([])
+			type: [String, Array],
+			default: ''
 		},
 		checkbox: {
 			type: Boolean,
@@ -90,21 +90,39 @@ export default {
 		value: {
 			immediate: true,
 			handler(newVal, oldVal) {
-				this.currentInputValue = newVal[0];
-				this.currentCheckValue = newVal[1];
+				if (!this.checkbox && typeof newVal === 'string') {
+					this.currentInputValue = newVal;
+				} else {
+					this.currentInputValue = newVal[0];
+					this.currentCheckValue = newVal[1];
+				}
 			}
 		}
 	},
 	methods: {
 		handleInputChange(value) {
-			this.$emit('change', [value, this.currentCheckValue]);
+			this.currentInputValue = value;
+			this.$emit('change', this.checkbox ? [value, this.currentCheckValue] : value);
+			this.$emit('input-change', value);
 		},
+
+		/**
+		 * checkbox: true下才有此回调
+		 */
 		handleCheckChange(value) {
+			this.currentCheckValue = value;
 			this.$emit('change', [this.currentInputValue, value]);
+			this.$emit('checkbox-change', this.currentInputValue);
 		}
 	}
 };
 </script>
 <style lang="scss">
+@import "../../style/index.scss";
+$block: vm-editor-input;
 
+@include block($block) {
+	position: relative;
+	display: inline-block;
+}
 </style>
