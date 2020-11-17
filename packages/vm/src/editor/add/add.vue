@@ -129,6 +129,9 @@ $block: vm-editor-add;
 		margin-right: 10px;
 		position: relative;
 		display: flex;
+
+		// 避免被vc-sort-list覆盖
+		text-align: left !important;
 	}
 	@include element(close) {
 		position: absolute;
