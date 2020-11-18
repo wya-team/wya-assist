@@ -35,7 +35,8 @@ export default {
 			Link,
 			Table.Filter,
 			Table.Sorter,
-			Table.Operate
+			Table.Operate,
+			Table.Select
 		].forEach(comp => {
 			const { name, aliasName } = comp;
 
