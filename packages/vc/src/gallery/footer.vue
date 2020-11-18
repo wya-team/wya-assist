@@ -78,7 +78,7 @@ export default {
 		},
 		handleMove() {
 			MoveImg.popup({
-				store: this.store,
+				storeInstance: this.store,
 				api: this.APIS.URL_GALLERY_IMG_MOVE,
 				http: this.http,
 				valueKey: this.valueKey

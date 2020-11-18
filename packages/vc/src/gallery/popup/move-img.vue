@@ -31,7 +31,7 @@ export default {
 		'vc-radio-group': Radio.Group
 	},
 	props: {
-		store: {
+		storeInstance: {
 			type: Object,
 			default: () => ({})
 		},
@@ -46,18 +46,18 @@ export default {
 		const { catId } = this.valueKey;
 		return {
 			visible: false,
-			targetCategoryId: this.store.state.curCategory[catId]
+			targetCategoryId: this.storeInstance.state.curCategory[catId]
 		};
 	},
 	computed: {
 		filteredCategories() {
 			const { isAll } = this.valueKey;
-			const categoryList = this.store.state.categoryList;
+			const categoryList = this.storeInstance.state.categoryList;
 			return categoryList.filter(item => !item[isAll]);
 		},
 		selectedFileIds() {
 			const { fileId } = this.valueKey;
-			const selectedFiles = this.store.state.selectedFiles;
+			const selectedFiles = this.storeInstance.state.selectedFiles;
 			return selectedFiles.map(item => item[fileId]);
 		}
 	},
