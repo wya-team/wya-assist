@@ -302,7 +302,7 @@ export default {
 
 		// 切换分页数量
 		handleChangePageSize() {
-			this.reset();
+			this.refresh();
 		},
 
 		// 切换分页
