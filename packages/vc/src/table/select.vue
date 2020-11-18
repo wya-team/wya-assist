@@ -79,6 +79,7 @@ export default {
 	components: {
 		'vc-paging': Paging,
 		'vc-table-column': Table.Column,
+		'vc-table-item': Table.Item,
 		'vc-radio': Radio,
 		'vc-radio-group': Radio.Group,
 	},
