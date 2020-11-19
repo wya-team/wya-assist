@@ -24,6 +24,7 @@ export const page = (opts = {}) => {
 			backgroundType: 1,
 			backgroundColor: '#F1F2F8',
 			backgroundImage: [],
+			title: '',
 			...defaultData
 		},
 		dataValidity: (res = {}) => {

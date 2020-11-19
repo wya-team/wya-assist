@@ -3,6 +3,15 @@
 		title="页面设置"
 		class="vm-basic-page-editor"
 	>
+		<vm-editor-cell label="页面标题：" multiple>
+			<vc-input
+				v-model="$attrs.title"
+				:indicator="{ inline: true }"
+				:maxlength="10"
+				@input="handleChange(arguments[0], 'title')"
+			/>
+		</vm-editor-cell>
+
 		<vm-editor-cell label="页面背景：" multiple>
 			<vm-editor-radio
 				v-model="$attrs.backgroundType"
@@ -31,6 +40,7 @@
 </template>
 
 <script>
+import Input from "@wya/vc/lib/input";
 import Editor from "../../../editor";
 
 export default {
@@ -41,6 +51,7 @@ export default {
 		'vm-editor-layout': Editor.Layout,
 		'vm-editor-color': Editor.Color,
 		'vm-editor-imgs-picker': Editor.ImgsPicker,
+		'vc-input': Input,
 	},
 	props: {
 
