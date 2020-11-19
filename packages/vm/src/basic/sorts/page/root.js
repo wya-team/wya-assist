@@ -26,7 +26,7 @@ export const page = (opts = {}) => {
 			backgroundImage: [],
 
 			title: '',
-			titleditable: 0,
+			titleEditable: 0,
 			
 			...defaultData
 		},
