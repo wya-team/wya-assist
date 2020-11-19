@@ -8,7 +8,7 @@ export default {
 	inheritAttrs: false,
 	props: {
 		id: String,
-		title: Object,
+		title: [Object, String],
 		backgroundColor: String,
 		backgroundType: Number,
 		backgroundImage: {

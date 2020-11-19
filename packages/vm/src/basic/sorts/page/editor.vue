@@ -3,7 +3,7 @@
 		title="页面设置"
 		class="vm-basic-page-editor"
 	>
-		<vm-editor-cell label="页面标题：" multiple>
+		<vm-editor-cell v-if="$attrs.titleEditable == 1" label="页面标题：" multiple>
 			<vc-input
 				v-model="$attrs.title"
 				:indicator="{ inline: true }"

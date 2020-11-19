@@ -24,7 +24,10 @@ export const page = (opts = {}) => {
 			backgroundType: 1,
 			backgroundColor: '#F1F2F8',
 			backgroundImage: [],
+
 			title: '',
+			titleditable: 0,
+			
 			...defaultData
 		},
 		dataValidity: (res = {}) => {
