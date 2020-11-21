@@ -6,7 +6,7 @@ import { Device, Load } from '@wya/utils';
 /**
  * 暂时先有公共的管理，后期考虑每个项目中单独拥有
  */
-export default class HackManager {
+export default class Hack {
 	constructor(options = {}) {
 		this.defaultOptions = options;
 
