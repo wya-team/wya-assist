@@ -10,7 +10,7 @@
 					@click="handleCategoryItem(item)"
 				>
 					<span class="vca-gallery-category-menu__item-name">{{ item[valueKey.catName] }}（{{ item[valueKey.count] }}）</span>
-					<span v-if="!item.is_all" class="vca-gallery-category-menu__icon-wrapper">
+					<span v-if="!item.is_all && !item.is_unclassified" class="vca-gallery-category-menu__icon-wrapper">
 						<vc-icon 
 							type="edit" 
 							class="vca-gallery-category-menu__item-icon"
