@@ -172,6 +172,7 @@ export default {
 				fileUrl: 'file_url',
 				isAll: 'is_all',
 				count: 'count',
+				isUnclassified: 'is_unclassified'
 			})
 		}
 	},
