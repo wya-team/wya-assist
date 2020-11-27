@@ -56,7 +56,7 @@ export default {
 					url: this.APIS['URL_GALLERY_IMG_RENAME'],
 					type: 'POST',
 					param: {
-						[fileId]: tfileIdhis.it[fileId],
+						[fileId]: this.it[fileId],
 						[fileName]: v
 					}
 				}).then(() => {
