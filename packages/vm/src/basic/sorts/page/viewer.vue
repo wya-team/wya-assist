@@ -52,6 +52,7 @@ export default {
 		},
 		backgroundImage: {
 			handler(val) {
+				if (this.backgroundType == 1) return;
 				this.getPage().then((res) => {
 					this.page && (this.page.style.backgroundImage = `url('${val[0]}')`);
 				});
