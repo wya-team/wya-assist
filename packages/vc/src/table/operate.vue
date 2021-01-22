@@ -41,7 +41,6 @@
 			</template>
 			<vc-dropdown
 				v-else-if="dataSource.length > 2"
-				class=""
 				portal-class-name="vca-drop-down"
 				placement="bottom-right"
 			>
@@ -55,8 +54,9 @@
 				<template #list>
 					<vc-dropdown-menu>
 						<template v-for="(item, i) of dataSource.slice(1)">
+							<!-- 带操作确认的操作项 -->
 							<vc-popconfirm
-								v-if="item[message]"
+								v-if="item[message] && !item.disabled"
 								:key="i"
 								:portal="false"
 								:title="item[message]"
@@ -66,11 +66,45 @@
 								@ok="handleOk(item)"
 								@cancel="handleCancel(item)"
 							>
-								<span>{{ item[label] }}</span>
+								<!-- 带悬浮提示的 -->
+								<vc-popover
+									v-if="item[tip]"
+									:content="item[tip]"
+									:portal="false"
+									placement="top"
+									theme="dark"
+									tag="div"
+								>
+									<span>{{ item[label] }}</span>
+								</vc-popover>
+								<!-- 无悬浮提示的 -->
+								<div v-else v-text="item[label]" />
 							</vc-popconfirm>
+
+							<!-- 带悬浮提示的操作项 -->
+							<vc-popover
+								v-else-if="item[tip]"
+								:key="i"
+								:content="item[tip]"
+								:portal="false"
+								class="vca-table-operate__item is-tip"
+								placement="top"
+								theme="dark"
+								tag="li"
+							>
+								<div 
+									class="vc-dropdown-item"
+									:class="{ 'is-disabled': item.disabled }"
+									@click="handleOk(item)"
+									v-text="item[label]"
+								/>
+							</vc-popover>
+
+							<!-- 常规操作项 -->
 							<vc-dropdown-item
 								v-else
 								:key="i"
+								:disabled="item.disabled"
 								align="left"
 								@click="handleOk(item)"
 								v-text="item[label]"
@@ -85,6 +119,7 @@
 <script>
 import Dropdown from '@wya/vc/lib/dropdown';
 import Popconfirm from '@wya/vc/lib/popconfirm';
+import Popover from '@wya/vc/lib/popover';
 import Icon from '@wya/vc/lib/icon';
 import Divider from '@wya/vc/lib/divider';
 
@@ -97,6 +132,7 @@ export default {
 		'vc-icon': Icon,
 		'vc-divider': Divider,
 		'vc-popconfirm': Popconfirm,
+		'vc-popover': Popover
 	},
 	props: {
 		dataSource: Array,
@@ -104,8 +140,9 @@ export default {
 			type: Object,
 			default: () => {
 				return {
-					message: 'message',
-					label: 'label',
+					message: 'message', // 操作确认文案
+					label: 'label', // 操作项文案
+					tip: 'tip', // 操作项hover提示文案
 					children: 'children'
 				};
 			}
@@ -117,10 +154,14 @@ export default {
 		},
 		label() {
 			return this.dataSourceKey.label;
+		},
+		tip() {
+			return this.dataSourceKey.tip;
 		}
 	},
 	methods: {
 		handleOk(item) {
+			if (item.disabled) return;
 			const { label } = this;
 			this.$emit('click', item[label], item);
 			this.$emit('ok', item[label], item);
@@ -151,6 +192,11 @@ export default {
 	&.is-inline {
 		display: inline-block;
 		text-align: right;
+	}
+}
+.vca-table-operate__item {
+	&.is-tip {
+		list-style: none;
 	}
 }
 </style>
