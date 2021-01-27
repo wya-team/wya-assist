@@ -24,6 +24,7 @@
 <script>
 
 const statusList = ['unsort', 'ascending', 'descending'];
+const statusShortList = ['', 'asc', 'desc'];
 
 export default {
 	name: 'vca-table-sorter',
@@ -32,21 +33,25 @@ export default {
 		event: 'change'
 	},
 	props: {
+		short: Boolean, // 排序值缩写
 		value: {
 			type: String,
-			default: 'unsort',
+			default: 'unsort', // value传入的值为null || undefined是default才会生效
 			validator(value) {
-				return statusList.includes(value);
+				return statusList.includes(value) || statusShortList.includes(value);
 			}
 		}
 	},
 	computed: {
+		curStatusList() {
+			return this.short ? statusShortList : statusList;
+		},
 		statusIndex: {
 			get() {
-				return statusList.indexOf(this.value);
+				return this.curStatusList.indexOf(this.value);
 			},
 			set(value) {
-				this.$emit('change', statusList[value]);
+				this.$emit('change', this.curStatusList[value]);
 			}
 		}
 	},
