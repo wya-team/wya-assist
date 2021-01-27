@@ -1,6 +1,6 @@
 {
   "name": "@wya/assist-vc",
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "",
   "main": "dist/assist-vc.min.js",
   "files": [
