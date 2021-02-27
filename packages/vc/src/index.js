@@ -7,6 +7,7 @@ import Footer from './footer';
 import Table from './table';
 import Gallery from './gallery';
 import Link from './link';
+import Timeline from './timeline';
 import VcaInstance from './vca';
 
 export {
@@ -19,7 +20,8 @@ export {
 	Footer,
 	Table,
 	Gallery,
-	Link
+	Link,
+	Timeline
 };
 
 export default {
@@ -33,6 +35,8 @@ export default {
 			SectionTitle,
 			Footer,
 			Link,
+			Timeline, 
+			Timeline.Item,
 			Table.Filter,
 			Table.Sorter,
 			Table.Operate,
