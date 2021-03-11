@@ -54,8 +54,9 @@ class StoreService extends Base {
 
 				return {
 					data() {
+						const responseData = (store.response || {}).data || [];
 						return {
-							[key]: (store.response || {}).data || [],
+							[key]: parser ? parser(responseData) : responseData,
 							[loadingKey]: false
 						};
 					},
