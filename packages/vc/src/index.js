@@ -8,6 +8,7 @@ import Table from './table';
 import Gallery from './gallery';
 import Link from './link';
 import VcaInstance from './vca';
+import RelationChain from './relation-chain';
 
 export {
 	Store,
@@ -19,7 +20,8 @@ export {
 	Footer,
 	Table,
 	Gallery,
-	Link
+	Link,
+	RelationChain
 };
 
 export default {
@@ -36,7 +38,9 @@ export default {
 			Table.Filter,
 			Table.Sorter,
 			Table.Operate,
-			Table.Select
+			Table.Select,
+			RelationChain,
+			RelationChain.Item
 		].forEach(comp => {
 			const { name, aliasName } = comp;
 
