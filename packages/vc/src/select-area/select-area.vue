@@ -11,7 +11,7 @@
 		<div
 			v-for="(area, index) in resetRegion"
 			:key="index"
-			class="vca-select-area__content g-flex g-fw-w g-m-tb-8"
+			class="vca-select-area__content"
 		>
 			<div class="vca-select-area__checkbox vca-select-area__content--area">
 				<vc-checkbox
@@ -27,7 +27,7 @@
 				v-for="(province, provinceIndex) in area.children"
 				:key="province.national_code"
 				:class="{ 'vca-select-area__empty': provinceIndex && provinceIndex % 3 === 0 }"
-				class="vca-select-area__checkbox vca-select-area__content--province g-relative"
+				class="vca-select-area__checkbox vca-select-area__content--province"
 			>
 				<vc-checkbox
 					:indeterminate="province.isChina && province.indeterminate"
@@ -35,7 +35,7 @@
 					:disabled="province.disabled"
 					@click.prevent.native="handleChangeCheckAllCity(area, province, 'isClickProvince')"
 				>
-					<span v-if="!province.isChina" class="g-m-l-8">{{ province.region_name }}</span>
+					<span v-if="!province.isChina" class="vca-select-area__checkbox--oversea">{{ province.region_name }}</span>
 				</vc-checkbox>
 				<vc-popover
 					v-if="province.isChina"
@@ -45,10 +45,10 @@
 					trigger="click"
 					placement="bottom"
 					content="Bottom"
-					class="vca-select-area__popover g-pointer"
+					class="vca-select-area__popover vca-select-area__pointer"
 					@visible-change="handleChangeCityList(province)"
 				>
-					<span class="g-pointer g-m-r-5">{{ province.region_name }}</span>
+					<span class="vca-select-area__pointer vca-select-area__checkbox--china">{{ province.region_name }}</span>
 					<vc-icon
 						v-show="!province.show"
 						type="p-triangle-down"
@@ -75,14 +75,14 @@
 						</vc-checkbox-group>
 					</template>
 				</vc-popover>
-				<span v-if="province.isChina && province.checkCity.length && !province.disabled" class="g-c-main">
+				<span v-if="province.isChina && province.checkCity.length && !province.disabled" class="vca-select-area__blue">
 					（{{ province.checkCity.length }}）
 				</span>
 			</div>
 		</div>
 		<div v-if="showOverseas" class="vca-select-area__more vca-select-area__empty">
 			<span
-				class="g-c-main g-pointer"
+				class="vca-select-area__blue vca-select-area__pointer"
 				@click="handleExpandOverseas"
 			>
 				{{ showMoreOverseas ? '收起更多国家' : '展开更多国家' }}
@@ -93,12 +93,12 @@
 			<vc-checkbox
 				v-model="selectAll.checkAll"
 				:indeterminate="selectAll.indeterminate"
-				class="g-fl"
+				class="vca-select-area__footer--checkbox"
 				@click.prevent.native="handleCheckAllRegion"
 			>
-				<span class="vca-select-area__footer--checkbox">全选</span>
+				<span class="vca-select-area__footer--span">全选</span>
 			</vc-checkbox>
-			<vc-button class="g-m-r-12" @click="handleCancel">
+			<vc-button class="vca-select-area__footer--cancel" @click="handleCancel">
 				取消
 			</vc-button>
 			<vc-button type="primary" @click="handleOk">
@@ -599,8 +599,17 @@ export const SelectArea = new Portal(config, {
 		height: 662px;
 	}
 	.vca-select-area__content {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 8px 0;
 		.vca-select-area__checkbox {
 			margin-bottom: 20px;
+            .vca-select-area__checkbox--oversea {
+                margin-left: 8px;
+            }
+            .vca-select-area__checkbox--china {
+                margin-right: 5px;
+            }
 			.vc-icon {
 				font-size: 14px;
 				position: relative;
@@ -664,10 +673,22 @@ export const SelectArea = new Portal(config, {
 	.vca-select-area__more {
 		margin-top: -20px !important;
 	}
+    .vca-select-area__pointer {
+        cursor: pointer;
+    }
+    .vca-select-area__blue {
+        color: #5495f6;
+    }
 	.vc-modal__footer {
 		.vca-select-area__footer--checkbox {
-			margin-left: 4px;
+			float: left;
 		}
+        .vca-select-area__footer--span {
+            margin-left: 4px;
+        }
+        .vca-select-area__footer--cancel {
+            margin-right: 12px;
+        }
 	}
 }
 </style>
