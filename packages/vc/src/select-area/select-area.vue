@@ -126,6 +126,12 @@ const config = {
 		'vc-icon': Icon,
 	},
 	props: {
+		region: { // 地区数据
+			type: Array,
+			default() {
+				return [];
+			}
+		},
 		title: {
 			type: String,
 			default: '选择地2区'
@@ -146,13 +152,7 @@ const config = {
 			type: Boolean,
 			default: true
 		},
-		region: { // 地区数据
-			type: Array,
-			default() {
-				return [];
-			}
-		},
-		plug_area_english: { // 是否开启国际化地区插件
+		plugAreaEnglish: { // 是否开启国际化地区插件
 			type: Boolean,
 			default: false
 		}
@@ -318,7 +318,7 @@ const config = {
 		handleOk() {
 			let checkData = [];
 			let overseasCheck = []; // 海外选择
-			let china = this.plug_area_english ? 'china' : '全国（含港澳台）';
+			let china = this.plugAreaEnglish ? 'china' : '全国（含港澳台）';
 			this.resetRegion.forEach(area => {
 				// 非海外
 				!area.isOverseas && area.children.forEach(province => {
