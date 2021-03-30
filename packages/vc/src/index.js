@@ -9,6 +9,7 @@ import Gallery from './gallery';
 import Link from './link';
 import VcaInstance from './vca';
 import RelationChain from './relation-chain';
+import EditableText from './editable-text';
 
 export {
 	Store,
@@ -21,7 +22,8 @@ export {
 	Table,
 	Gallery,
 	Link,
-	RelationChain
+	RelationChain,
+	EditableText
 };
 
 export default {
@@ -35,6 +37,7 @@ export default {
 			SectionTitle,
 			Footer,
 			Link,
+			EditableText,
 			Table.Filter,
 			Table.Sorter,
 			Table.Operate,
