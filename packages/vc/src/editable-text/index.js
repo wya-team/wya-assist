@@ -1,1 +1,1 @@
-export { default } from './editable-text';
+export { default } from './editable-text.vue';
