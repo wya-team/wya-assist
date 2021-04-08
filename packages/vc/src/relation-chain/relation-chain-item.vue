@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-	name: 'relation-chain',
+	name: 'vca-relation-chain-item',
 	components: {
 	},
 	props: {
