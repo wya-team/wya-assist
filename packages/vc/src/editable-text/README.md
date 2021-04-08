@@ -5,7 +5,7 @@
 ---|---|---|---|---
 value | 当前展示值 | `String`、`Number` | - | -
 inputType | 编辑时的输入类型 | `string` | `string`, `number` | `string`
-inputOptions | vc-input或vc-input-number的绑定属性 | `Object` | - | -
+inputOpts | vc-input或vc-input-number的绑定属性 | `Object` | - | -
 complete | 触发完成的时机 | `String` | `onBlur`：输入框失焦触发, `onConfirm`：点击‘确定’触发 | -
 
 ## 事件
