@@ -13,7 +13,7 @@
 				clearable
 				autofocus
 				:step="false"
-				v-bind="inputOptions"
+				v-bind="inputOpts"
 				class="c-editable-text__input"
 				@blur="handleComplete"
 				@enter="handleComplete"
@@ -24,7 +24,7 @@
 				v-model="editValue"
 				clearable
 				autofocus
-				v-bind="inputOptions"
+				v-bind="inputOpts"
 				class="c-editable-text__input"
 				@blur="handleComplete"
 				@enter="handleComplete"
@@ -65,7 +65,7 @@ export default {
 			default: 'string',
 			validator: value => ['string', 'number'].includes(value)
 		},
-		inputOptions: {
+		inputOpts: {
 			type: Object,
 			default: () => ({})
 		},
