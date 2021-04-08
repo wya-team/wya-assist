@@ -41,7 +41,7 @@ export default {
 		},
 		avatarImage() {
 			return {
-				backgroundImage: `url('${this.defaultAvatar}')`
+				backgroundImage: `url('${this.avatar || this.defaultAvatar}')`
 			};
 		}
 	},
