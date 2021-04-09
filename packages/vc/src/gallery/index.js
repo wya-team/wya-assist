@@ -1,12 +1,17 @@
 import Portal from '@wya/vc/lib/portal';
-import wrapperComponent from './gallery.vue';
+import { ajax } from '@wya/http';
+import wrapperComponent from './gallery';
 
 const Gallery = new Portal(wrapperComponent, {
-	onBefore(opts) {
-		const http = opts.ajax || ajax;
+	onBefore({ accept, valueKey, apis, ...rest }) {
+		const http = rest.ajax || ajax;
 		return http({
-			url: opts.apis['URL_GALLERY_CATEGORY_LIST'],
-			type: 'GET'
+			url: apis['URL_GALLERY_CATEGORY_LIST'],
+			type: 'GET',
+			param: {
+				// 分类类型：1 图片，2 视频
+				[valueKey ? valueKey.catType : 'cat_type']: accept === 'video' ? 2 : 1
+			}
 		});
 	}
 });

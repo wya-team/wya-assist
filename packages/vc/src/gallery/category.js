@@ -4,7 +4,7 @@ import { Editor } from './popup';
 export default {
 	methods: {
 		handleAdd() {
-			const { catName } = this.valueKey;
+			const { catName, catType } = this.valueKey;
 			Editor.popup({
 				title: '新增分组',
 				originalText: '分组',
@@ -15,18 +15,18 @@ export default {
 					url: this.APIS['URL_GALLERY_CATEGORY_ADD'],
 					type: 'POST',
 					param: {
+						[catType]: this.accept === 'video' ? 2 : 1,
 						[catName]: inputValue
 					}
-				}).then(({ data }) => {
-					this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { target: data });
+				}).then(() => {
 					this.$emit('add-success');
 				}).catch((err) => {
 					console.log(err, 'error');
 				});
-			}).catch(() => {});
+			});
 		},
 		handleRename(it) {
-			const { catName, catId } = this.valueKey;
+			const { catName, catId, catType } = this.valueKey;
 			Editor.popup({
 				title: '重命名分组',
 				originalText: it[catName],
@@ -39,6 +39,7 @@ export default {
 						type: 'POST',
 						param: {
 							[catId]: it[catId],
+							[catType]: this.accept === 'video' ? 2 : 1,
 							[catName]: inputValue
 						}
 					}).then(() => {
@@ -49,18 +50,20 @@ export default {
 				})
 				.catch(() => {});
 		},
-		handleDelCategory(catId) {
+		handleDelCategory(item) {
+			const { catName, catId } = this.valueKey;
+			const id = item[catId];
 			Modal.warning({
-				title: '您确定要删除该分组吗？',
+				title: `您确定要删除分组"${item[catName]}"吗？`,
 				onOk: (e, cb) => {
 					return this.http({
-						url: this.APIS['URL_GALLERY_CATEGORY_DEL'],
+						url: this.APIS['URL_GALLERY_CATEGORY_DELETE'],
 						type: 'POST',
 						param: {
-							[this.valueKey.catId]: catId
+							[catId]: id
 						}
 					}).then(() => {
-						this.$emit('del-success', catId);
+						this.$emit('del-success', id);
 						cb();
 					}).catch((err) => {
 						cb();

@@ -3,67 +3,39 @@
 		v-model="isVisible"
 		:mask-closable="false"
 		size="large"
-		title="选择图片"
+		:title="`我的${sourceName}`"
 		class="vca-gallery vm-hack-editor"
 		@cancel="handleCancel"
 	>
 		<div class="vca-gallery__content">
 			<div class="vca-gallery__category--wrapper">
 				<vca-gallery-category-menu
-					:data-source="categoryList"
-					:current="curCategory"
+					:data-source="categories"
+					:value="currentMenuId"
+					:upload-opts="uploadOpts"
 					@add-success="handleAddSuccess"
 					@del-success="handleDelSuccess"
+					@change="handleMenuChange"
 				/>
 			</div>
 
 			<div class="vca-gallery__view--wrapper">
 				<div class="vca-gallery__view">
-					<div class="vca-gallery__view-toolbar">
-						<div>
-							<template>
-								<vc-upload
-									v-bind="uploadOpts"
-									accept="image/*"
-									@error="handleError"
-									@begin="handleBegin"
-									@complete="handleComplete"
-									@file-error="handleFileError"
-									@file-success="handleFileSuccess"
-								>
-									<vc-button type="primary">
-										<vc-icon type="upload" />
-										本地上传
-									</vc-button>
-								</vc-upload>
-							</template>
-						</div>
-						<div>
-							<vc-input
-								v-model="keyword"
-								clearable
-								placeholder="搜索图片"
-								style="width: 240px;"
-								@change="handleChange"
-								@enter="handleSearch"
-							>
-								<template #append>
-									<vc-button type="primary" @click="handleSearch">
-										<vc-icon type="search" />
-									</vc-button>
-								</template>
-							</vc-input>
-						</div>
-					</div>
 					<div class="vca-gallery__view-imgs">
+						<div 
+							v-if="listInfo[currentMenuId].total && !listInfo[currentMenuId].count"
+							class="vca-gallery__empty"
+						>
+							暂无素材，请上传
+						</div>
 						<vc-paging
-							v-if="categoryList.length >= 1"
+							v-else-if="categories.length >= 1"
 							ref="tableTarget"
-							:data-source="listInfo[curCategory[valueKey.catId]].data"
-							:count="listInfo[curCategory[valueKey.catId]].count"
-							:total="listInfo[curCategory[valueKey.catId]].total"
-							:reset="listInfo[curCategory[valueKey.catId]].reset"
-							:current.sync="current[curCategory[valueKey.catId]]"
+							:data-source="listInfo[currentMenuId].data"
+							:count="listInfo[currentMenuId].count"
+							:total="listInfo[currentMenuId].total"
+							:reset="listInfo[currentMenuId].reset"
+							:current.sync="current[currentMenuId]"
 							:history="false"
 							:load-data="loadData"
 							:page-opts="pageOpts"
@@ -71,16 +43,14 @@
 							@page-size-change="handleChangePageSize"
 						>
 							<template #default="{ it }">
-								<vca-gallery-img-item
+								<vca-gallery-file-item
 									:it="it"
 									:checked="selectedFileIds.includes(it[valueKey.fileId])"
 									:disabled="disabledList.includes(it[valueKey.fileUrl])"
-									class="vca-gallery__img-item"
 									@toggle="handleFileToggle(it)"
 								/>
 							</template>
 						</vc-paging>
-						<!-- <vca-gallery-no-category v-else @add-success="handleAddSuccess"/> -->
 					</div>
 				</div>
 			</div>
@@ -88,11 +58,10 @@
 
 		<template #footer>
 			<vca-gallery-footer
-				:whole="isWhole"
 				:max="max"
 				@cancel="handleCancel"
 				@ok="handleConfirm"
-				@refresh-category="loadCategory"
+				@refresh-category="loadCategories"
 			/>
 		</template>
 	</vc-modal>
@@ -101,45 +70,42 @@
 <script>
 import Portal from '@wya/vc/lib/portal';
 import Modal from '@wya/vc/lib/modal';
-import Input from '@wya/vc/lib/input';
-import Icon from '@wya/vc/lib/icon';
-import Button from '@wya/vc/lib/button';
 import Paging from '@wya/vc/lib/paging';
 import Message from '@wya/vc/lib/message';
-import Upload from '@wya/vc/lib/upload';
 
 import { ajax } from '@wya/http';
+
 import GalleryStore from './store';
-import CategoryMenu from './category-menu.vue';
-import ImgItem from './img-item.vue';
-import uploadMixin from './upload';
+import CategoryMenu from './menu.vue';
+import FileItem from './file-item.vue';
 import Footer from './footer.vue';
-import NoCategory from './no-category.vue';
 
 export default {
 	name: 'vca-gallery',
 	components: {
 		'vc-modal': Modal,
 		'vc-paging': Paging,
-		'vc-input': Input,
-		'vc-button': Button,
-		'vc-icon': Icon,
-		'vc-upload': Upload,
 		'vca-gallery-category-menu': CategoryMenu,
-		'vca-gallery-img-item': ImgItem,
-		'vca-gallery-footer': Footer,
-		// 'vca-gallery-no-category': NoCategory
+		'vca-gallery-file-item': FileItem,
+		'vca-gallery-footer': Footer
 	},
-	mixins: [uploadMixin],
 	provide() {
 		return {
 			APIS: this.apis,
 			store: this.store,
 			http: this.http,
-			valueKey: this.valueKey
+			valueKey: this.valueKey,
+			accept: this.accept,
+			sourceName: this.sourceName
 		};
 	},
 	props: {
+		// 类型：图片image、视频video
+		accept: {
+			type: String,
+			default: 'image',
+			validator: value => ['image', 'video'].includes(value)
+		},
 		ajax: Function,
 		apis: {
 			type: Object,
@@ -154,7 +120,7 @@ export default {
 			default: () => ({
 				multiple: true,
 				max: 10,
-				size: 0
+				size: 0,
 			})
 		},
 		disabledList: {
@@ -165,14 +131,16 @@ export default {
 			type: Object,
 			default: () => ({
 				catId: 'cat_id',
+				catType: 'cat_type',
 				catName: 'cat_name',
 				// 与 filename, fileid 做区分
 				fileName: 'file_name',
 				fileId: 'file_id',
 				fileUrl: 'file_url',
-				isAll: 'is_all',
-				count: 'count',
-				isUnclassified: 'is_unclassified'
+				fileSize: 'file_size',
+				fileType: 'cat_type',
+				isDefault: 'is_default',
+				count: 'cat_num'
 			})
 		}
 	},
@@ -198,21 +166,21 @@ export default {
 		};
 	},
 	computed: {
+		// 资源类型名称
+		sourceName() {
+			return this.accept === 'video' ? '视频' : '图片';
+		},
 		http() {
 			return this.ajax || ajax;
 		},
 		listInfo() {
 			return this.store.state.listInfo;
 		},
-		isWhole() {
-			const { isAll } = this.valueKey;
-			return !!this.curCategory[isAll];
+		categories() {
+			return this.store.state.categories;
 		},
-		categoryList() {
-			return this.store.state.categoryList;
-		},
-		curCategory() {
-			return this.store.state.curCategory;
+		currentMenuId() {
+			return this.store.state.curCategory[this.valueKey.catId];
 		},
 		selectedFiles() {
 			return this.store.state.selectedFiles;
@@ -223,50 +191,49 @@ export default {
 		}
 	},
 	created() {
-		this.store.commit('GALLERY_CATEGORY_LIST_GET_SUCCESS', { data: this.baseData.paths });
-		this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { target: this.baseData.paths[0] });
+		this.store.commit('GALLERY_CATEGORIES_SET', { data: this.baseData });
+		this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { id: this.baseData[0][this.valueKey.catId] });
 	},
 	mounted() {
 		this.isVisible = true;
-		console.log(this.isVisible);
 	},
 	methods: {
-		loadCategory() {
-			const { fileName } = this.valueKey;
+		loadCategories() {
+			const { catType, fileName } = this.valueKey;
 			this.http({
 				url: this.apis['URL_GALLERY_CATEGORY_LIST'],
 				type: 'GET',
 				param: {
+					[catType]: this.accept === 'video' ? 2 : 1,
 					[fileName]: this.keyword
 				}
 			}).then(({ data }) => {
-				this.store.commit('GALLERY_CATEGORY_LIST_GET_SUCCESS', { data: data.paths });
+				this.store.commit('GALLERY_CATEGORIES_SET', { data });
 			}).catch((err) => {
 				console.log(err, 'error');
 			});
 		},
 		handleCancel() {
-			console.log(2);
 			this.isVisible = false;
 			this.$emit('close');
 		},
 		loadData(page, pageSize) {
 			const { catId, fileName } = this.valueKey;
 			return this.http({
-				url: this.apis['URL_GALLERY_IMG_LIST'],
+				url: this.apis['URL_GALLERY_FILE_LIST'],
 				type: 'GET',
 				param: {
 					page,
 					pageSize,
-					[catId]: this.curCategory[catId],
+					[catId]: this.currentMenuId,
 					[fileName]: this.keyword
 				}
 			}).then(({ data }) => {
-				this.store.commit('GALLERY_IMG_LIST_GET_SUCCESS', {
+				this.store.commit('GALLERY_FILE_LIST_GET_SUCCESS', {
 					data,
 					param: {
-						catId: this.curCategory[catId],
-						page: data.currentPage
+						catId: this.currentMenuId,
+						page
 					}
 				});
 			}).catch((err) => {
@@ -274,8 +241,8 @@ export default {
 			});
 		},
 		handleSearch() {
-			this.loadCategory();
-			this.store.commit('GALLERY_IMG_LIST_INIT');
+			this.loadCategories();
+			this.store.commit('GALLERY_FILE_LIST_INIT');
 		},
 		handleChange(e) {
 			if (!e.target.value) {
@@ -285,14 +252,20 @@ export default {
 		handleChangePageSize() {
 			this.handleSearch();
 		},
+		handleMenuChange(id) {
+			this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { id });
+		},
 		handleAddSuccess() {
-			this.loadCategory();
+			this.loadCategories();
 		},
 		handleDelSuccess(catId) {
-			const index = this.categoryList
-				.findIndex(item => item[this.valueKey.catId] === catId);
-			this.categoryList.splice(index, 1);
-			this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { target: this.categoryList[0] });
+			this.store.commit('GALLERY_CATEGORIES_SET', { 
+				data: this.categories.filter(it => it[this.valueKey.catId] !== catId) 
+			});
+			// 如果删除的是当前激活的分类，则回到第一个分类
+			if (catId === this.currentMenuId) {
+				this.store.commit('GALLERY_CURRENT_CATEGORY_SET', { id: this.categories[0][this.valueKey.catId] });
+			}
 		},
 
 		handleFileToggle(it) {
@@ -406,8 +379,14 @@ $c-border: #e8e8e8;
 			}
 		}
 	}
+	@include element(empty) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+	}
 
-	.vca-gallery-img-item {
+	.vca-gallery-file-item {
 		margin: 5px;
 		background: #fff;
 	}

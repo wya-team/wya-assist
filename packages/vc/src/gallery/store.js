@@ -15,7 +15,7 @@ class GalleryStore {
 
 		this.state = {
 			listInfo: {},
-			categoryList: [],
+			categories: [],
 			curCategory: {},
 			selectedFiles: [],
 			...initialState
@@ -38,46 +38,44 @@ class GalleryStore {
 	 * GalleryStore Mutations
 	 */
 	mutations = {
-		GALLERY_CATEGORY_LIST_GET_SUCCESS(state, { data = [] }) {
+		GALLERY_CATEGORIES_SET(state, { data = [] }) {
 			const { catId } = this.gallery.valueKey;
-			state.categoryList = data;
+			state.categories = data;
 			data.forEach(item => {
 				initialListInfo[item[catId]] = { ...initPage };
 			});
 			state.listInfo = { ...initialListInfo };
 		},
-		GALLERY_IMG_LIST_GET_SUCCESS(state, { data, param: { catId, page } }) {
+		GALLERY_FILE_LIST_GET_SUCCESS(state, { data, param: { catId, page } }) {
 			state.listInfo = {
 				...state.listInfo,
 				[catId]: {
 					...state.listInfo[catId],
-					current: data.currentPage,
-					count: data.totalCount,
-					total: data.totalPage,
+					...data.page,
 					data: {
 						...state.listInfo[catId].data,
 						[page]: data.list
 					}
 				}
 			};
-			const target = state.categoryList.find(item => item[this.gallery.valueKey.catId] === catId);
-			target && (target[this.gallery.valueKey.count] = data.totalCount);
+			const index = state.categories.findIndex(item => item[this.gallery.valueKey.catId] === catId);
+			index >= 0 && (state.categories[index][this.gallery.valueKey.count] = data.page.count);
 		},
-		GALLERY_CURRENT_CATEGORY_SET(state, { target }) {
+		GALLERY_CURRENT_CATEGORY_SET(state, { id }) {
 			const { catId } = this.gallery.valueKey;
+			const target = state.categories.find(it => it[catId] === id);
 			state.curCategory = target;
 			state.listInfo = {
 				...initialListInfo,
-				[target[catId]]: { ...initPage }
+				[id]: { ...initPage }
 			};
 		},
-		GALLERY_IMG_LIST_INIT(state) {
+		GALLERY_FILE_LIST_INIT(state) {
 			state.listInfo = {
 				...initialListInfo
 			};
 		},
-		GALLERY_IMG_LIST_RESET(state, { catId }) {
-
+		GALLERY_FILE_LIST_RESET(state, { catId }) {
 			state.listInfo = {
 				...state.listInfo,
 				[catId]: {

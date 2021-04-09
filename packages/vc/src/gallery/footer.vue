@@ -23,10 +23,15 @@
 				<vc-button @click="handleClearSelected">
 					取消选中
 				</vc-button>
-				<vc-button @click="handleDel">
-					删除
-				</vc-button>
-				<vc-button v-if="!whole" @click="handleMove">
+				<vc-popconfirm
+					title="确定要删除所选文件吗？"
+					@ok="handleDel"
+				>
+					<vc-button>
+						删除
+					</vc-button>
+				</vc-popconfirm>
+				<vc-button @click="handleMove">
 					移动到
 				</vc-button>
 			</div>
@@ -38,7 +43,7 @@
 import Modal from '@wya/vc/lib/modal';
 import Button from '@wya/vc/lib/button';
 import Message from '@wya/vc/lib/message';
-import { MoveImg } from './popup';
+import { MoveFile } from './popup';
 
 export default {
 	name: 'vca-gallery-footer',
@@ -47,10 +52,6 @@ export default {
 	},
 	inject: ['APIS', 'store', 'http', 'valueKey'],
 	props: {
-		whole: {
-			type: Boolean,
-			default: false
-		},
 		max: {
 			type: Number,
 			default: 0
@@ -77,38 +78,33 @@ export default {
 			this.$emit('ok');
 		},
 		handleMove() {
-			MoveImg.popup({
-				storeInstance: this.store,
-				api: this.APIS.URL_GALLERY_IMG_MOVE,
+			MoveFile.popup({
+				value: this.curCategory[this.valueKey.catId],
+				api: this.APIS.URL_GALLERY_FILE_MOVE,
 				http: this.http,
-				valueKey: this.valueKey
+				valueKey: this.valueKey,
+				categories: this.store.state.categories,
+				fileIds: this.selectedFileIds
 			}).then(() => {
 				this.$emit('refresh-category');
-				this.store.commit('GALLERY_IMG_LIST_INIT');
+				this.store.commit('GALLERY_FILE_LIST_INIT');
 				this.store.commit('GALLERY_SELECTED_FILES_SET', { target: [] });
-			}).catch(() => {});
+			});
 		},
 		handleDel() {
 			const { catId, fileId } = this.valueKey;
-			Modal.warning({
-				title: '您确定要删除所选的图片吗？',
-				onOk: (e, cb) => {
-					return this.http({
-						url: this.APIS['URL_GALLERY_IMG_DEL'],
-						type: 'POST',
-						param: {
-							[`${fileId}s`]: this.selectedFileIds.join()
-						}
-					}).then(() => {
-						this.$emit('refresh-category');
-						this.store.commit('GALLERY_IMG_LIST_RESET', { catId: this.curCategory[catId] });
-						this.store.commit('GALLERY_SELECTED_FILES_SET', { target: [] });
-						cb();
-					}).catch(err => {
-						console.log(err, 'error');
-					});
-
+			this.http({
+				url: this.APIS['URL_GALLERY_FILE_DELETE'],
+				type: 'POST',
+				param: {
+					[fileId]: this.selectedFileIds.join()
 				}
+			}).then(() => {
+				this.$emit('refresh-category');
+				this.store.commit('GALLERY_FILE_LIST_RESET', { catId: this.curCategory[catId] });
+				this.store.commit('GALLERY_SELECTED_FILES_SET', { target: [] });
+			}).catch(err => {
+				console.log(err, 'error');
 			});
 
 		},

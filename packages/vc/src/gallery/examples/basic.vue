@@ -1,12 +1,15 @@
 <template>
 	<div>
-		<vc-button @click="handleClick">
-			gallery
+		<vc-button @click="handleGallery('image')">
+			图片 gallery
+		</vc-button>
+		<vc-button @click="handleGallery('video')">
+			视频 gallery
 		</vc-button>
 		<vc-upload-picker />
-		<vc-upload @file-success="handleSuccess" @file-error="handleSuccess">
+		<!-- <vc-upload @file-success="handleSuccess" @file-error="handleSuccess">
 			<vc-button>upload</vc-button>
-		</vc-upload>
+		</vc-upload> -->
 	</div>
 </template>
 
@@ -22,13 +25,13 @@ const { ajax } = createHttpClient({
 		return {
 			...options,
 			headers: {
-				token: '539995a80a612e02852c2b1cb6ac5d6bde7d7cfc'
+				token: '2bc5053418887fe46ba16391438cf6615e7a8e9e'
 			}
 		};
 	}
 });
 const OSS = 'https://wyatest.oss-cn-hangzhou.aliyuncs.com';
-const BASE = 'https://is-manage.wyawds.com';
+const BASE = 'https://chyy.wyawds.com';
 
 const galleryOptions = {
 	ajax,
@@ -39,15 +42,15 @@ const galleryOptions = {
 	},
 	disabledList: [],
 	apis: {
-		URL_GALLERY_CATEGORY_LIST: `${BASE}/base/photo-gallery/get-all-category.json`,
-		URL_GALLERY_CATEGORY_RENAME: `${BASE}/base/photo-gallery/rename-category.json`,
-		URL_GALLERY_CATEGORY_ADD: `${BASE}/base/photo-gallery/add-category.json`,
-		URL_GALLERY_CATEGORY_DEL: `${BASE}/base/photo-gallery/delete-category.json`,
-		URL_GALLERY_IMG_LIST: `${BASE}/base/photo-gallery/get-img-list.json`,
-		URL_GALLERY_IMG_UPLOAD: `${BASE}/base/photo-gallery/upload-img.json`,
-		URL_GALLERY_IMG_RENAME: `${BASE}/base/photo-gallery/rename-img.json`,
-		URL_GALLERY_IMG_MOVE: `${BASE}/base/photo-gallery/move-img.json`,
-		URL_GALLERY_IMG_DEL: `${BASE}/base/photo-gallery/delete-images.json`,
+		URL_GALLERY_CATEGORY_LIST: `${BASE}/product/upload/cat-list.json`,
+		URL_GALLERY_CATEGORY_RENAME: `${BASE}/product/upload/save-cat.json`,
+		URL_GALLERY_CATEGORY_ADD: `${BASE}/product/upload/save-cat.json`,
+		URL_GALLERY_CATEGORY_DELETE: `${BASE}/product/upload/delete-cat.json`,
+		URL_GALLERY_FILE_LIST: `${BASE}/product/upload/file-list.json`,
+		URL_GALLERY_FILE_UPLOAD: `${BASE}/product/upload/add-file.json`,
+		URL_GALLERY_FILE_RENAME: `${BASE}/product/upload/rename-file.json`,
+		URL_GALLERY_FILE_MOVE: `${BASE}/product/upload/remove-file.json`,
+		URL_GALLERY_FILE_DELETE: `${BASE}/product/upload/delete-file.json`,
 	}
 };
 
@@ -167,8 +170,11 @@ export default {
 		'vc-upload-picker': UploadPicker
 	},
 	methods: {
-		handleClick() {
-			Gallery.popup(galleryOptions).then((res) => {
+		handleGallery(accept) {
+			Gallery.popup({
+				...galleryOptions,
+				accept
+			}).then((res) => {
 
 			}).catch((res) => {
 				console.log(res);

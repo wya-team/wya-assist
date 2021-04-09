@@ -34,10 +34,10 @@ export default {
 		handleFileSuccess(res, file) {
 			const { catId, fileUrl, fileName } = this.valueKey;
 			this.http({
-				url: this.apis['URL_GALLERY_IMG_UPLOAD'],
+				url: this.apis['URL_GALLERY_FILE_UPLOAD'],
 				type: 'POST',
 				param: {
-					[catId]: this.isWhole ? "" : this.curCategory[catId],
+					[catId]: this.curCategory[catId],
 					[fileUrl]: res.data.url, // 这里存在耦合
 					[fileName]: res.data.title
 				},
@@ -45,7 +45,7 @@ export default {
 				errorTip: false
 			}).then(() => {
 				this.success++;
-				this.store.commit('GALLERY_IMG_LIST_INIT');
+				this.store.commit('GALLERY_FILE_LIST_INIT');
 				Message.destroy();
 				Message.success({
 					content: '上传成功'
