@@ -1,6 +1,6 @@
 import Portal from '@wya/vc/lib/portal';
 import { ajax } from '@wya/http';
-import wrapperComponent from './gallery';
+import wrapperComponent from './gallery.vue';
 
 const Gallery = new Portal(wrapperComponent, {
 	onBefore({ accept, valueKey, apis, ...rest }) {

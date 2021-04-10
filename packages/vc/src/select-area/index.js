@@ -1,1 +1,1 @@
-export { SelectArea } from './select-area';
+export { SelectArea } from './select-area.vue';

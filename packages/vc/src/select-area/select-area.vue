@@ -633,7 +633,7 @@ export const SelectArea = new Portal(config, {
 				left: -50px;
 				width: 144px;
 				height: 240px;
-				background: $white;
+				background: #ffffff;
 				box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
 				border-radius:4px;
 				margin-top: 4px;
@@ -653,12 +653,12 @@ export const SelectArea = new Portal(config, {
 				&::-webkit-scrollbar-thumb {
 					width: 100%;
 					height: 40px;
-					background: $cbd;
+					background: #cdcdcd;
 					border-radius: 2px;
 				}
 				/*主干部分*/
 				&::-webkit-scrollbar-track {
-					background-color: $white;
+					background-color: #ffffff
 				}
 			}
 		}
