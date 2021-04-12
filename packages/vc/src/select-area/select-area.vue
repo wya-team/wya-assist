@@ -133,7 +133,7 @@ export default {
 		},
 		title: {
 			type: String,
-			default: '选择地2区'
+			default: '选择地区'
 		},
 		disabledCodes: { // 禁用的地区code数组
 			type: Array,
