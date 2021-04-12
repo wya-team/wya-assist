@@ -108,14 +108,13 @@
 	</vc-modal>
 </template>
 <script>
-import Portal from '@wya/vc/lib/portal';
 import Modal from '@wya/vc/lib/modal';
 import Popover from '@wya/vc/lib/popover';
 import Checkbox from '@wya/vc/lib/checkbox';
 import Button from '@wya/vc/lib/button';
 import Icon from '@wya/vc/lib/icon';
 
-const config = {
+export default {
 	name: 'vca-select-area',
 	components: {
 		'vc-modal': Modal,
@@ -588,10 +587,6 @@ const config = {
 		},
 	}
 };
-
-export default config;
-export const SelectArea = new Portal(config, {
-});
 </script>
 <style lang="scss">
 .vca-select-area {

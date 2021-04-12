@@ -10,7 +10,7 @@ import Link from './link';
 import VcaInstance from './vca';
 import RelationChain from './relation-chain';
 import EditableText from './editable-text';
-import { SelectArea } from './select-area';
+import SelectArea from './select-area';
 
 export {
 	Store,
