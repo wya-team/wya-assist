@@ -9,13 +9,17 @@
 			<div v-show="checked || disabled" class="vca-gallery-file-item__checked-icon-wrapper">
 				<vc-icon type="correct" class="vca-gallery-file-item__checked-icon" />
 			</div>
-			<div 
-				v-if="it[valueKey.fileType] === 2"
-				class="vca-gallery-file-item__play-icon-wrapper"
-				@click.stop="handlePlay(it)"
-			>
-				<vc-icon type="toplay" class="vca-gallery-file-item__play-icon" />
-			</div>
+			<template v-if="it[valueKey.fileType] === 2">
+				<div 
+					class="vca-gallery-file-item__play-icon-wrapper"
+					@click.stop="handlePlay(it)"
+				>
+					<vc-icon type="toplay" class="vca-gallery-file-item__play-icon" />
+				</div>
+				<div class="vca-gallery-file-item__duration">
+					{{ duration }}
+				</div>
+			</template>
 		</div>
 		<div class="vca-gallery-file-item__name-wrapper">
 			<span class="vca-gallery-file-item__name">{{ it[valueKey.fileName] }}</span>
@@ -52,7 +56,20 @@ export default {
 			default: false
 		}
 	},
+	computed: {
+		duration() {
+			const { duration } = this.it;
+			const hours = Math.floor(duration / (60 * 60));
+			let rest = duration % (60 * 60);
+			const minutes = Math.floor(rest / 60);
+			rest %= 60;
+			return `${this.paddingZero(hours)}:${this.paddingZero(minutes)}:${this.paddingZero(rest)}`;
+		}
+	},
 	methods: {
+		paddingZero(value) {
+			return value < 10 ? `0${value}` : `${value}`;
+		},
 		handleRename() {
 			const { fileName, fileId } = this.valueKey;
 			Editor.popup({
@@ -122,6 +139,7 @@ $block: vca-gallery-file-item;
 				border-width: 10px 12px;
 				border-style: solid;
 				border-color: transparent #5495f6 #5495f6 transparent;
+				z-index: 10;
 			}
 			@include element(checked-icon) {
 				position: absolute;
@@ -169,6 +187,20 @@ $block: vca-gallery-file-item;
 				transform: scale(1);
 				opacity: 1;
 			}
+		}
+		@include element(duration) {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding-left: 4px;
+			width: 100%;
+			height: 20px;
+			line-height: 20px;
+			font-size: 12px;
+			color: #fff;
+			background: rgba(0, 0, 0, .5);
+			z-index: 9;
 		}
 	}
 	@include element(img) {

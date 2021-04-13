@@ -115,6 +115,11 @@ export default {
 			type: Number,
 			default: 0
 		},
+		// 可选的最大视频时长。0不限制
+		maxDuration: {
+			type: Number,
+			default: 0
+		},
 		uploadOpts: {
 			type: Object,
 			default: () => ({
@@ -269,13 +274,18 @@ export default {
 		},
 
 		handleFileToggle(it) {
-			const { fileId } = this.valueKey;
+			const { fileId, fileType } = this.valueKey;
 
 			const temp = [...this.selectedFiles];
 
 			const index = temp.findIndex(item => item[fileId] === it[fileId]);
 
 			if (index === -1) {
+				// 如为视频文件，且其时长大于最大可选时长，则不允许选择
+				if (it[fileType] === 2 && this.maxDuration > 0 && it.duration > this.maxDuration) {
+					Message.info({ content: `请选择时长不大于${this.maxDuration}秒的视频` });
+					return;
+				}
 				if (!this.max || temp.length < this.max) {
 					temp.push(it);
 				} else if (this.max === 1) {
