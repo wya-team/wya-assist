@@ -47,7 +47,7 @@ import Icon from '@wya/vc/lib/icon';
 import Button from '@wya/vc/lib/button';
 import Transition from '@wya/vc/lib/transition';
 import categoryMixin from './category';
-import { Uploader } from './popup/uploader.vue';
+import { Uploader } from './popup';
 
 export default {
 	name: 'vca-gallery-category-menu',

@@ -80,7 +80,6 @@
 </template>
 
 <script>
-import Portal from '@wya/vc/lib/portal';
 import Message from '@wya/vc/lib/message';
 import UploadPicker from '@wya/vc/lib/upload-picker';
 import Upload from '@wya/vc/lib/upload';
@@ -91,9 +90,9 @@ import Form from '@wya/vc/lib/form';
 import Select from '@wya/vc/lib/select';
 import Option from '@wya/vc/lib/select/option';
 import Input from '@wya/vc/lib/input';
-import { VideoPreviewer } from '.';
+import { VideoPreviewer } from './video-previewer.vue';
 
-const config = {
+export default {
 	name: 'vca-gallery-uploader',
 	components: {
 		'vc-modal': Modal,
@@ -247,9 +246,6 @@ const config = {
 		}
 	},
 };
-
-export default config;
-export const Uploader = new Portal(config);
 </script>
 
 <style lang="scss">

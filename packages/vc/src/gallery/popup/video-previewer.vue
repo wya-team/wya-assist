@@ -24,7 +24,7 @@ import Portal from '@wya/vc/lib/portal';
 import Popup from '@wya/vc/lib/popup';
 import Icon from '@wya/vc/lib/icon';
 
-export default {
+const config = {
 	name: 'vca-gallery-video-previewer',
 	components: {
 		'vc-popup': Popup,
@@ -63,6 +63,9 @@ export default {
 		}
 	},
 };
+
+export default config;
+export const VideoPreviewer = new Portal(config, { promise: false });
 </script>
 
 <style lang="scss">
