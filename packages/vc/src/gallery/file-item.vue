@@ -5,7 +5,7 @@
 			class="vca-gallery-file-item__file-wrapper"
 			@click="handleToggle"
 		>
-			<img :src="`${it[valueKey.fileUrl]}!4-4`" class="vca-gallery-file-item__img">
+			<vc-img :src="`${it[valueKey.fileUrl]}!4-4`" class="vca-gallery-file-item__img" />
 			<div v-show="checked || disabled" class="vca-gallery-file-item__checked-icon-wrapper">
 				<vc-icon type="correct" class="vca-gallery-file-item__checked-icon" />
 			</div>
@@ -27,6 +27,7 @@
 <script>
 import Icon from '@wya/vc/lib/icon';
 import Message from '@wya/vc/lib/message';
+import Img from '@wya/vc/lib/img';
 
 import { Editor, MoveFile, VideoPreviewer } from './popup';
 
@@ -34,7 +35,8 @@ export default {
 	name: 'vca-gallery-file-item',
 	inject: ['APIS', 'store', 'http', 'valueKey', 'sourceName'],
 	components: {
-		'vc-icon': Icon
+		'vc-icon': Icon,
+		'vc-img': Img,
 	},
 	props: {
 		it: {

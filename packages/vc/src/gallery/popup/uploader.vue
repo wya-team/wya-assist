@@ -86,11 +86,22 @@ import UploadPicker from '@wya/vc/lib/upload-picker';
 import Upload from '@wya/vc/lib/upload';
 import Img from '@wya/vc/lib/img';
 import Icon from '@wya/vc/lib/icon';
+import Modal from '@wya/vc/lib/modal';
+import Form from '@wya/vc/lib/form';
+import Select from '@wya/vc/lib/select';
+import Option from '@wya/vc/lib/select/option';
+import Input from '@wya/vc/lib/input';
 import { VideoPreviewer } from '.';
 
 const config = {
 	name: 'vca-gallery-uploader',
 	components: {
+		'vc-modal': Modal,
+		'vc-form': Form,
+		'vc-form-item': Form.Item,
+		'vc-select': Select,
+		'vc-option': Option,
+		'vc-input': Input,
 		'vc-upload-picker': UploadPicker,
 		'vc-upload': Upload,
 		'vc-img': Img,

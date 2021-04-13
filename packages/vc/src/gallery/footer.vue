@@ -40,15 +40,15 @@
 </template>
 
 <script>
-import Modal from '@wya/vc/lib/modal';
 import Button from '@wya/vc/lib/button';
-import Message from '@wya/vc/lib/message';
+import Popconfirm from '@wya/vc/lib/popconfirm';
 import { MoveFile } from './popup';
 
 export default {
 	name: 'vca-gallery-footer',
 	components: {
-		'vc-button': Button
+		'vc-button': Button,
+		'vc-popconfirm': Popconfirm
 	},
 	inject: ['APIS', 'store', 'http', 'valueKey'],
 	props: {

@@ -22,12 +22,14 @@
 import Portal from '@wya/vc/lib/portal';
 import Modal from '@wya/vc/lib/modal';
 import Select from '@wya/vc/lib/select';
+import Option from '@wya/vc/lib/select/option';
 
 export default {
 	name: 'vca-gallery-move-file',
 	components: {
 		'vc-modal': Modal,
-		'vc-select': Select
+		'vc-select': Select,
+		'vc-option': Option,
 	},
 	props: {
 		// 当前所在分组
