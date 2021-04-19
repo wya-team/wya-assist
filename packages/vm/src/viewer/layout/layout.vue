@@ -74,7 +74,7 @@ export default {
 					? `url(${backgroundImage[0]})`
 					: undefined,
 				backgroundSize,
-				borderRadius: `${borderRadius}px`,
+				borderRadius: !this.currentInner ? `${borderRadius}px` : undefined,
 				overflow: 'hidden'
 			};
 		}
