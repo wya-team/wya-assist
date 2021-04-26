@@ -66,9 +66,10 @@ export default {
 			return `${this.paddingZero(hours)}:${this.paddingZero(minutes)}:${this.paddingZero(rest)}`;
 		},
 		videoPosterUrl() {
+			const { fileUrl, fileType } = this.valueKey;
 			// 阿里云视频截帧 -> https://help.aliyun.com/document_detail/64555.html
-			return this.accept === 'video' 
-				? `${this.it[this.valueKey.fileUrl]}?x-oss-process=video/snapshot,t_0,f_png,w_0,h_0,m_fast`
+			return this.it[fileType] === 2 
+				? `${this.it[fileUrl]}?x-oss-process=video/snapshot,t_0,f_png,w_0,h_0,m_fast`
 				: '';
 		},
 	},
