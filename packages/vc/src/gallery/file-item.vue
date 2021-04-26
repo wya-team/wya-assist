@@ -5,7 +5,7 @@
 			class="vca-gallery-file-item__file-wrapper"
 			@click="handleToggle"
 		>
-			<vc-img :src="`${it[valueKey.fileUrl]}!4-4`" class="vca-gallery-file-item__img" />
+			<vc-img :src="videoPosterUrl || `${it[valueKey.fileUrl]}!4-4`" class="vca-gallery-file-item__img" />
 			<div v-show="checked || disabled" class="vca-gallery-file-item__checked-icon-wrapper">
 				<vc-icon type="correct" class="vca-gallery-file-item__checked-icon" />
 			</div>
@@ -64,7 +64,13 @@ export default {
 			const minutes = Math.floor(rest / 60);
 			rest %= 60;
 			return `${this.paddingZero(hours)}:${this.paddingZero(minutes)}:${this.paddingZero(rest)}`;
-		}
+		},
+		videoPosterUrl() {
+			// 阿里云视频截帧 -> https://help.aliyun.com/document_detail/64555.html
+			return this.accept === 'video' 
+				? `${this.it[this.valueKey.fileUrl]}?x-oss-process=video/snapshot,t_0,f_png,w_0,h_0,m_fast`
+				: '';
+		},
 	},
 	methods: {
 		paddingZero(value) {
