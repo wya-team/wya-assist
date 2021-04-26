@@ -86,9 +86,7 @@ export default {
 				apis: this.APIS,
 				http: this.http
 			}).then(({ catId }) => {
-				if (catId !== this.value) {
-					this.$emit('change', catId);
-				}
+				this.$emit('change', catId);
 			});
 		},
 		handleCategoryItem(item) {
