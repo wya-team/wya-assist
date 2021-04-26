@@ -202,8 +202,11 @@ export default {
 		 */
 		handleVideoSuccess(res, file) {
 			this.formData.fileUrls.splice(0, 1, res.data.url);
+			if (!this.formData[this.valueKey.fileName]) {
+				this.formData[this.valueKey.fileName] = res.data.title;
+			}
 			this.formData.list.splice(0, 1, {
-				file_name: res.data.title,
+				file_name: this.formData[this.valueKey.fileName],
 				file_url: res.data.url,
 				file_size: file.size,
 				duration: file.duration || 0
@@ -229,14 +232,18 @@ export default {
 			try {
 				await this.$refs.form.validate();
 				const { catId, fileId, fileName, fileSize } = this.valueKey;
+				const payload = {
+					[catId]: this.formData[catId],
+					// list中可能存在上传后又被删除的文件，但是fileUrls是最新的，所以要根据fileUrls来取
+					list: this.formData.list.filter(it => this.formData.fileUrls.includes(it.file_url))
+				};
+				if (this.accept === 'video') {
+					payload.list[0].file_name = this.formData[fileName];
+				}
 				await this.http({
 					url: this.apis.URL_GALLERY_FILE_UPLOAD,
 					type: 'POST',
-					param: {
-						[catId]: this.formData[catId],
-						// list中可能存在上传后又被删除的文件，但是fileUrls是最新的，所以要根据fileUrls来取
-						list: this.formData.list.filter(it => this.formData.fileUrls.includes(it.file_url))
-					}
+					param: payload
 				});
 				this.$emit('sure', { catId: this.formData[catId] });
 				cb();
