@@ -11,6 +11,7 @@
 			<template #default="{ it, index }">
 				<div class="vm-editor-add__item">
 					<vc-icon
+						v-if="typeof it.closeable === 'undefined' || it.closeable"
 						type="error"
 						class="vm-editor-add__close"
 						@click="handleDelete(index)"
