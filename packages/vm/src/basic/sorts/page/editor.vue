@@ -31,7 +31,7 @@
 					<vm-editor-imgs-picker
 						v-model="$attrs.backgroundImage"
 						tips="建议宽度750像素"
-						@change="handleChange(arguments[0], 'backgroundImage')"
+						@change="handleImageChange"
 					/>
 				</div>
 			</div>
@@ -42,6 +42,7 @@
 <script>
 import Input from "@wya/vc/lib/input";
 import Editor from "../../../editor";
+import { getImagesSize } from "../../../utils";
 
 export default {
 	name: 'vm-basic-page-editor',
@@ -76,6 +77,18 @@ export default {
 		handleChange(value, key) {
 			this.$emit('change', { [key]: value });
 		},
+
+		async handleImageChange(value) {
+			this.handleChange(value, 'backgroundImage');
+			const sizes = await getImagesSize(value);
+
+			// 避免异步后被重置，不取闭包下的value
+			const size = sizes[this.$attrs.backgroundImage];
+			if (size) {
+				this.handleChange(size.width, 'imageWidth');
+				this.handleChange(size.height, 'imageHeight');
+			}
+		}
 
 	},
 };

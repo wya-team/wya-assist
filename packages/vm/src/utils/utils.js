@@ -25,3 +25,28 @@ export const generatePicker = (target) => {
 		return item;
 	});
 };
+
+export const getImagesSize = (imgs) => {
+	!(imgs instanceof Array) && (imgs = [imgs]);
+	imgs = imgs.filter(i => !!i && typeof i === 'string');
+
+	return imgs.reduce((pre, src) => {
+		return pre.then((result) => {
+			return new Promise((resolve) => {
+				let img = new Image();
+				let done = () => {
+					result[src] = {
+						width: img.naturalWidth || 0,
+						height: img.naturalHeight || 0
+					};
+					resolve(result);
+					img = null;
+				};
+				
+				img.src = src;
+				img.onload = done;
+				img.onerror = done;
+			});
+		});
+	}, Promise.resolve({}));
+};

@@ -24,6 +24,8 @@ export const page = (opts = {}) => {
 			backgroundType: 1,
 			backgroundColor: '#F1F2F8',
 			backgroundImage: [],
+			imageWidth: 0,
+			imageHeight: 0,
 
 			title: '',
 			titleEditable: 0,
