@@ -48,8 +48,9 @@ $block: vm-rtf-viewer;
 		padding: 8px 12px;
 		overflow: hidden;
 	}
+	// 不使用padding
 	.ql-editor {
-		padding: 8px 12px;
+		// padding: 8px 12px;
 		line-height: 22px;
 		img {
 			width: 100vw;
