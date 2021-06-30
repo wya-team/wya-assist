@@ -67,6 +67,7 @@
 
 <script>
 import Dropdown from '@wya/vc/lib/dropdown';
+import Icon from '@wya/vc/lib/icon';
 
 const statusList = ['unsort', 'ascending', 'descending'];
 const statusShortList = ['', 'asc', 'desc'];
