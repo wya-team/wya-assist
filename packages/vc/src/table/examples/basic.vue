@@ -3,7 +3,7 @@
 		<vca-table-filter :data-source="dataSource">
 			<div>filter</div>
 		</vca-table-filter>
-		<vca-table-sorter v-model="value">
+		<vca-table-sorter v-model="value" :options="dataSource" @select="handleSort">
 			<div>sorter</div>
 		</vca-table-sorter>
 
@@ -78,6 +78,10 @@ export default {
 		},
 		handleClick(label, item) {
 			Message.info(label);
+		},
+		handleSort(res) {
+			console.log(res);
+			console.log(this.value);
 		}	
 	}
 };
