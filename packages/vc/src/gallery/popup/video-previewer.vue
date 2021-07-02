@@ -1,9 +1,10 @@
 <template>
-	<vc-popup 
+	<vc-modal
 		v-model="visible"
-		theme="dark"
-		placement="center"
+		title=""
 		class="vca-gallery-video-previewer"
+		mask-closable
+		@close="handleClose"
 	>
 		<div class="vca-gallery-video-previewer__video-wrapper">
 			<video 
@@ -15,19 +16,21 @@
 				disablePictureInPicture
 			/>
 		</div>
-		<vc-icon type="close" class="vca-gallery-video-previewer__close" @click="handleClose" />
-	</vc-popup>
+		<div class="vca-gallery-video-previewer__close-wrapper">
+			<vc-icon type="close" class="vca-gallery-video-previewer__close" @click="handleClose" />
+		</div>
+	</vc-modal>
 </template>
 
 <script>
 import Portal from '@wya/vc/lib/portal';
-import Popup from '@wya/vc/lib/popup';
+import Modal from '@wya/vc/lib/modal';
 import Icon from '@wya/vc/lib/icon';
 
 const config = {
 	name: 'vca-gallery-video-previewer',
 	components: {
-		'vc-popup': Popup,
+		'vc-modal': Modal,
 		'vc-icon': Icon
 	},
 	props: {
@@ -89,18 +92,28 @@ export const VideoPreviewer = new Portal(config, { promise: false });
 		outline: none;
 	}
 
-	@include element(close) {
+	@include element(close-wrapper) {
 		position: absolute;
-		top: 20px;
-		right: 20px;
+		top: 12px;
+		right: 12px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
 		font-size: 16px;
 		color: #fff;
 		cursor: pointer;
+		background: rgba(0, 0, 0, .3)
 	}
 
-	.vcm-popup__wrapper, .vcm-popup__mask {
-		z-index: 1010;
+	.vc-modal__header, .vc-modal__footer {
+		display: none;
 	}
-
+	.vc-modal__container, .vc-modal__content {
+		padding: 0;
+		min-height: auto !important;
+	}
 }
 </style>

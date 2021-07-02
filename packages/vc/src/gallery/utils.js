@@ -22,7 +22,6 @@ export const getMimesByMimeStr = (mimeStr, mainMime) => {
  * @param {*} mimeTypes 
  */
 export const isValidMime = (src, mimeTypes) => {
-	console.log(mimeTypes);
 	if (mimeTypes.includes('*')) return true;
 	const mime = src.replace(/.+\.([\w\d]+)/, '$1').toLowerCase();
 	return mimeTypes.includes(mime);
