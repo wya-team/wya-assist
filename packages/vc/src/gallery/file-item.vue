@@ -3,6 +3,7 @@
 		<div
 			:class="{ 'is-checked': checked || disabled, 'is-disabled': disabled }"
 			class="vca-gallery-file-item__file-wrapper"
+			:title="disabled || it.disabled ? '该项不可选' : '该项可选'"
 			@click="handleToggle"
 		>
 			<vc-img 
@@ -12,6 +13,11 @@
 			/>
 			<div v-show="checked || disabled" class="vca-gallery-file-item__checked-icon-wrapper">
 				<vc-icon type="correct" class="vca-gallery-file-item__checked-icon" />
+			</div>
+			<div v-if="it.disabled" class="vca-gallery-file-item__disabled-reason">
+				<div v-for="(item, index) in it.disabledReasons" :key="index">
+					{{ index + 1 }}.{{ item }}
+				</div>
 			</div>
 			<template v-if="it[valueKey.fileType] !== 1">
 				<div 
@@ -106,7 +112,7 @@ export default {
 		},
 
 		handleToggle() {
-			if (this.disabled) return;
+			if (this.disabled || this.it.disabled) return;
 			this.$emit('toggle');
 		},
 		handlePlay(item) {
@@ -149,6 +155,7 @@ $block: vca-gallery-file-item;
 		cursor: pointer;
 		border: 1px solid transparent;
 		border-radius: 4px;
+		z-index: 0;
 		@include when(checked) {
 			border-color: #5495f6;
 			@include element(checked-icon-wrapper) {
@@ -173,6 +180,19 @@ $block: vca-gallery-file-item;
 			@include element(checked-icon-wrapper) {
 				border-color: transparent rgba(84, 149, 246, .5) rgba(84, 149, 246, .5) transparent;
 			}
+		}
+
+		@include element(disabled-reason) {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			padding: 8px;
+			font-size: 10px;
+			color: #fff;
+			background: rgba(0, 0, 0, .5);
 		}
 
 		@include element(play-icon-wrapper) {
@@ -205,6 +225,9 @@ $block: vca-gallery-file-item;
 				align-items: center;
 				transform: scale(1);
 				opacity: 1;
+			}
+			@include element(disabled-reason) {
+				display: block;
 			}
 		}
 		@include element(duration) {

@@ -12,7 +12,7 @@
 				<vca-gallery-category-menu
 					:data-source="categories"
 					:value="currentMenuId"
-					:upload-opts="uploadOpts"
+					:upload-opts="fileUploadOpts"
 					@add-success="handleAddSuccess"
 					@del-success="handleDelSuccess"
 					@change="handleMenuChange"
@@ -74,7 +74,8 @@ import Paging from '@wya/vc/lib/paging';
 import Message from '@wya/vc/lib/message';
 
 import { ajax } from '@wya/http';
-import { SOURCE_MAP } from './constants.js';
+import { SOURCE_MAP, DEFAULT_FIELD_MAP } from './constants.js';
+import { isValidMime, getMimesByMimeStr } from './utils.js';
 
 import GalleryStore from './store';
 import CategoryMenu from './menu.vue';
@@ -105,7 +106,7 @@ export default {
 		accept: {
 			type: String,
 			default: 'image',
-			validator: value => ['image', 'video', 'audio'].includes(value)
+			validator: value => Object.keys(SOURCE_MAP).includes(value)
 		},
 		ajax: Function,
 		apis: {
@@ -116,7 +117,7 @@ export default {
 			type: Number,
 			default: 0
 		},
-		// 可选的最大视频或音频时长，0表示不限制
+		// 可选的最大视频或音频时长，0表示不限制，单位：s
 		maxDuration: {
 			type: Number,
 			default: 0
@@ -135,25 +136,39 @@ export default {
 		},
 		valueKey: {
 			type: Object,
-			default: () => ({
-				catId: 'cat_id',
-				catType: 'cat_type',
-				catName: 'cat_name',
-				// 与 filename, fileid 做区分
-				fileName: 'file_name',
-				fileId: 'file_id',
-				fileUrl: 'file_url',
-				fileSize: 'file_size',
-				fileType: 'cat_type',
-				isDefault: 'is_default',
-				count: 'cat_num'
-			})
+			default: () => DEFAULT_FIELD_MAP
 		}
 	},
 	data() {
 		const store = new GalleryStore(this, {
 			max: this.max
 		});
+
+		let fileUploadOpts;
+		switch (this.accept) {
+			case 'video':
+				fileUploadOpts = {
+					accept: 'video/mp4',
+					size: 50,
+					...this.uploadOpts,
+				};
+				break;
+
+			case 'audio':
+				fileUploadOpts = {
+					accept: 'audio/mp3,audio/aac',
+					size: 20,
+					...this.uploadOpts,
+				};
+				break;
+
+			default:
+				fileUploadOpts = {
+					accept: 'image/jpg,image/png,image/gif,image/bmp',
+					size: 3,
+					...this.uploadOpts,
+				};
+		}
 
 		return {
 			isVisible: false,
@@ -168,7 +183,9 @@ export default {
 				showElevator: true,
 				placement: 'top',
 				pageSizeOpts: [30, 40, 50, 100]
-			}
+			},
+			fileUploadOpts,
+			validMimeTypes: getMimesByMimeStr(fileUploadOpts.accept)
 		};
 	},
 	computed: {
@@ -235,6 +252,12 @@ export default {
 					[fileName]: this.keyword
 				}
 			}).then(({ data }) => {
+				data.list.forEach(it => {
+					// 禁用原因
+					it.disabledReasons = this.getDisabledReason(it);
+					// 是否禁用
+					it.disabled = !!it.disabledReasons.length;
+				});
 				this.store.commit('GALLERY_FILE_LIST_GET_SUCCESS', {
 					data,
 					param: {
@@ -275,18 +298,13 @@ export default {
 		},
 
 		handleFileToggle(it) {
-			const { fileId, fileType } = this.valueKey;
+			const { fileId } = this.valueKey;
 
 			const temp = [...this.selectedFiles];
 
 			const index = temp.findIndex(item => item[fileId] === it[fileId]);
 
 			if (index === -1) {
-				// 如为视频或音频文件，且其时长大于最大可选时长，则不允许选择
-				if ([2, 3].includes(it[fileType]) && this.maxDuration > 0 && it.duration > this.maxDuration) {
-					Message.info({ content: `请选择时长不大于${this.maxDuration}秒的${this.sourceName}` });
-					return;
-				}
 				if (!this.max || temp.length < this.max) {
 					temp.push(it);
 				} else if (this.max === 1) {
@@ -309,6 +327,27 @@ export default {
 			this.isVisible = false;
 			const list = this.selectedFiles.map(it => it[fileUrl]);
 			this.$emit('sure', { list });
+		},
+		/**
+		 * 获取文件禁用原因
+		 * 1、格式不匹配
+		 * 2、文件大小不匹配
+		 * 3、时长不匹配（针对媒体文件）
+		*/
+		getDisabledReason(file) {
+			const { fileUrl, fileSize } = this.valueKey;
+			const { size } = this.fileUploadOpts;
+			const reasons = [];
+			// 文件格式判断
+			!isValidMime(file[fileUrl], this.validMimeTypes) && reasons.push('格式不匹配');
+			// 文件大小判断
+			size > 0 && file[fileSize] > size * 1024 * 1024 && reasons.push(`大小超过${size}M`);
+			// 媒体文件时长判断
+			this.accept !== 'image' 
+				&& this.maxDuration > 0 
+				&& file.duration > this.maxDuration 
+				&& reasons.push(`时长超过${this.maxDuration}s`);
+			return reasons;
 		}
 	}
 };

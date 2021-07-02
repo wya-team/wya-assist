@@ -34,10 +34,10 @@
 			<vc-form-item v-if="accept !== 'image'" label="本地文件：" prop="fileUrls">
 				<vc-upload
 					v-if="!formData.fileUrls.length"
-					:size="fileUploadOpts.size"
+					:size="uploadOpts.size"
 					:max="1"
 					show-tips
-					:accept="fileUploadOpts.accept"
+					:accept="uploadOpts.accept"
 					@file-before="handleMediaBefore"
 					@begin="handleMediaBegin"
 					@file-error="handleMediaError"
@@ -61,7 +61,7 @@
 					</div>
 				</div>
 				<div style="color: #999">
-					支持 {{ fileMimes }} 格式，{{ sourceName }}不能超过 {{ fileUploadOpts.size }}Mb
+					支持 {{ fileMimes }} 格式，{{ sourceName }}文件大小不超过 {{ uploadOpts.size }}Mb
 				</div>
 			</vc-form-item>
 			<vc-form-item v-else label="本地文件：" prop="fileUrls">
@@ -69,11 +69,11 @@
 					v-model="formData.fileUrls"
 					:max="10"
 					:gallery="false"
-					:upload-opts="fileUploadOpts"
+					:upload-opts="uploadOpts"
 					@success="handleImageSuccess"
 				/>
 				<div style="color: #999">
-					支持 {{ fileMimes }} 格式，最多10张，单张图片不超过 {{ fileUploadOpts.size }}Mb
+					支持 {{ fileMimes }} 格式，最多10张，单张图片大小不超过 {{ uploadOpts.size }}Mb
 				</div>
 			</vc-form-item>
 		</vc-form>
@@ -127,32 +127,6 @@ export default {
 	},
 	data() {
 		const { catId, fileName } = this.valueKey;
-		let fileUploadOpts;
-		switch (this.accept) {
-			case 'video':
-				fileUploadOpts = {
-					accept: 'video/mp4',
-					size: 50,
-					...this.uploadOpts,
-				};
-				break;
-
-			case 'audio':
-				fileUploadOpts = {
-					accept: 'audio/mp3,audio/aac',
-					size: 20,
-					...this.uploadOpts,
-				};
-				break;
-
-			default:
-				fileUploadOpts = {
-					accept: 'image/jpg,image/png,image/gif,image/bmp',
-					size: 3,
-					...this.uploadOpts,
-				};
-				break;
-		}
 		return {
 			visible: false,
 			
@@ -167,8 +141,7 @@ export default {
 				[fileName]: [{ required: true, message: `请填写文件名称` }],
 				fileUrls: [{ required: true, type: 'array', message: '请上传本地文件' }]
 			},
-			fileUploadOpts,
-			fileMimes: getMimesByMimeStr(fileUploadOpts.accept).join('、')
+			fileMimes: getMimesByMimeStr(this.uploadOpts.accept).join('、')
 		};
 	},
 	computed: {

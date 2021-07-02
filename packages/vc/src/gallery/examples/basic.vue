@@ -43,6 +43,7 @@ const galleryOptions = {
 		max: 30,
 		multiple: true
 	},
+	maxDuration: 10,
 	disabledList: [],
 	apis: {
 		URL_GALLERY_CATEGORY_LIST: `${BASE}/product/upload/cat-list.json`,
