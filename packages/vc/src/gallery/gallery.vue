@@ -174,7 +174,7 @@ export default {
 	computed: {
 		// 资源类型名称
 		sourceName() {
-			return SOURCE_MAP[this.accept].name
+			return SOURCE_MAP[this.accept].name;
 		},
 		http() {
 			return this.ajax || ajax;

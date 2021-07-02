@@ -61,7 +61,7 @@
 					</div>
 				</div>
 				<div style="color: #999">
-					支持 .mp4格式，{{ sourceName }}不能超过 {{ fileUploadOpts.size }}Mb
+					支持 {{ fileMimes }} 格式，{{ sourceName }}不能超过 {{ fileUploadOpts.size }}Mb
 				</div>
 			</vc-form-item>
 			<vc-form-item v-else label="本地文件：" prop="fileUrls">
@@ -69,11 +69,11 @@
 					v-model="formData.fileUrls"
 					:max="10"
 					:gallery="false"
-					:upload-opts="imageUploadOpts"
+					:upload-opts="fileUploadOpts"
 					@success="handleImageSuccess"
 				/>
 				<div style="color: #999">
-					支持 .jpg, .gif, .png, .bmp 格式，最多10张，单个图片不超过 {{ imageUploadOpts.size }}Mb
+					支持 {{ fileMimes }} 格式，最多10张，单张图片不超过 {{ fileUploadOpts.size }}Mb
 				</div>
 			</vc-form-item>
 		</vc-form>
@@ -94,6 +94,7 @@ import Input from '@wya/vc/lib/input';
 import { VideoPreviewer } from './video-previewer.vue';
 import { AudioPreviewer } from './audio-previewer.vue';
 import { SOURCE_MAP } from '../constants.js';
+import { getMimesByMimeStr } from '../utils'; 
 
 export default {
 	name: 'vca-gallery-uploader',
@@ -166,7 +167,8 @@ export default {
 				[fileName]: [{ required: true, message: `请填写文件名称` }],
 				fileUrls: [{ required: true, type: 'array', message: '请上传本地文件' }]
 			},
-			fileUploadOpts
+			fileUploadOpts,
+			fileMimes: getMimesByMimeStr(fileUploadOpts.accept).join('、')
 		};
 	},
 	computed: {
