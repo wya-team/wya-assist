@@ -127,6 +127,7 @@ export default {
 	},
 	data() {
 		const { catId, fileName } = this.valueKey;
+		const mimes = getMimesByMimeStr(this.uploadOpts.accept, this.accept);
 		return {
 			visible: false,
 			
@@ -141,7 +142,7 @@ export default {
 				[fileName]: [{ required: true, message: `请填写文件名称` }],
 				fileUrls: [{ required: true, type: 'array', message: '请上传本地文件' }]
 			},
-			fileMimes: getMimesByMimeStr(this.uploadOpts.accept).join('、')
+			fileMimes: mimes.includes('*') ? '所有' : mimes.join('、')
 		};
 	},
 	computed: {

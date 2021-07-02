@@ -148,25 +148,25 @@ export default {
 		switch (this.accept) {
 			case 'video':
 				fileUploadOpts = {
-					accept: 'video/mp4',
 					size: 50,
 					...this.uploadOpts,
+					accept: this.uploadOpts.accept || 'video/mp4',
 				};
 				break;
 
 			case 'audio':
 				fileUploadOpts = {
-					accept: 'audio/mp3,audio/aac',
 					size: 20,
 					...this.uploadOpts,
+					accept: this.uploadOpts.accept || 'audio/mp3,audio/aac',
 				};
 				break;
 
 			default:
 				fileUploadOpts = {
-					accept: 'image/jpg,image/png,image/gif,image/bmp',
 					size: 3,
 					...this.uploadOpts,
+					accept: this.uploadOpts.accept || 'image/jpg,image/png,image/gif,image/bmp',
 				};
 		}
 
@@ -185,7 +185,7 @@ export default {
 				pageSizeOpts: [30, 40, 50, 100]
 			},
 			fileUploadOpts,
-			validMimeTypes: getMimesByMimeStr(fileUploadOpts.accept)
+			validMimeTypes: getMimesByMimeStr(fileUploadOpts.accept, this.accept)
 		};
 	},
 	computed: {
