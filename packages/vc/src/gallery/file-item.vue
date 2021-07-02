@@ -26,7 +26,7 @@
 			</template>
 		</div>
 		<div class="vca-gallery-file-item__name-wrapper">
-			<span class="vca-gallery-file-item__name">{{ it[valueKey.fileName] }}</span>
+			<span class="vca-gallery-file-item__name" :title="it[valueKey.fileName]">{{ it[valueKey.fileName] }}</span>
 			<vc-icon type="edit" class="vca-gallery-file-item__name-edit-icon" @click="handleRename" />
 		</div>
 	</div>
