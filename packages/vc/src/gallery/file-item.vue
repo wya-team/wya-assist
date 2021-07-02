@@ -19,10 +19,19 @@
 					{{ index + 1 }}.{{ item }}
 				</div>
 			</div>
-			<template v-if="it[valueKey.fileType] !== 1">
+			<div 
+				v-if="it[valueKey.fileType] === 1"
+				class="vca-gallery-file-item__preview-icon-wrapper"
+				title="点击预览"
+				@click.stop="handlePlay(it, $event)"
+			>
+				<vc-icon type="visible" class="vca-gallery-file-item__preview-icon" />
+			</div>
+			<template v-else>
 				<div 
-					class="vca-gallery-file-item__play-icon-wrapper"
-					@click.stop="handlePlay(it)"
+					class="vca-gallery-file-item__preview-icon-wrapper"
+					title="点击预览"
+					@click.stop="handlePlay(it, $event)"
 				>
 					<vc-icon type="toplay" class="vca-gallery-file-item__play-icon" />
 				</div>
@@ -42,6 +51,7 @@
 import Icon from '@wya/vc/lib/icon';
 import Message from '@wya/vc/lib/message';
 import Img from '@wya/vc/lib/img';
+import ImgsPreview from '@wya/vc/lib/imgs-preview';
 
 import { Editor, MoveFile, VideoPreviewer, AudioPreviewer } from './popup';
 
@@ -115,16 +125,46 @@ export default {
 			if (this.disabled || this.it.disabled) return;
 			this.$emit('toggle');
 		},
-		handlePlay(item) {
+		handlePlay(item, event) {
 			const { fileName, fileType, fileUrl } = this.valueKey;
-			if (item[fileType] === 3) {
+			const type = item[fileType];
+			// 音频
+			if (type === 3) {
 				AudioPreviewer.popup({
 					src: item[fileUrl],
 					name: item[fileName]
 				});
-			} else {
+			// 视频
+			} else if (type === 2) {
 				VideoPreviewer.popup({
 					dataSource: [item[fileUrl]]
+				});
+			// 图片
+			} else {
+				let pos = {};
+				try {
+					const target = event.target; // 先得到pos, 否则getThumbBoundsFn再计划，target已变化（比如弹窗transition的影响）
+					const pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+					const rect = target.getBoundingClientRect();
+
+					pos = { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
+
+				} catch (e) {
+					console.log(e);
+				}
+
+				const url = item[fileUrl];
+				ImgsPreview.open({
+					dataSource: [{
+						src: url,
+						thumbnail: url,
+						title: item[fileName]
+					}],
+					opts: {
+						index: 0,
+						history: false,
+						getThumbBoundsFn: (index) => pos
+					},
 				});
 			}
 		}
@@ -195,7 +235,7 @@ $block: vca-gallery-file-item;
 			background: rgba(0, 0, 0, .5);
 		}
 
-		@include element(play-icon-wrapper) {
+		@include element(preview-icon-wrapper) {
 			position: absolute;
 			top: 50%;
 			left: 50%;
@@ -218,8 +258,12 @@ $block: vca-gallery-file-item;
 			color: #fff;
 			font-size: 18px;
 		}
+		@include element(preview-icon) {
+			color: #fff;
+			font-size: 18px;
+		}
 		&:hover {
-			@include element(play-icon-wrapper) {
+			@include element(preview-icon-wrapper) {
 				display: flex;
 				justify-content: center;
 				align-items: center;
