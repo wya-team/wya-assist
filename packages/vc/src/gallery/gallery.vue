@@ -74,6 +74,7 @@ import Paging from '@wya/vc/lib/paging';
 import Message from '@wya/vc/lib/message';
 
 import { ajax } from '@wya/http';
+import { SOURCE_MAP } from './constants.js';
 
 import GalleryStore from './store';
 import CategoryMenu from './menu.vue';
@@ -100,11 +101,11 @@ export default {
 		};
 	},
 	props: {
-		// 类型：图片image、视频video
+		// 类型：图片image、视频video、音频audio
 		accept: {
 			type: String,
 			default: 'image',
-			validator: value => ['image', 'video'].includes(value)
+			validator: value => ['image', 'video', 'audio'].includes(value)
 		},
 		ajax: Function,
 		apis: {
@@ -115,7 +116,7 @@ export default {
 			type: Number,
 			default: 0
 		},
-		// 可选的最大视频时长。0不限制
+		// 可选的最大视频或音频时长，0表示不限制
 		maxDuration: {
 			type: Number,
 			default: 0
@@ -173,7 +174,7 @@ export default {
 	computed: {
 		// 资源类型名称
 		sourceName() {
-			return this.accept === 'video' ? '视频' : '图片';
+			return SOURCE_MAP[this.accept].name
 		},
 		http() {
 			return this.ajax || ajax;
@@ -209,7 +210,7 @@ export default {
 				url: this.apis['URL_GALLERY_CATEGORY_LIST'],
 				type: 'GET',
 				param: {
-					[catType]: this.accept === 'video' ? 2 : 1,
+					[catType]: SOURCE_MAP[this.accept].fileType,
 					[fileName]: this.keyword
 				}
 			}).then(({ data }) => {
@@ -281,9 +282,9 @@ export default {
 			const index = temp.findIndex(item => item[fileId] === it[fileId]);
 
 			if (index === -1) {
-				// 如为视频文件，且其时长大于最大可选时长，则不允许选择
-				if (it[fileType] === 2 && this.maxDuration > 0 && it.duration > this.maxDuration) {
-					Message.info({ content: `请选择时长不大于${this.maxDuration}秒的视频` });
+				// 如为视频或音频文件，且其时长大于最大可选时长，则不允许选择
+				if ([2, 3].includes(it[fileType]) && this.maxDuration > 0 && it.duration > this.maxDuration) {
+					Message.info({ content: `请选择时长不大于${this.maxDuration}秒的${this.sourceName}` });
 					return;
 				}
 				if (!this.max || temp.length < this.max) {

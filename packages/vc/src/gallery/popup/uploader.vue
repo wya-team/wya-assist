@@ -23,44 +23,45 @@
 					</vc-option>
 				</vc-select>
 			</vc-form-item>
-			<vc-form-item v-if="accept === 'video'" label="视频名称：" :prop="valueKey.fileName">
+			<vc-form-item v-if="accept !== 'image'" :label="`${sourceName}名称：`" :prop="valueKey.fileName">
 				<vc-input
 					v-model="formData[valueKey.fileName]"
 					clearable
-					placeholder="请输入视频名称"
+					:placeholder="`请输入${sourceName}名称`"
 					style="width: 300px"
 				/>
 			</vc-form-item>
-			<vc-form-item v-if="accept === 'video'" label="本地文件：" prop="fileUrls">
+			<vc-form-item v-if="accept !== 'image'" label="本地文件：" prop="fileUrls">
 				<vc-upload
 					v-if="!formData.fileUrls.length"
-					:size="50"
+					:size="fileUploadOpts.size"
 					:max="1"
 					show-tips
-					accept="video/mp4"
-					@file-before="handleFileBefore"
-					@begin="handleBegin"
-					@error="handleError"
-					@file-success="handleVideoSuccess"
+					:accept="fileUploadOpts.accept"
+					@file-before="handleMediaBefore"
+					@begin="handleMediaBegin"
+					@file-error="handleMediaError"
+					@error="handleMediaError"
+					@file-success="handleMediaSuccess"
 				>
 					<div class="vca-gallery-uploader__upload-box">
 						<vc-icon type="plus" style="margin-bottom:8px;font-size:14px;" />
 						<span>上传</span>
 					</div>
 				</vc-upload>
-				<div v-else class="vca-gallery-uploader__video" @click="handlePreviewVideo">
-					<vc-img :src="videoPosterUrl" fit="cover" />
-					<div class="vca-gallery-uploader__video-mask">
+				<div v-else class="vca-gallery-uploader__media" @click="handlePreview">
+					<vc-img v-if="accept === 'video'" :src="videoPosterUrl" fit="cover" />
+					<div class="vca-gallery-uploader__media-mask">
 						<div class="vca-gallery-uploader__play">
 							<vc-icon type="toplay" />
 						</div>
 					</div>
-					<div class="vca-gallery-uploader__delete" @click.stop="handleDeleteVideo">
+					<div class="vca-gallery-uploader__delete" @click.stop="handleDeleteMedia">
 						<vc-icon type="clear" />
 					</div>
 				</div>
 				<div style="color: #999">
-					支持 .mp4格式，视频不能超过 50Mb
+					支持 .mp4格式，{{ sourceName }}不能超过 {{ fileUploadOpts.size }}Mb
 				</div>
 			</vc-form-item>
 			<vc-form-item v-else label="本地文件：" prop="fileUrls">
@@ -69,10 +70,10 @@
 					:max="10"
 					:gallery="false"
 					:upload-opts="imageUploadOpts"
-					@success="handleFileSuccess"
+					@success="handleImageSuccess"
 				/>
 				<div style="color: #999">
-					支持 .jpg, .gif, .png, .bmp 格式，最多10张，单个图片不超过 3Mb
+					支持 .jpg, .gif, .png, .bmp 格式，最多10张，单个图片不超过 {{ imageUploadOpts.size }}Mb
 				</div>
 			</vc-form-item>
 		</vc-form>
@@ -91,6 +92,8 @@ import Select from '@wya/vc/lib/select';
 import Option from '@wya/vc/lib/select/option';
 import Input from '@wya/vc/lib/input';
 import { VideoPreviewer } from './video-previewer.vue';
+import { AudioPreviewer } from './audio-previewer.vue';
+import { SOURCE_MAP } from '../constants.js';
 
 export default {
 	name: 'vca-gallery-uploader',
@@ -110,7 +113,7 @@ export default {
 		accept: {
 			type: String,
 			default: 'image',
-			validator: value => ['image', 'video'].includes(value)
+			validator: value => Object.keys(SOURCE_MAP).includes(value)
 		},
 		uploadOpts: {
 			type: Object,
@@ -123,6 +126,32 @@ export default {
 	},
 	data() {
 		const { catId, fileName } = this.valueKey;
+		let fileUploadOpts;
+		switch (this.accept) {
+			case 'video':
+				fileUploadOpts = {
+					accept: 'video/mp4',
+					size: 50,
+					...this.uploadOpts,
+				};
+				break;
+
+			case 'audio':
+				fileUploadOpts = {
+					accept: 'audio/mp3,audio/aac',
+					size: 20,
+					...this.uploadOpts,
+				};
+				break;
+
+			default:
+				fileUploadOpts = {
+					accept: 'image/jpg,image/png,image/gif,image/bmp',
+					size: 3,
+					...this.uploadOpts,
+				};
+				break;
+		}
 		return {
 			visible: false,
 			
@@ -134,20 +163,16 @@ export default {
 			},
 			rules: {
 				[catId]: [{ required: true, message: '请选择分组' }],
-				[fileName]: [{ required: true, message: '请填写视频名称' }],
+				[fileName]: [{ required: true, message: `请填写文件名称` }],
 				fileUrls: [{ required: true, type: 'array', message: '请上传本地文件' }]
 			},
-			imageUploadOpts: {
-				...this.uploadOpts,
-				accept: 'image/jpg,image/png,image/gif,image/bmp',
-				size: 3
-			}
+			fileUploadOpts
 		};
 	},
 	computed: {
 		// 资源类型名称
 		sourceName() {
-			return this.accept === 'video' ? '视频' : '图片';
+			return SOURCE_MAP[this.accept].name;
 		},
 		videoPosterUrl() {
 			if (this.accept !== 'video' || !this.formData.fileUrls.length) return '';
@@ -159,71 +184,80 @@ export default {
 		this.visible = true;	
 	},
 	methods: {
-		handleBegin(files) {
+		handleMediaBegin(files) {
 			Message.loading({ content: '上传中' });
 		},
 		/**
-		 * 获取视频时长
+		 * 获取媒体文件时长
 		 */
-		handleFileBefore(videoFile) {
-			const videoEl = document.createElement('video');
-			videoEl.preload = 'metadata';
+		handleMediaBefore(mediaFile) {
+			const mediaEl = document.createElement(SOURCE_MAP[this.accept].elementTag);
+			mediaEl.preload = 'metadata';
 			
 			return new Promise((resolve, reject) => {
 				let timer = null;
 				const handler = () => {
-					window.URL.revokeObjectURL(videoEl.src);
+					window.URL.revokeObjectURL(mediaEl.src);
 					timer && clearTimeout(timer);
-					videoFile.duration = videoEl.duration;
-					resolve(videoFile);
+					mediaFile.duration = mediaEl.duration;
+					resolve(mediaFile);
 				};
 				timer = setTimeout(() => {
-					videoEl.removeEventListener('loadedmetadata', handler, false);
-					reject({ msg: '获取视频时长失败' }); // eslint-disable-line
+					mediaEl.removeEventListener('loadedmetadata', handler, false);
+					reject({ msg: `获取${this.sourceName}时长失败` }); // eslint-disable-line
 				}, 5000);
 
-				videoEl.addEventListener('loadedmetadata', handler, false);
-				videoEl.src = window.URL.createObjectURL(videoFile);
+				mediaEl.addEventListener('loadedmetadata', handler, false);
+				mediaEl.src = window.URL.createObjectURL(mediaFile);
 			});
 		},
 		/**
 		 * 图片文件上传成功回调
 		 */
-		handleFileSuccess(res, file) {
+		handleImageSuccess(res, file) {
+			const { fileName, fileSize, fileUrl } = this.valueKey;
 			this.formData.list.push({
-				file_name: res.data.title,
-				file_url: res.data.url,
-				file_size: file.size,
+				[fileName]: res.data.title,
+				[fileUrl]: res.data.url,
+				[fileSize]: file.size,
 			});
 			Message.destroy();
 		},
 		/**
-		 * 视频文件上传成功回调
+		 * 媒体文件上传成功回调
 		 */
-		handleVideoSuccess(res, file) {
+		handleMediaSuccess(res, file) {
+			const { fileName, fileSize, fileUrl } = this.valueKey;
 			this.formData.fileUrls.splice(0, 1, res.data.url);
-			if (!this.formData[this.valueKey.fileName]) {
-				this.formData[this.valueKey.fileName] = res.data.title;
+			if (!this.formData[fileName]) {
+				this.formData[fileName] = res.data.title;
 			}
+			
 			this.formData.list.splice(0, 1, {
-				file_name: this.formData[this.valueKey.fileName],
-				file_url: res.data.url,
-				file_size: file.size,
+				[fileName]: this.formData[fileName],
+				[fileUrl]: res.data.url,
+				[fileSize]: file.size,
 				duration: file.duration || 0
 			});
 			Message.destroy();
 		},
-		handleError(error) {
+		handleMediaError(error) {
 			Message.destroy();
 			Message.error({ content: error.msg });
 		},
-		handleDeleteVideo() {
+		handleDeleteMedia() {
 			this.formData.fileUrls.splice(0, 1);
 		},
-		handlePreviewVideo() {
-			VideoPreviewer.popup({
-				dataSource: this.formData.fileUrls.slice(0, 1)
-			});
+		handlePreview() {
+			if (this.accept === 'video') {
+				VideoPreviewer.popup({
+					dataSource: this.formData.fileUrls.slice(0, 1)
+				});
+			} else {
+				AudioPreviewer.popup({
+					src: this.formData.fileUrls[0]
+				});
+			}
 		},
 		/**
 		 * 保存素材
@@ -231,14 +265,14 @@ export default {
 		async handleOk(e, cb) {
 			try {
 				await this.$refs.form.validate();
-				const { catId, fileId, fileName, fileSize } = this.valueKey;
+				const { catId, fileId, fileName, fileSize, fileUrl } = this.valueKey;
 				const payload = {
 					[catId]: this.formData[catId],
 					// list中可能存在上传后又被删除的文件，但是fileUrls是最新的，所以要根据fileUrls来取
-					list: this.formData.list.filter(it => this.formData.fileUrls.includes(it.file_url))
+					list: this.formData.list.filter(it => this.formData.fileUrls.includes(it[fileUrl]))
 				};
-				if (this.accept === 'video') {
-					payload.list[0].file_name = this.formData[fileName];
+				if (this.accept !== 'image') {
+					payload.list[0][fileName] = this.formData[fileName];
 				}
 				await this.http({
 					url: this.apis.URL_GALLERY_FILE_UPLOAD,
@@ -271,7 +305,7 @@ export default {
 		background-color: #F5F5F6;
 		cursor: pointer;
 	}
-	.vca-gallery-uploader__video {
+	.vca-gallery-uploader__media {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -281,7 +315,7 @@ export default {
 		border-radius: 4px;
 		background-color: #fafafa;
 		cursor: pointer;
-		.vca-gallery-uploader__video-mask {
+		.vca-gallery-uploader__media-mask {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -328,5 +362,8 @@ export default {
 			height: 100%;
 		}
 	}
+}
+.vc-upload-tips {
+	z-index: 99999;
 }
 </style>

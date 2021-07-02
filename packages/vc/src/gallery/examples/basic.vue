@@ -6,6 +6,9 @@
 		<vc-button @click="handleGallery('video')">
 			视频 gallery
 		</vc-button>
+		<vc-button @click="handleGallery('audio')">
+			音频 gallery
+		</vc-button>
 		<vc-upload-picker />
 		<!-- <vc-upload @file-success="handleSuccess" @file-error="handleSuccess">
 			<vc-button>upload</vc-button>
@@ -25,7 +28,7 @@ const { ajax } = createHttpClient({
 		return {
 			...options,
 			headers: {
-				token: '2bc5053418887fe46ba16391438cf6615e7a8e9e'
+				token: '91b5366e54b7a0cb9f9d48377a92c2f021f19b79'
 			}
 		};
 	}

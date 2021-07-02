@@ -1,5 +1,6 @@
 import Modal from '@wya/vc/lib/modal';
 import { Editor } from './popup';
+import { SOURCE_MAP } from './constants.js';
 
 export default {
 	methods: {
@@ -15,7 +16,7 @@ export default {
 					url: this.APIS['URL_GALLERY_CATEGORY_ADD'],
 					type: 'POST',
 					param: {
-						[catType]: this.accept === 'video' ? 2 : 1,
+						[catType]: SOURCE_MAP[this.accept].fileType,
 						[catName]: inputValue
 					}
 				}).then(() => {
@@ -39,7 +40,7 @@ export default {
 						type: 'POST',
 						param: {
 							[catId]: it[catId],
-							[catType]: this.accept === 'video' ? 2 : 1,
+							[catType]: SOURCE_MAP[this.accept].fileType,
 							[catName]: inputValue
 						}
 					}).then(() => {

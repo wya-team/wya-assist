@@ -5,11 +5,15 @@
 			class="vca-gallery-file-item__file-wrapper"
 			@click="handleToggle"
 		>
-			<vc-img :src="videoPosterUrl || `${it[valueKey.fileUrl]}!4-4`" class="vca-gallery-file-item__img" />
+			<vc-img 
+				v-if="it[valueKey.fileType] !== 3"
+				:src="videoPosterUrl || `${it[valueKey.fileUrl]}!4-4`"
+				class="vca-gallery-file-item__img"
+			/>
 			<div v-show="checked || disabled" class="vca-gallery-file-item__checked-icon-wrapper">
 				<vc-icon type="correct" class="vca-gallery-file-item__checked-icon" />
 			</div>
-			<template v-if="it[valueKey.fileType] === 2">
+			<template v-if="it[valueKey.fileType] !== 1">
 				<div 
 					class="vca-gallery-file-item__play-icon-wrapper"
 					@click.stop="handlePlay(it)"
@@ -33,7 +37,7 @@ import Icon from '@wya/vc/lib/icon';
 import Message from '@wya/vc/lib/message';
 import Img from '@wya/vc/lib/img';
 
-import { Editor, MoveFile, VideoPreviewer } from './popup';
+import { Editor, MoveFile, VideoPreviewer, AudioPreviewer } from './popup';
 
 export default {
 	name: 'vca-gallery-file-item',
@@ -106,9 +110,17 @@ export default {
 			this.$emit('toggle');
 		},
 		handlePlay(item) {
-			VideoPreviewer.popup({
-				dataSource: [item[this.valueKey.fileUrl]]
-			});
+			const { fileName, fileType, fileUrl } = this.valueKey;
+			if (item[fileType] === 3) {
+				AudioPreviewer.popup({
+					src: item[fileUrl],
+					name: item[fileName]
+				});
+			} else {
+				VideoPreviewer.popup({
+					dataSource: [item[fileUrl]]
+				});
+			}
 		}
 	}
 };
@@ -182,7 +194,7 @@ $block: vca-gallery-file-item;
 			opacity: 0;
 		}
 		@include element(play-icon) {
-			margin-right: -3px;
+			margin-right: -4px;
 			color: #fff;
 			font-size: 18px;
 		}
@@ -213,8 +225,10 @@ $block: vca-gallery-file-item;
 	@include element(img) {
 		width: 104px;
 		height: 104px;
-		object-fit: cover;
 		border: none;
+		img {
+			object-fit: cover;
+		}
 	}
 	@include element(name-edit-icon) {
 		display: none;

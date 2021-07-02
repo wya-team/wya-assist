@@ -1,6 +1,7 @@
 import Portal from '@wya/vc/lib/portal';
 import { ajax } from '@wya/http';
 import wrapperComponent from './gallery.vue';
+import { SOURCE_MAP } from './constants.js';
 
 const Gallery = new Portal(wrapperComponent, {
 	onBefore({ accept, valueKey, apis, ...rest }) {
@@ -10,7 +11,7 @@ const Gallery = new Portal(wrapperComponent, {
 			type: 'GET',
 			param: {
 				// 分类类型：1 图片，2 视频
-				[valueKey ? valueKey.catType : 'cat_type']: accept === 'video' ? 2 : 1
+				[valueKey ? valueKey.catType : 'cat_type']: SOURCE_MAP[accept].fileType
 			}
 		});
 	}

@@ -2,7 +2,7 @@
 	<div class="vca-gallery-category-menu">
 		<div class="vca-gallery-category-menu__tools">
 			<vc-button type="primary" @click="handleUpload">
-				上传{{ accept === 'video' ? '视频' : '图片' }}
+				上传{{ sourceName }}
 			</vc-button>
 			<vc-button type="default" @click="handleAdd">
 				添加分组
@@ -48,10 +48,11 @@ import Button from '@wya/vc/lib/button';
 import Transition from '@wya/vc/lib/transition';
 import categoryMixin from './category';
 import { Uploader } from './popup';
+import { SOURCE_MAP } from './constants.js';
 
 export default {
 	name: 'vca-gallery-category-menu',
-	inject: ['APIS', 'http', 'store', 'valueKey', 'accept'],
+	inject: ['APIS', 'http', 'store', 'valueKey', 'accept', 'sourceName'],
 	components: {
 		'vc-transition-slide': Transition.Slide,
 		'vc-icon': Icon,
