@@ -11,7 +11,7 @@ export const SOURCE_MAP = {
 	},
 	'audio': {
 		name: '音频',
-		fileType: 2,
+		fileType: 3,
 		elementTag: 'audio'
 	}
 };
