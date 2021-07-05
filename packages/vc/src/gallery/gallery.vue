@@ -137,6 +137,12 @@ export default {
 		valueKey: {
 			type: Object,
 			default: () => DEFAULT_FIELD_MAP
+		},
+		// 输出的类型，url，仅输出文件oss的url，original，输出整个文件的信息（Object的形式）
+		output: {
+			type: String,
+			default: 'url',
+			validator: value => ['url', 'original'].includes(value)
 		}
 	},
 	data() {
@@ -325,7 +331,7 @@ export default {
 		handleConfirm() {
 			const { fileUrl } = this.valueKey;
 			this.isVisible = false;
-			const list = this.selectedFiles.map(it => it[fileUrl]);
+			const list = this.output === 'original' ? this.selectedFiles : this.selectedFiles.map(it => it[fileUrl]);
 			this.$emit('sure', { list });
 		},
 		/**
