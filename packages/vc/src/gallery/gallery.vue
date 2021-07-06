@@ -75,7 +75,7 @@ import Message from '@wya/vc/lib/message';
 
 import { ajax } from '@wya/http';
 import { SOURCE_MAP, DEFAULT_FIELD_MAP } from './constants.js';
-import { isValidMime, getMimesByMimeStr } from './utils.js';
+import { isValidMime, getExtsByMimeStr } from './utils.js';
 
 import GalleryStore from './store';
 import CategoryMenu from './menu.vue';
@@ -172,7 +172,7 @@ export default {
 				fileUploadOpts = {
 					size: 3,
 					...this.uploadOpts,
-					accept: this.uploadOpts.accept || 'image/jpg,image/png,image/gif,image/bmp',
+					accept: this.uploadOpts.accept || 'image/jpeg,image/png,image/gif,image/bmp',
 				};
 		}
 
@@ -191,7 +191,8 @@ export default {
 				pageSizeOpts: [30, 40, 50, 100]
 			},
 			fileUploadOpts,
-			validMimeTypes: getMimesByMimeStr(fileUploadOpts.accept, this.accept)
+			// 允许的文件后缀名
+			validFileExts: getExtsByMimeStr(fileUploadOpts.accept, this.accept)
 		};
 	},
 	computed: {
@@ -345,7 +346,7 @@ export default {
 			const { size } = this.fileUploadOpts;
 			const reasons = [];
 			// 文件格式判断
-			!isValidMime(file[fileUrl], this.validMimeTypes) && reasons.push('格式不匹配');
+			!isValidMime(file[fileUrl], this.validFileExts) && reasons.push('格式不匹配');
 			// 文件大小判断
 			size > 0 && file[fileSize] > size * 1024 * 1024 && reasons.push(`大小超过${size}M`);
 			// 媒体文件时长判断

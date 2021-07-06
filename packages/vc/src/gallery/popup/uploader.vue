@@ -94,7 +94,7 @@ import Input from '@wya/vc/lib/input';
 import { VideoPreviewer } from './video-previewer.vue';
 import { AudioPreviewer } from './audio-previewer.vue';
 import { SOURCE_MAP } from '../constants.js';
-import { getMimesByMimeStr } from '../utils'; 
+import { getExtsByMimeStr } from '../utils'; 
 
 export default {
 	name: 'vca-gallery-uploader',
@@ -127,7 +127,7 @@ export default {
 	},
 	data() {
 		const { catId, fileName } = this.valueKey;
-		const mimes = getMimesByMimeStr(this.uploadOpts.accept, this.accept);
+		const mimes = getExtsByMimeStr(this.uploadOpts.accept, this.accept);
 		return {
 			visible: false,
 			
