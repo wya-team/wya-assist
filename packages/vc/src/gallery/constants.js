@@ -48,6 +48,7 @@ export const MIME_EXT_MAP = {
 	// 音频
 	'audio/mp3': ['.mp3'],
 	'audio/mpeg': ['.mp3'],
+	'audio/m4a': ['.m4a'],
 	'audio/aac': ['.aac'],
 	'audio/webm': ['.weba'],
 	'audio/midi': ['.midi', '.mid'],
