@@ -10,15 +10,20 @@
 		<div v-if="name" class="vca-gallery-audio-previewer__name">
 			音频文件名称：{{ name }}
 		</div>
-		<audio ref="audio" :src="src" controls class="vca-gallery-audio-previewer__audio" />
+		<audio 
+			ref="audio"
+			:src="src"
+			controls
+			autoplay
+			class="vca-gallery-audio-previewer__audio"
+		/>
 	</vc-modal>
 </template>
 
 <script>
-import Portal from '@wya/vc/lib/portal';
 import Modal from '@wya/vc/lib/modal';
 
-const config = {
+export default {
 	name: 'vca-gallery-video-previewer',
 	components: {
 		'vc-modal': Modal,
@@ -42,9 +47,6 @@ const config = {
 		}
 	},
 };
-
-export default config;
-export const AudioPreviewer = new Portal(config, { promise: false });
 </script>
 
 <style lang="scss">

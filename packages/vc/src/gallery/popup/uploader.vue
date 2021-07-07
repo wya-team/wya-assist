@@ -91,8 +91,8 @@ import Form from '@wya/vc/lib/form';
 import Select from '@wya/vc/lib/select';
 import Option from '@wya/vc/lib/select/option';
 import Input from '@wya/vc/lib/input';
-import { VideoPreviewer } from './video-previewer.vue';
-import { AudioPreviewer } from './audio-previewer.vue';
+import { VideoPreviewer } from './video-previewer/index';
+import { AudioPreviewer } from './audio-previewer/index';
 import { SOURCE_MAP } from '../constants.js';
 import { getExtsByMimeStr } from '../utils'; 
 

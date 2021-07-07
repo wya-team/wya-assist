@@ -13,6 +13,7 @@
 				controlslist="nodownload"
 				class="vca-gallery-video-previewer__video"
 				controls
+				autoplay
 				disablePictureInPicture
 			/>
 		</div>
@@ -23,11 +24,10 @@
 </template>
 
 <script>
-import Portal from '@wya/vc/lib/portal';
 import Modal from '@wya/vc/lib/modal';
 import Icon from '@wya/vc/lib/icon';
 
-const config = {
+export default {
 	name: 'vca-gallery-video-previewer',
 	components: {
 		'vc-modal': Modal,
@@ -66,13 +66,10 @@ const config = {
 		}
 	},
 };
-
-export default config;
-export const VideoPreviewer = new Portal(config, { promise: false });
 </script>
 
 <style lang="scss">
-@import "../../style/index.scss";
+@import "../../../style/index.scss";
 
 @include block(vca-gallery-video-previewer) {
 	position: relative;
