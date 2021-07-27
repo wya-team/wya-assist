@@ -10,7 +10,7 @@ const resetStore = () => {
 };
 
 const defaultCompare = (newParam, localObj) => {
-	isEqualWith(newParam, localObj.param)
+	return isEqualWith(newParam, localObj.param)
 		? localObj.response
 		: undefined;
 };
