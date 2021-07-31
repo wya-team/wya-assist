@@ -96,7 +96,7 @@ import Popconfirm from '@wya/vc/lib/popconfirm';
 import Popover from '@wya/vc/lib/popover';
 import Icon from '@wya/vc/lib/icon';
 import Divider from '@wya/vc/lib/divider';
-import Item from './item';
+import Item from './item.vue';
 
 export default {
 	name: 'vca-table-operate',
