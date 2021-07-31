@@ -28,7 +28,7 @@ const { ajax } = createHttpClient({
 		return {
 			...options,
 			headers: {
-				token: '91b5366e54b7a0cb9f9d48377a92c2f021f19b79'
+				token: '1f358b7ed7e8bdeb019f4c21cba0330ed407e604'
 			}
 		};
 	}
@@ -44,6 +44,7 @@ const galleryOptions = {
 		multiple: true
 	},
 	maxDuration: 10,
+	// output: 'original',
 	disabledList: [],
 	apis: {
 		URL_GALLERY_CATEGORY_LIST: `${BASE}/product/upload/cat-list.json`,
@@ -179,7 +180,7 @@ export default {
 				...galleryOptions,
 				accept
 			}).then((res) => {
-
+				console.log(res, '---');
 			}).catch((res) => {
 				console.log(res);
 			});
