@@ -2,7 +2,7 @@
   "name": "@wya/assist-wx",
   "version": "1.0.1",
   "description": "",
-  "main": "dist/assist-js.js",
+  "main": "dist/assist-wx.min.js",
   "files": [
     "dist/**"
   ],
