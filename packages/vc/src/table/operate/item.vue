@@ -18,8 +18,13 @@
 </template>
 
 <script>
+import Popconfirm from '@wya/vc/lib/popconfirm';
+
 export default {
 	name: 'vca-table-operate-item',
+	components: {
+		'vc-popconfirm': Popconfirm
+	},
 	props: {
 		info: {
 			type: Object,
