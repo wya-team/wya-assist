@@ -11,6 +11,7 @@ import VcaInstance from './vca';
 import RelationChain from './relation-chain';
 import EditableText from './editable-text';
 import SelectArea from './select-area';
+import Map from './map';
 
 export {
 	Store,
@@ -25,7 +26,8 @@ export {
 	Link,
 	RelationChain,
 	EditableText,
-	SelectArea
+	SelectArea,
+	Map
 };
 
 export default {
@@ -45,7 +47,8 @@ export default {
 			Table.Operate,
 			Table.Select,
 			RelationChain,
-			RelationChain.Item
+			RelationChain.Item,
+			Map
 		].forEach(comp => {
 			const { name, aliasName } = comp;
 
