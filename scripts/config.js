@@ -157,6 +157,8 @@ class Config {
 					exclude: 'node_modules/**',
 					babelHelpers: 'runtime'
 				}),
+
+				// TODO: 移除buble, 仅用babel, 问题可参考@wya/vm
 				buble({
 					objectAssign: 'Object.assign' // ...Object spread and rest
 				})
