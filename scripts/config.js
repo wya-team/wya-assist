@@ -1,10 +1,9 @@
 const path = require('path');
 const { babel } = require('@rollup/plugin-babel');
-const buble = require('@rollup/plugin-buble');
 const replace = require('@rollup/plugin-replace');
 const commonjs = require('@rollup/plugin-commonjs');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const { uglify } = require('rollup-plugin-uglify');
+const { terser } = require('rollup-plugin-terser');
 const postcss = require('rollup-plugin-postcss');
 const vue = require('rollup-plugin-vue');
 
@@ -149,20 +148,24 @@ class Config {
 				replace({
 					'__DEV__': 'false',
 					'ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-					'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+					'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+					preventAssignment: false
 				}),
 				...(opts.plugins || []),
+
+				/**
+				 * 使用babel，结合.babelrc
+				 * node_modules/vue-runtime-helpers需要重新编译, 不设置 exclude: 'node_modules/**',
+				 *
+				 * .vue新增extensions, 否者无法编译
+				 */
 				babel({
 					babelrc: true,
-					exclude: 'node_modules/**',
+					extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.vue'], 
 					babelHelpers: 'runtime'
 				}),
 
-				// TODO: 移除buble, 仅用babel, 问题可参考@wya/vm
-				buble({
-					objectAssign: 'Object.assign' // ...Object spread and rest
-				})
-				// process.env.NODE_ENV === 'production' && uglify()
+				process.env.NODE_ENV === 'production' && terser()
 			],
 			output: {
 				file: opts.dest,
