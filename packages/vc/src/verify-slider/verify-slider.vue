@@ -37,7 +37,7 @@
 import { Draggable } from '@wya/vm';
 import Popover from '@wya/vc/lib/popover';
 import Icon from '@wya/vc/lib/icon';
-import Core from './core';
+import Core from './core.vue';
 
 export default {
 	name: "vca-verify-slider",
