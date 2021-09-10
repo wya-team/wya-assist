@@ -12,6 +12,7 @@ import RelationChain from './relation-chain';
 import EditableText from './editable-text';
 import SelectArea from './select-area';
 import Map from './map';
+import VerifySlider from './verify-slider';
 
 export {
 	Store,
@@ -27,7 +28,8 @@ export {
 	RelationChain,
 	EditableText,
 	SelectArea,
-	Map
+	Map,
+	VerifySlider
 };
 
 export default {
@@ -48,7 +50,8 @@ export default {
 			Table.Select,
 			RelationChain,
 			RelationChain.Item,
-			Map
+			Map,
+			VerifySlider
 		].forEach(comp => {
 			const { name, aliasName } = comp;
 
