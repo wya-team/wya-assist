@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<vca-verify-slider-core
+			:src="verifySrc" 
+			:url="verifyUrl" 
+			@success="handleSuccess"
+		/>
 		<vca-verify-slider 
 			v-model="showVerifySlider"
 			:src="verifySrc" 
@@ -8,8 +13,7 @@
 		>
 			<vc-button 
 				type="primary"
-				long 
-				class="v-login-sign__btn"
+				style="margin-top: 30px"
 				@click.prevent.stop="handleValidate"
 			>
 				登录
@@ -19,12 +23,15 @@
 </template>
 
 <script>
-import Silder from '..';
+import { Utils } from '@wya/utils';
+import Popover from '@wya/vc/lib/popover';
+import Slider from '..';
 
 export default {
 	name: 'vca-basic',
 	components: {
-		'vca-verify-slider': Silder
+		'vca-verify-slider': Slider,
+		'vca-verify-slider-core': Slider.Core,
 	},
 	data() {
 		return {
@@ -38,10 +45,15 @@ export default {
 		},
 		handleValidate() {
 			this.showVerifySlider = true;
-		}		
+		},
 	}
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.v-verify-portal-container {
+	.vc-popover-core__container {
+		padding: 0 !important;
+	}
+}
 </style>

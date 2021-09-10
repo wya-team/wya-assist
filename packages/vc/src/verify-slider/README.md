@@ -1,22 +1,5 @@
 ## API
 
-// 校验图片地址
-		src: {
-			type: String,
-			default: '',
-			required: true
-		},
-		ajax: Function,
-		// 校验滑块接口地址
-		url: {
-			type: String,
-			default: '',
-			required: true
-		},
-		visible: {
-			type: Boolean,
-			default: false
-		}
 ### 属性
 属性 | 说明 | 类型 | 可选值 | 默认值
 ---|---|---|---|---
@@ -28,4 +11,5 @@ ajax | 请求方法 | `Function` | - | `@wya/http`的`ajax`
 ### Slot
 属性 | 说明
 ---|---
-default | -
+success | 滑块检验成功的回调
+visible-change | popover显示隐藏回调
