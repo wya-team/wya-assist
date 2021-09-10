@@ -77,9 +77,13 @@
 </template>
 
 <script>
+/**
+ * 来自业务提取，对于后端传图有一定要求
+ */
 import { Draggable } from '@wya/vm';
 import { ajax } from '@wya/http';
-import { Popover, Spin } from '@wya/vc';
+import Popover from '@wya/vc/lib/popover';
+import Spin from '@wya/vc/lib/spin';
 import { hackImg } from './utils';
 
 export default {
