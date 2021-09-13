@@ -20,9 +20,7 @@
 				/>
 				<vca-verify-slider-core
 					ref="sliderCore"
-					:src="src"
-					:url="url"
-					:ajax="ajax"
+					v-bind="$props"
 					@success="handleSuccess"
 				/>
 			</div>
