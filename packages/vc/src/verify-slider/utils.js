@@ -1,3 +1,5 @@
+import { URL } from '@wya/utils';
+
 const getPixelRGBA = (imageData, x, y) => {
 	const origin = y * imageData.width * 4 + 4 * x;
 
@@ -41,20 +43,26 @@ const getGridCoord = (baseX, baseY) => {
 	return result;
 };
 
-const loadImage = (src) => {
+const loadImage = (src, param) => {
 	return new Promise((resolve, reject) => {
 		const image = new Image();
 		image.onload = () => resolve(image);
 		image.onerror = () => reject(image);
-		image.src = src + `?${Math.random()}`;
+		image.src = URL.merge({ 
+			path: src,
+			query: {
+				v: Math.random(),
+				...(param || {}),
+			}
+		});
 		// 这里看具体情况，有些图片需要带上cookie验证
 		image.crossOrigin = 'use-credentials';
 	});
 };
  
-export const hackImg = async (src) => {
+export const hackImg = async (src, { param }) => {
 	try {
-		const image = await loadImage(src);
+		const image = await loadImage(src, param);
 
 		const canvas = document.createElement('canvas');
 		const context = canvas.getContext('2d');

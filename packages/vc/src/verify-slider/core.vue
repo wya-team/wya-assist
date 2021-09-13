@@ -78,13 +78,22 @@ export default {
 			default: '',
 			required: true
 		},
-		ajax: Function,
+		srcParam: {
+			type: Object,
+			default: () => ({})
+		},
 		// 校验滑块接口地址
 		url: {
 			type: String,
 			default: '',
 			required: true
 		},
+		// 接收滑块的字段可能存在变动
+		urlAjaxOptions: {
+			type: Object,
+			default: () => ({})
+		},
+		ajax: Function,
 	},
 	data() {
 		return {
@@ -125,7 +134,7 @@ export default {
 				this.isFail = false;
 				this.isSuccess = false;
 
-				this.pic = await hackImg(this.src);
+				this.pic = await hackImg(this.src, { param: this.srcParam });
 				this.isLoading = false;
 			} catch {
 				// TODO 
@@ -168,17 +177,22 @@ export default {
 		// 校验滑块位置
 		verifyData(offsetX) {
 			const request = this.ajax || ajax;
+
+			const { param, parseParam, ...rest } = this.urlAjaxOptions || {};
 			request({
 				url: this.url,
 				type: 'GET',
 				param: {
-					tn_r: offsetX
+					tn_r: offsetX,
+					...param,
+					...(this.parseParam && this.parseParam(offsetX))
 				},
 				errorTip: false,
 				successTip: false,
 				localData: process.env.NODE_ENV === 'development' 
 					? { status: 1, data: {} }
-					: null 
+					: null,
+				...rest
 			}).then((res) => {
 				this.status = 'success';
 				this.isFail = false;
