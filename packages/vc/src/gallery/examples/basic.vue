@@ -28,7 +28,8 @@ const { ajax } = createHttpClient({
 		return {
 			...options,
 			headers: {
-				token: '1f358b7ed7e8bdeb019f4c21cba0330ed407e604'
+				'admin-token': '352b75f4b9d9254d25422c373b15ae75',
+				token: 'd16440b18b41c797e214d5d3b0fa24061c050690'
 			}
 		};
 	}

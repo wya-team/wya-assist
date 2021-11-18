@@ -120,6 +120,7 @@ export default {
 			type: Object,
 			default: () => ({})
 		},
+		catId: Number,
 		valueKey: Object,
 		categories: Array,
 		http: Function,
@@ -132,6 +133,7 @@ export default {
 			visible: false,
 			
 			formData: {
+				[catId]: this.catId,
 				// 文件url数组
 				fileUrls: [],
 				// 文件信息数组

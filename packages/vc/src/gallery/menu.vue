@@ -80,6 +80,7 @@ export default {
 	methods: {
 		handleUpload() {
 			Uploader.popup({
+				catId: this.value,
 				accept: this.accept,
 				uploadOpts: this.uploadOpts,
 				categories: this.dataSource,
