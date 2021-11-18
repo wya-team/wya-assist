@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build:packages": "cross-env NODE_ENV=production node --max_old_space_size=8192 ./scripts/build.js",
+    "dev:vc": "lerna exec --scope @wya/assist-vc -- yarn dev",
     "test": "node scripts/unit-test.js",
     "bootstrap": "lerna clean && lerna bootstrap --loglevel silly",
     "pub": "npm run build:packages && lerna publish",
