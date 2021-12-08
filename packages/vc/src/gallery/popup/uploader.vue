@@ -134,6 +134,7 @@ export default {
 			
 			formData: {
 				[catId]: this.catId,
+				[fileName]: '',
 				// 文件url数组
 				fileUrls: [],
 				// 文件信息数组
